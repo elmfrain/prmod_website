@@ -89,21 +89,70 @@ CMakeFiles/pr_web.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/main.c.s"
 	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S F:\pr_website\main.c -o CMakeFiles\pr_web.dir\main.c.s
 
+CMakeFiles/pr_web.dir/stb_image.c.obj: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/stb_image.c.obj: CMakeFiles/pr_web.dir/includes_C.rsp
+CMakeFiles/pr_web.dir/stb_image.c.obj: ../stb_image.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\pr_website\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/pr_web.dir/stb_image.c.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\pr_web.dir\stb_image.c.obj -c F:\pr_website\stb_image.c
+
+CMakeFiles/pr_web.dir/stb_image.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/stb_image.c.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E F:\pr_website\stb_image.c > CMakeFiles\pr_web.dir\stb_image.c.i
+
+CMakeFiles/pr_web.dir/stb_image.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/stb_image.c.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S F:\pr_website\stb_image.c -o CMakeFiles\pr_web.dir\stb_image.c.s
+
+CMakeFiles/pr_web.dir/input.c.obj: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/input.c.obj: CMakeFiles/pr_web.dir/includes_C.rsp
+CMakeFiles/pr_web.dir/input.c.obj: ../input.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\pr_website\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/pr_web.dir/input.c.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\pr_web.dir\input.c.obj -c F:\pr_website\input.c
+
+CMakeFiles/pr_web.dir/input.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/input.c.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E F:\pr_website\input.c > CMakeFiles\pr_web.dir\input.c.i
+
+CMakeFiles/pr_web.dir/input.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/input.c.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S F:\pr_website\input.c -o CMakeFiles\pr_web.dir\input.c.s
+
+CMakeFiles/pr_web.dir/shaders.c.obj: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/shaders.c.obj: CMakeFiles/pr_web.dir/includes_C.rsp
+CMakeFiles/pr_web.dir/shaders.c.obj: ../shaders.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\pr_website\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/pr_web.dir/shaders.c.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\pr_web.dir\shaders.c.obj -c F:\pr_website\shaders.c
+
+CMakeFiles/pr_web.dir/shaders.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/shaders.c.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E F:\pr_website\shaders.c > CMakeFiles\pr_web.dir\shaders.c.i
+
+CMakeFiles/pr_web.dir/shaders.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/shaders.c.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X8EAA8~1.EXE $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S F:\pr_website\shaders.c -o CMakeFiles\pr_web.dir\shaders.c.s
+
 # Object files for target pr_web
 pr_web_OBJECTS = \
-"CMakeFiles/pr_web.dir/main.c.obj"
+"CMakeFiles/pr_web.dir/main.c.obj" \
+"CMakeFiles/pr_web.dir/stb_image.c.obj" \
+"CMakeFiles/pr_web.dir/input.c.obj" \
+"CMakeFiles/pr_web.dir/shaders.c.obj"
 
 # External object files for target pr_web
 pr_web_EXTERNAL_OBJECTS =
 
 pr_web.exe: CMakeFiles/pr_web.dir/main.c.obj
+pr_web.exe: CMakeFiles/pr_web.dir/stb_image.c.obj
+pr_web.exe: CMakeFiles/pr_web.dir/input.c.obj
+pr_web.exe: CMakeFiles/pr_web.dir/shaders.c.obj
 pr_web.exe: CMakeFiles/pr_web.dir/build.make
 pr_web.exe: dep/glad/libglad.a
+pr_web.exe: dep/cglm/libcglm.dll.a
 pr_web.exe: dep/glfw/src/libglfw3.a
 pr_web.exe: CMakeFiles/pr_web.dir/linklibs.rsp
 pr_web.exe: CMakeFiles/pr_web.dir/objects1.rsp
 pr_web.exe: CMakeFiles/pr_web.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\pr_website\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable pr_web.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\pr_website\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable pr_web.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\pr_web.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

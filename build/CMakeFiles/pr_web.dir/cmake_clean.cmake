@@ -1,5 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/pr_web.dir/input.c.obj"
   "CMakeFiles/pr_web.dir/main.c.obj"
+  "CMakeFiles/pr_web.dir/shaders.c.obj"
+  "CMakeFiles/pr_web.dir/stb_image.c.obj"
   "libpr_web.dll.a"
   "pr_web.exe"
   "pr_web.exe.manifest"

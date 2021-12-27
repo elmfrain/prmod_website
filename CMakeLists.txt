@@ -6,18 +6,21 @@ project(pr_web)
 add_subdirectory("dep/glad")
 
 #Add glm
-add_subdirectory("dep/glm")
+add_subdirectory("dep/cglm")
 
 #add glfw
 add_subdirectory("dep/glfw")
 
 add_executable(${PROJECT_NAME}
     main.c
+    stb_image.c
+    input.c
+    shaders.c
 )
 
 target_link_libraries(${PROJECT_NAME}
     glad
-    glm
+    cglm
     glfw
 )
 
@@ -25,5 +28,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     include
     dep/glfw/include
     dep/glad/include
-    dep/glm/glm
+    dep/cglm/include
 )

@@ -5,9 +5,189 @@
   "file": "F:/pr_website/main.c"
 },
 {
+  "directory": "F:/pr_website/build",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE  @CMakeFiles/pr_web.dir/includes_C.rsp -g -o CMakeFiles\\pr_web.dir\\stb_image.c.obj -c F:\\pr_website\\stb_image.c",
+  "file": "F:/pr_website/stb_image.c"
+},
+{
+  "directory": "F:/pr_website/build",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE  @CMakeFiles/pr_web.dir/includes_C.rsp -g -o CMakeFiles\\pr_web.dir\\input.c.obj -c F:\\pr_website\\input.c",
+  "file": "F:/pr_website/input.c"
+},
+{
+  "directory": "F:/pr_website/build",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE  @CMakeFiles/pr_web.dir/includes_C.rsp -g -o CMakeFiles\\pr_web.dir\\shaders.c.obj -c F:\\pr_website\\shaders.c",
+  "file": "F:/pr_website/shaders.c"
+},
+{
   "directory": "F:/pr_website/build/dep/glad",
   "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE  @CMakeFiles/glad.dir/includes_C.rsp -g -o CMakeFiles\\glad.dir\\src\\glad.c.obj -c F:\\pr_website\\dep\\glad\\src\\glad.c",
   "file": "F:/pr_website/dep/glad/src/glad.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\euler.c.obj -c F:\\pr_website\\dep\\cglm\\src\\euler.c",
+  "file": "F:/pr_website/dep/cglm/src/euler.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\affine.c.obj -c F:\\pr_website\\dep\\cglm\\src\\affine.c",
+  "file": "F:/pr_website/dep/cglm/src/affine.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\io.c.obj -c F:\\pr_website\\dep\\cglm\\src\\io.c",
+  "file": "F:/pr_website/dep/cglm/src/io.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\quat.c.obj -c F:\\pr_website\\dep\\cglm\\src\\quat.c",
+  "file": "F:/pr_website/dep/cglm/src/quat.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\cam.c.obj -c F:\\pr_website\\dep\\cglm\\src\\cam.c",
+  "file": "F:/pr_website/dep/cglm/src/cam.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\vec2.c.obj -c F:\\pr_website\\dep\\cglm\\src\\vec2.c",
+  "file": "F:/pr_website/dep/cglm/src/vec2.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\vec3.c.obj -c F:\\pr_website\\dep\\cglm\\src\\vec3.c",
+  "file": "F:/pr_website/dep/cglm/src/vec3.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\vec4.c.obj -c F:\\pr_website\\dep\\cglm\\src\\vec4.c",
+  "file": "F:/pr_website/dep/cglm/src/vec4.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\mat2.c.obj -c F:\\pr_website\\dep\\cglm\\src\\mat2.c",
+  "file": "F:/pr_website/dep/cglm/src/mat2.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\mat3.c.obj -c F:\\pr_website\\dep\\cglm\\src\\mat3.c",
+  "file": "F:/pr_website/dep/cglm/src/mat3.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\mat4.c.obj -c F:\\pr_website\\dep\\cglm\\src\\mat4.c",
+  "file": "F:/pr_website/dep/cglm/src/mat4.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\plane.c.obj -c F:\\pr_website\\dep\\cglm\\src\\plane.c",
+  "file": "F:/pr_website/dep/cglm/src/plane.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\frustum.c.obj -c F:\\pr_website\\dep\\cglm\\src\\frustum.c",
+  "file": "F:/pr_website/dep/cglm/src/frustum.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\box.c.obj -c F:\\pr_website\\dep\\cglm\\src\\box.c",
+  "file": "F:/pr_website/dep/cglm/src/box.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\project.c.obj -c F:\\pr_website\\dep\\cglm\\src\\project.c",
+  "file": "F:/pr_website/dep/cglm/src/project.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\sphere.c.obj -c F:\\pr_website\\dep\\cglm\\src\\sphere.c",
+  "file": "F:/pr_website/dep/cglm/src/sphere.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\ease.c.obj -c F:\\pr_website\\dep\\cglm\\src\\ease.c",
+  "file": "F:/pr_website/dep/cglm/src/ease.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\curve.c.obj -c F:\\pr_website\\dep\\cglm\\src\\curve.c",
+  "file": "F:/pr_website/dep/cglm/src/curve.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\bezier.c.obj -c F:\\pr_website\\dep\\cglm\\src\\bezier.c",
+  "file": "F:/pr_website/dep/cglm/src/bezier.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\ray.c.obj -c F:\\pr_website\\dep\\cglm\\src\\ray.c",
+  "file": "F:/pr_website/dep/cglm/src/ray.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\affine2d.c.obj -c F:\\pr_website\\dep\\cglm\\src\\affine2d.c",
+  "file": "F:/pr_website/dep/cglm/src/affine2d.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\persp_lh_zo.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\persp_lh_zo.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/persp_lh_zo.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\persp_rh_zo.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\persp_rh_zo.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/persp_rh_zo.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\persp_lh_no.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\persp_lh_no.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/persp_lh_no.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\persp_rh_no.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\persp_rh_no.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/persp_rh_no.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\ortho_lh_zo.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\ortho_lh_zo.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/ortho_lh_zo.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\ortho_rh_zo.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\ortho_rh_zo.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/ortho_rh_zo.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\ortho_lh_no.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\ortho_lh_no.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/ortho_lh_no.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\ortho_rh_no.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\ortho_rh_no.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/ortho_rh_no.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\view_lh_zo.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\view_lh_zo.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/view_lh_zo.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\view_rh_zo.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\view_rh_zo.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/view_rh_zo.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\view_lh_no.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\view_lh_no.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/view_lh_no.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/cglm",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DCGLM_EXPORTS -Dcglm_EXPORTS @CMakeFiles/cglm.dir/includes_C.rsp -g -Wall -Werror -O3 -std=gnu11 -o CMakeFiles\\cglm.dir\\src\\clipspace\\view_rh_no.c.obj -c F:\\pr_website\\dep\\cglm\\src\\clipspace\\view_rh_no.c",
+  "file": "F:/pr_website/dep/cglm/src/clipspace/view_rh_no.c"
 },
 {
   "directory": "F:/pr_website/build/dep/glfw/src",

@@ -74,17 +74,27 @@ CMAKE_BINARY_DIR = F:\pr_website\build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
+# Special rule for the target package_source
+package_source:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
+	cd /d F:\pr_website\build && "C:\Program Files\CMake\bin\cpack.exe" --config ./CPackSourceConfig.cmake F:/pr_website/build/CPackSourceConfig.cmake
+.PHONY : package_source
 
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
+# Special rule for the target package_source
+package_source/fast: package_source
+
+.PHONY : package_source/fast
+
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
+	cd /d F:\pr_website\build && "C:\Program Files\CMake\bin\cpack.exe" --config ./CPackConfig.cmake
+.PHONY : package
+
+# Special rule for the target package
+package/fast: package
+
+.PHONY : package/fast
 
 # Special rule for the target install
 install: preinstall
@@ -97,6 +107,18 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	"C:\Program Files\CMake\bin\cmake.exe" -P cmake_install.cmake
 .PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -174,6 +196,21 @@ depend:
 	cd /d F:\pr_website\build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles\Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+dep/glfw/CMakeFiles/uninstall.dir/rule:
+	cd /d F:\pr_website\build && $(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 dep/glfw/CMakeFiles/uninstall.dir/rule
+.PHONY : dep/glfw/CMakeFiles/uninstall.dir/rule
+
+# Convenience name for target.
+uninstall: dep/glfw/CMakeFiles/uninstall.dir/rule
+
+.PHONY : uninstall
+
+# fast build rule for target.
+uninstall/fast:
+	cd /d F:\pr_website\build && $(MAKE) $(MAKESILENT) -f dep\glfw\CMakeFiles\uninstall.dir\build.make dep/glfw/CMakeFiles/uninstall.dir/build
+.PHONY : uninstall/fast
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -185,7 +222,10 @@ help:
 	@echo ... install/local
 	@echo ... install/strip
 	@echo ... list_install_components
+	@echo ... package
+	@echo ... package_source
 	@echo ... rebuild_cache
+	@echo ... uninstall
 .PHONY : help
 
 

@@ -10,7 +10,7 @@
 					[
 						1,
 						2,
-						4
+						3
 					],
 					"hasInstallRule" : true,
 					"minimumCMakeVersion" : 
@@ -21,7 +21,7 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -35,42 +35,29 @@
 					"source" : "dep/glad",
 					"targetIndexes" : 
 					[
-						0
+						1
 					]
 				},
 				{
-					"build" : "dep/glm",
-					"childIndexes" : 
-					[
-						3
-					],
+					"build" : "dep/cglm",
+					"hasInstallRule" : true,
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.2"
+						"string" : "3.8.2"
 					},
 					"parentIndex" : 0,
 					"projectIndex" : 2,
-					"source" : "dep/glm",
+					"source" : "dep/cglm",
 					"targetIndexes" : 
 					[
-						3
+						0
 					]
-				},
-				{
-					"build" : "dep/glm/glm",
-					"minimumCMakeVersion" : 
-					{
-						"string" : "3.2"
-					},
-					"parentIndex" : 2,
-					"projectIndex" : 2,
-					"source" : "dep/glm/glm"
 				},
 				{
 					"build" : "dep/glfw",
 					"childIndexes" : 
 					[
-						5
+						4
 					],
 					"hasInstallRule" : true,
 					"minimumCMakeVersion" : 
@@ -79,7 +66,11 @@
 					},
 					"parentIndex" : 0,
 					"projectIndex" : 3,
-					"source" : "dep/glfw"
+					"source" : "dep/glfw",
+					"targetIndexes" : 
+					[
+						4
+					]
 				},
 				{
 					"build" : "dep/glfw/src",
@@ -88,13 +79,13 @@
 					{
 						"string" : "3.4"
 					},
-					"parentIndex" : 4,
+					"parentIndex" : 3,
 					"projectIndex" : 3,
 					"source" : "dep/glfw/src",
 					"targetIndexes" : 
 					[
-						1,
-						4
+						2,
+						5
 					]
 				}
 			],
@@ -115,7 +106,7 @@
 					"name" : "pr_web",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -127,39 +118,46 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "cglm",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
 						0
 					]
 				},
 				{
 					"directoryIndexes" : 
 					[
-						2,
-						3
-					],
-					"name" : "glm",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						3
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						4,
-						5
+						3,
+						4
 					],
 					"name" : "GLFW",
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						1,
-						4
+						2,
+						4,
+						5
 					]
 				}
 			],
 			"targets" : 
 			[
+				{
+					"directoryIndex" : 2,
+					"id" : "cglm::@5f137c4d29bcb6f92063",
+					"jsonFile" : "target-cglm-Debug-1ddf3e5c2484830414a7.json",
+					"name" : "cglm",
+					"projectIndex" : 2
+				},
 				{
 					"directoryIndex" : 1,
 					"id" : "glad::@6851246c51ec7a26e5a9",
@@ -168,7 +166,7 @@
 					"projectIndex" : 1
 				},
 				{
-					"directoryIndex" : 5,
+					"directoryIndex" : 4,
 					"id" : "glfw::@5106eb10157cbc0193d3",
 					"jsonFile" : "target-glfw-Debug-6d391da34047d1bc622f.json",
 					"name" : "glfw",
@@ -177,19 +175,19 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "pr_web::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-pr_web-Debug-7a217a64ed8b89dbf3c8.json",
+					"jsonFile" : "target-pr_web-Debug-9b7ad8c8a384cb61f86e.json",
 					"name" : "pr_web",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 2,
-					"id" : "uninstall::@7f3aa4775a7b45ed07cf",
-					"jsonFile" : "target-uninstall-Debug-8b951e4ffd6b8ad216ee.json",
+					"directoryIndex" : 3,
+					"id" : "uninstall::@23b4ea63d65d417720ff",
+					"jsonFile" : "target-uninstall-Debug-cf39ee2dd1bcbe2137bc.json",
 					"name" : "uninstall",
-					"projectIndex" : 2
+					"projectIndex" : 3
 				},
 				{
-					"directoryIndex" : 5,
+					"directoryIndex" : 4,
 					"id" : "update_mappings::@5106eb10157cbc0193d3",
 					"jsonFile" : "target-update_mappings-Debug-40cf9544d69bc878b34d.json",
 					"name" : "update_mappings",

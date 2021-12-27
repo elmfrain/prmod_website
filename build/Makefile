@@ -84,17 +84,27 @@ list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
+	"C:\Program Files\CMake\bin\cpack.exe" --config ./CPackConfig.cmake
+.PHONY : package
 
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
+# Special rule for the target package
+package/fast: package
+
+.PHONY : package/fast
+
+# Special rule for the target package_source
+package_source:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
+	"C:\Program Files\CMake\bin\cpack.exe" --config ./CPackSourceConfig.cmake F:/pr_website/build/CPackSourceConfig.cmake
+.PHONY : package_source
+
+# Special rule for the target package_source
+package_source/fast: package_source
+
+.PHONY : package_source/fast
 
 # Special rule for the target install
 install: preinstall
@@ -107,6 +117,18 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	"C:\Program Files\CMake\bin\cmake.exe" -P cmake_install.cmake
 .PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -201,6 +223,19 @@ glad/fast:
 .PHONY : glad/fast
 
 #=============================================================================
+# Target rules for targets named cglm
+
+# Build rule for target.
+cglm: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 cglm
+.PHONY : cglm
+
+# fast build rule for target.
+cglm/fast:
+	$(MAKE) $(MAKESILENT) -f dep\cglm\CMakeFiles\cglm.dir\build.make dep/cglm/CMakeFiles/cglm.dir/build
+.PHONY : cglm/fast
+
+#=============================================================================
 # Target rules for targets named uninstall
 
 # Build rule for target.
@@ -210,7 +245,7 @@ uninstall: cmake_check_build_system
 
 # fast build rule for target.
 uninstall/fast:
-	$(MAKE) $(MAKESILENT) -f dep\glm\CMakeFiles\uninstall.dir\build.make dep/glm/CMakeFiles/uninstall.dir/build
+	$(MAKE) $(MAKESILENT) -f dep\glfw\CMakeFiles\uninstall.dir\build.make dep/glfw/CMakeFiles/uninstall.dir/build
 .PHONY : uninstall/fast
 
 #=============================================================================
@@ -239,6 +274,33 @@ update_mappings/fast:
 	$(MAKE) $(MAKESILENT) -f dep\glfw\src\CMakeFiles\update_mappings.dir\build.make dep/glfw/src/CMakeFiles/update_mappings.dir/build
 .PHONY : update_mappings/fast
 
+input.obj: input.c.obj
+
+.PHONY : input.obj
+
+# target to build an object file
+input.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/input.c.obj
+.PHONY : input.c.obj
+
+input.i: input.c.i
+
+.PHONY : input.i
+
+# target to preprocess a source file
+input.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/input.c.i
+.PHONY : input.c.i
+
+input.s: input.c.s
+
+.PHONY : input.s
+
+# target to generate assembly for a file
+input.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/input.c.s
+.PHONY : input.c.s
+
 main.obj: main.c.obj
 
 .PHONY : main.obj
@@ -266,6 +328,60 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/main.c.s
 .PHONY : main.c.s
 
+shaders.obj: shaders.c.obj
+
+.PHONY : shaders.obj
+
+# target to build an object file
+shaders.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/shaders.c.obj
+.PHONY : shaders.c.obj
+
+shaders.i: shaders.c.i
+
+.PHONY : shaders.i
+
+# target to preprocess a source file
+shaders.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/shaders.c.i
+.PHONY : shaders.c.i
+
+shaders.s: shaders.c.s
+
+.PHONY : shaders.s
+
+# target to generate assembly for a file
+shaders.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/shaders.c.s
+.PHONY : shaders.c.s
+
+stb_image.obj: stb_image.c.obj
+
+.PHONY : stb_image.obj
+
+# target to build an object file
+stb_image.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/stb_image.c.obj
+.PHONY : stb_image.c.obj
+
+stb_image.i: stb_image.c.i
+
+.PHONY : stb_image.i
+
+# target to preprocess a source file
+stb_image.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/stb_image.c.i
+.PHONY : stb_image.c.i
+
+stb_image.s: stb_image.c.s
+
+.PHONY : stb_image.s
+
+# target to generate assembly for a file
+stb_image.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pr_web.dir\build.make CMakeFiles/pr_web.dir/stb_image.c.s
+.PHONY : stb_image.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -277,15 +393,27 @@ help:
 	@echo ... install/local
 	@echo ... install/strip
 	@echo ... list_install_components
+	@echo ... package
+	@echo ... package_source
 	@echo ... rebuild_cache
 	@echo ... uninstall
 	@echo ... update_mappings
+	@echo ... cglm
 	@echo ... glad
 	@echo ... glfw
 	@echo ... pr_web
+	@echo ... input.obj
+	@echo ... input.i
+	@echo ... input.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... shaders.obj
+	@echo ... shaders.i
+	@echo ... shaders.s
+	@echo ... stb_image.obj
+	@echo ... stb_image.i
+	@echo ... stb_image.s
 .PHONY : help
 
 

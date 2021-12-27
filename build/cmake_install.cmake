@@ -40,7 +40,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("F:/pr_website/build/dep/glad/cmake_install.cmake")
-  include("F:/pr_website/build/dep/glm/cmake_install.cmake")
+  include("F:/pr_website/build/dep/cglm/cmake_install.cmake")
   include("F:/pr_website/build/dep/glfw/cmake_install.cmake")
 
 endif()
