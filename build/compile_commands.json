@@ -1,0 +1,117 @@
+[
+{
+  "directory": "F:/pr_website/build",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE  @CMakeFiles/pr_web.dir/includes_C.rsp -g -o CMakeFiles\\pr_web.dir\\main.c.obj -c F:\\pr_website\\main.c",
+  "file": "F:/pr_website/main.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glad",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE  @CMakeFiles/glad.dir/includes_C.rsp -g -o CMakeFiles\\glad.dir\\src\\glad.c.obj -c F:\\pr_website\\dep\\glad\\src\\glad.c",
+  "file": "F:/pr_website/dep/glad/src/glad.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\context.c.obj -c F:\\pr_website\\dep\\glfw\\src\\context.c",
+  "file": "F:/pr_website/dep/glfw/src/context.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\init.c.obj -c F:\\pr_website\\dep\\glfw\\src\\init.c",
+  "file": "F:/pr_website/dep/glfw/src/init.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\input.c.obj -c F:\\pr_website\\dep\\glfw\\src\\input.c",
+  "file": "F:/pr_website/dep/glfw/src/input.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\monitor.c.obj -c F:\\pr_website\\dep\\glfw\\src\\monitor.c",
+  "file": "F:/pr_website/dep/glfw/src/monitor.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\platform.c.obj -c F:\\pr_website\\dep\\glfw\\src\\platform.c",
+  "file": "F:/pr_website/dep/glfw/src/platform.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\vulkan.c.obj -c F:\\pr_website\\dep\\glfw\\src\\vulkan.c",
+  "file": "F:/pr_website/dep/glfw/src/vulkan.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\window.c.obj -c F:\\pr_website\\dep\\glfw\\src\\window.c",
+  "file": "F:/pr_website/dep/glfw/src/window.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\egl_context.c.obj -c F:\\pr_website\\dep\\glfw\\src\\egl_context.c",
+  "file": "F:/pr_website/dep/glfw/src/egl_context.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\osmesa_context.c.obj -c F:\\pr_website\\dep\\glfw\\src\\osmesa_context.c",
+  "file": "F:/pr_website/dep/glfw/src/osmesa_context.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\null_init.c.obj -c F:\\pr_website\\dep\\glfw\\src\\null_init.c",
+  "file": "F:/pr_website/dep/glfw/src/null_init.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\null_monitor.c.obj -c F:\\pr_website\\dep\\glfw\\src\\null_monitor.c",
+  "file": "F:/pr_website/dep/glfw/src/null_monitor.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\null_window.c.obj -c F:\\pr_website\\dep\\glfw\\src\\null_window.c",
+  "file": "F:/pr_website/dep/glfw/src/null_window.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\null_joystick.c.obj -c F:\\pr_website\\dep\\glfw\\src\\null_joystick.c",
+  "file": "F:/pr_website/dep/glfw/src/null_joystick.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_module.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_module.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_module.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_time.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_time.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_time.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_thread.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_thread.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_thread.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_init.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_init.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_init.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_joystick.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_joystick.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_joystick.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_monitor.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_monitor.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_monitor.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\win32_window.c.obj -c F:\\pr_website\\dep\\glfw\\src\\win32_window.c",
+  "file": "F:/pr_website/dep/glfw/src/win32_window.c"
+},
+{
+  "directory": "F:/pr_website/build/dep/glfw/src",
+  "command": "C:\\PROGRA~1\\MINGW-~1\\X86_64~1.0-P\\mingw64\\bin\\X8EAA8~1.EXE -DUNICODE -DWINVER=0x0501 -D_GLFW_WIN32 -D_UNICODE @CMakeFiles/glfw.dir/includes_C.rsp -g -Wall -std=c99 -Wdeclaration-after-statement -o CMakeFiles\\glfw.dir\\wgl_context.c.obj -c F:\\pr_website\\dep\\glfw\\src\\wgl_context.c",
+  "file": "F:/pr_website/dep/glfw/src/wgl_context.c"
+}
+]
