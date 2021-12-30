@@ -4,39 +4,39 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "F:/pr_website/dep/cglm/src/affine.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/affine.c.obj"
-  "F:/pr_website/dep/cglm/src/affine2d.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/affine2d.c.obj"
-  "F:/pr_website/dep/cglm/src/bezier.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/bezier.c.obj"
-  "F:/pr_website/dep/cglm/src/box.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/box.c.obj"
-  "F:/pr_website/dep/cglm/src/cam.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/cam.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/ortho_lh_no.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_no.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/ortho_lh_zo.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_zo.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/ortho_rh_no.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_no.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/ortho_rh_zo.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_zo.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/persp_lh_no.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_no.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/persp_lh_zo.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_zo.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/persp_rh_no.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_no.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/persp_rh_zo.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_zo.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/view_lh_no.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_no.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/view_lh_zo.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_zo.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/view_rh_no.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_no.c.obj"
-  "F:/pr_website/dep/cglm/src/clipspace/view_rh_zo.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_zo.c.obj"
-  "F:/pr_website/dep/cglm/src/curve.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/curve.c.obj"
-  "F:/pr_website/dep/cglm/src/ease.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/ease.c.obj"
-  "F:/pr_website/dep/cglm/src/euler.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/euler.c.obj"
-  "F:/pr_website/dep/cglm/src/frustum.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/frustum.c.obj"
-  "F:/pr_website/dep/cglm/src/io.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/io.c.obj"
-  "F:/pr_website/dep/cglm/src/mat2.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/mat2.c.obj"
-  "F:/pr_website/dep/cglm/src/mat3.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/mat3.c.obj"
-  "F:/pr_website/dep/cglm/src/mat4.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/mat4.c.obj"
-  "F:/pr_website/dep/cglm/src/plane.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/plane.c.obj"
-  "F:/pr_website/dep/cglm/src/project.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/project.c.obj"
-  "F:/pr_website/dep/cglm/src/quat.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/quat.c.obj"
-  "F:/pr_website/dep/cglm/src/ray.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/ray.c.obj"
-  "F:/pr_website/dep/cglm/src/sphere.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/sphere.c.obj"
-  "F:/pr_website/dep/cglm/src/vec2.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/vec2.c.obj"
-  "F:/pr_website/dep/cglm/src/vec3.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/vec3.c.obj"
-  "F:/pr_website/dep/cglm/src/vec4.c" "F:/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/vec4.c.obj"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/affine.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine2d.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/affine2d.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/bezier.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/bezier.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/box.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/box.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/cam.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/cam.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_no.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_no.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_zo.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_zo.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_no.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_no.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_zo.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_zo.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_no.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_no.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_zo.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_zo.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_no.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_no.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_zo.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_zo.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_no.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_no.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_zo.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_zo.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_no.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_no.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_zo.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_zo.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/curve.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/curve.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ease.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/ease.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/euler.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/euler.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/frustum.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/frustum.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/io.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/io.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat2.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/mat2.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat3.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/mat3.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat4.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/mat4.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/plane.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/plane.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/project.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/project.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/quat.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/quat.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ray.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/ray.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/sphere.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/sphere.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec2.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/vec2.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec3.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/vec3.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec4.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/src/vec4.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
@@ -51,6 +51,13 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "../dep/cglm/include"
   "../dep/cglm/src"
   )
+
+# Pairs of files generated by the same build rule.
+set(CMAKE_MULTIPLE_OUTPUT_PAIRS
+  "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.so" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.so.0.8.5"
+  "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.so.0" "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.so.0.8.5"
+  )
+
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES

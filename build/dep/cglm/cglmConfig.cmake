@@ -4,7 +4,7 @@ if("${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.5)
    message(FATAL_ERROR "CMake >= 2.6.0 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 2.6...3.17)
+cmake_policy(VERSION 2.6)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -45,14 +45,14 @@ unset(_expectedTargets)
 add_library(cglm::cglm SHARED IMPORTED)
 
 set_target_properties(cglm::cglm PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "F:/pr_website/dep/cglm/include"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include"
 )
 
 # Import target "cglm::cglm" for configuration "Debug"
 set_property(TARGET cglm::cglm APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
 set_target_properties(cglm::cglm PROPERTIES
-  IMPORTED_IMPLIB_DEBUG "F:/pr_website/build/dep/cglm/libcglm.dll.a"
-  IMPORTED_LOCATION_DEBUG "F:/pr_website/build/dep/cglm/libcglm-0.dll"
+  IMPORTED_LOCATION_DEBUG "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.so.0.8.5"
+  IMPORTED_SONAME_DEBUG "libcglm.so.0"
   )
 
 # This file does not depend on other imported targets which have

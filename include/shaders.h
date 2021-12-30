@@ -9,14 +9,18 @@ void prwsSetModelViewMatrix(mat4 matrix);
 
 void prwsSetColorv(vec4 color);
 
-float* prwsGetProjectionMatrix();
+const float* prwsGetProjectionMatrix();
 
-float* prwsGetModelViewMatrix();
+const float* prwsGetModelViewMatrix();
 
-float* prwsGetColor();
+const float* prwsGetColor();
 
 void prwsSetColor(float r, float g, float b, float a);
 
-void prwsUsePOSshader();
+void prws_POS_shader();
 
-void prwsUsePOS_UVshader();
+void prws_POS_UV_shader();
+
+void prws_POS_COLOR_shader();
+
+void prws_POS_UV_COLOR_TEXID_shader();

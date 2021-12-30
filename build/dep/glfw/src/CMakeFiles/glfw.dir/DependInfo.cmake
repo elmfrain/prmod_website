@@ -4,36 +4,35 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "F:/pr_website/dep/glfw/src/context.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/context.c.obj"
-  "F:/pr_website/dep/glfw/src/egl_context.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/egl_context.c.obj"
-  "F:/pr_website/dep/glfw/src/init.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/init.c.obj"
-  "F:/pr_website/dep/glfw/src/input.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/input.c.obj"
-  "F:/pr_website/dep/glfw/src/monitor.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/monitor.c.obj"
-  "F:/pr_website/dep/glfw/src/null_init.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_init.c.obj"
-  "F:/pr_website/dep/glfw/src/null_joystick.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.obj"
-  "F:/pr_website/dep/glfw/src/null_monitor.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.obj"
-  "F:/pr_website/dep/glfw/src/null_window.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_window.c.obj"
-  "F:/pr_website/dep/glfw/src/osmesa_context.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.obj"
-  "F:/pr_website/dep/glfw/src/platform.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/platform.c.obj"
-  "F:/pr_website/dep/glfw/src/vulkan.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/vulkan.c.obj"
-  "F:/pr_website/dep/glfw/src/wgl_context.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/wgl_context.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_init.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_init.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_joystick.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_joystick.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_module.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_module.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_monitor.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_monitor.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_thread.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_thread.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_time.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_time.c.obj"
-  "F:/pr_website/dep/glfw/src/win32_window.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/win32_window.c.obj"
-  "F:/pr_website/dep/glfw/src/window.c" "F:/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/window.c.obj"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/context.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/context.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/egl_context.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/glx_context.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/init.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/init.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/input.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/input.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/linux_joystick.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/monitor.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/monitor.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_init.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_init.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_joystick.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_monitor.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_window.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/null_window.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/osmesa_context.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/platform.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/platform.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_module.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_thread.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_time.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/vulkan.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/window.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/window.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_init.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_monitor.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_window.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/xkb_unicode.c" "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_C
-  "UNICODE"
-  "WINVER=0x0501"
-  "_GLFW_WIN32"
-  "_UNICODE"
+  "_DEFAULT_SOURCE"
+  "_GLFW_X11"
   )
 
 # The include file search paths:

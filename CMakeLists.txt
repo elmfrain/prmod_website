@@ -16,6 +16,8 @@ add_executable(${PROJECT_NAME}
     stb_image.c
     input.c
     shaders.c
+    background_renderer.c
+    ui_render.c
 )
 
 target_link_libraries(${PROJECT_NAME}

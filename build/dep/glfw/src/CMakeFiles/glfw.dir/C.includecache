@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-F:/pr_website/dep/glfw/include/GLFW/glfw3.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include/GLFW/glfw3.h
 stddef.h
 -
 stdint.h
@@ -52,7 +52,7 @@ GL/gl.h
 GL/glext.h
 -
 
-F:/pr_website/dep/glfw/src/cocoa_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/cocoa_joystick.h
 IOKit/IOKitLib.h
 -
 IOKit/IOCFPlugIn.h
@@ -60,7 +60,7 @@ IOKit/IOCFPlugIn.h
 IOKit/hid/IOHIDKeys.h
 -
 
-F:/pr_website/dep/glfw/src/cocoa_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/cocoa_platform.h
 stdint.h
 -
 Carbon/Carbon.h
@@ -70,11 +70,11 @@ IOKit/hid/IOHIDLib.h
 Cocoa/Cocoa.h
 -
 
-F:/pr_website/dep/glfw/src/cocoa_time.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/cocoa_time.h
 
-F:/pr_website/dep/glfw/src/context.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/context.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 assert.h
 -
 stdio.h
@@ -86,9 +86,9 @@ limits.h
 stdio.h
 -
 
-F:/pr_website/dep/glfw/src/egl_context.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/egl_context.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 stdio.h
 -
 string.h
@@ -98,9 +98,19 @@ stdlib.h
 assert.h
 -
 
-F:/pr_website/dep/glfw/src/init.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/glx_context.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+string.h
+-
+stdlib.h
+-
+assert.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/init.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 string.h
 -
 stdlib.h
@@ -112,11 +122,11 @@ stdarg.h
 assert.h
 -
 
-F:/pr_website/dep/glfw/src/input.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/input.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 mappings.h
-F:/pr_website/dep/glfw/src/mappings.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/mappings.h
 assert.h
 -
 float.h
@@ -128,15 +138,39 @@ stdlib.h
 string.h
 -
 
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 glfw_config.h
-F:/pr_website/dep/glfw/src/glfw_config.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/glfw_config.h
 ../include/GLFW/glfw3.h
-F:/pr_website/dep/glfw/include/GLFW/glfw3.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include/GLFW/glfw3.h
 platform.h
-F:/pr_website/dep/glfw/src/platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/platform.h
 
-F:/pr_website/dep/glfw/src/linux_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/linux_joystick.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+sys/types.h
+-
+sys/stat.h
+-
+sys/inotify.h
+-
+fcntl.h
+-
+errno.h
+-
+dirent.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/linux_joystick.h
 linux/input.h
 -
 linux/limits.h
@@ -144,11 +178,11 @@ linux/limits.h
 regex.h
 -
 
-F:/pr_website/dep/glfw/src/mappings.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/mappings.h
 
-F:/pr_website/dep/glfw/src/monitor.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/monitor.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 assert.h
 -
 math.h
@@ -162,21 +196,21 @@ stdlib.h
 limits.h
 -
 
-F:/pr_website/dep/glfw/src/null_init.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_init.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 stdlib.h
 -
 
-F:/pr_website/dep/glfw/src/null_joystick.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_joystick.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 
-F:/pr_website/dep/glfw/src/null_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_joystick.h
 
-F:/pr_website/dep/glfw/src/null_monitor.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_monitor.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 stdlib.h
 -
 string.h
@@ -184,15 +218,15 @@ string.h
 math.h
 -
 
-F:/pr_website/dep/glfw/src/null_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_platform.h
 
-F:/pr_website/dep/glfw/src/null_window.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_window.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 stdlib.h
 -
 
-F:/pr_website/dep/glfw/src/osmesa_context.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/osmesa_context.c
 stdlib.h
 -
 string.h
@@ -200,55 +234,77 @@ string.h
 assert.h
 -
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 
-F:/pr_website/dep/glfw/src/platform.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/platform.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 
-F:/pr_website/dep/glfw/src/platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/platform.h
 null_platform.h
-F:/pr_website/dep/glfw/src/null_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_platform.h
 win32_platform.h
-F:/pr_website/dep/glfw/src/win32_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_platform.h
 cocoa_platform.h
-F:/pr_website/dep/glfw/src/cocoa_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/cocoa_platform.h
 wl_platform.h
-F:/pr_website/dep/glfw/src/wl_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/wl_platform.h
 x11_platform.h
-F:/pr_website/dep/glfw/src/x11_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_platform.h
 null_joystick.h
-F:/pr_website/dep/glfw/src/null_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/null_joystick.h
 win32_joystick.h
-F:/pr_website/dep/glfw/src/win32_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_joystick.h
 cocoa_joystick.h
-F:/pr_website/dep/glfw/src/cocoa_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/cocoa_joystick.h
 linux_joystick.h
-F:/pr_website/dep/glfw/src/linux_joystick.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/linux_joystick.h
 win32_thread.h
-F:/pr_website/dep/glfw/src/win32_thread.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_thread.h
 posix_thread.h
-F:/pr_website/dep/glfw/src/posix_thread.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_thread.h
 win32_time.h
-F:/pr_website/dep/glfw/src/win32_time.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_time.h
 cocoa_time.h
-F:/pr_website/dep/glfw/src/cocoa_time.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/cocoa_time.h
 posix_time.h
-F:/pr_website/dep/glfw/src/posix_time.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_time.h
 
-F:/pr_website/dep/glfw/src/posix_thread.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_module.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+dlfcn.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_thread.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+assert.h
+-
+string.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_thread.h
 pthread.h
 -
 
-F:/pr_website/dep/glfw/src/posix_time.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_time.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+unistd.h
+-
+sys/time.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/posix_time.h
 stdint.h
 -
 time.h
 -
 
-F:/pr_website/dep/glfw/src/vulkan.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/vulkan.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 assert.h
 -
 string.h
@@ -256,47 +312,9 @@ string.h
 stdlib.h
 -
 
-F:/pr_website/dep/glfw/src/wgl_context.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-stdlib.h
--
-assert.h
--
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_joystick.h
 
-F:/pr_website/dep/glfw/src/win32_init.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-stdlib.h
--
-
-F:/pr_website/dep/glfw/src/win32_joystick.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-stdio.h
--
-math.h
--
-
-F:/pr_website/dep/glfw/src/win32_joystick.h
-
-F:/pr_website/dep/glfw/src/win32_module.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-
-F:/pr_website/dep/glfw/src/win32_monitor.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-stdlib.h
--
-string.h
--
-limits.h
--
-wchar.h
--
-
-F:/pr_website/dep/glfw/src/win32_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_platform.h
 wctype.h
 -
 windows.h
@@ -310,41 +328,17 @@ dbt.h
 dwmapi.h
 -
 
-F:/pr_website/dep/glfw/src/win32_thread.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-assert.h
--
-
-F:/pr_website/dep/glfw/src/win32_thread.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_thread.h
 windows.h
 -
 
-F:/pr_website/dep/glfw/src/win32_time.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
-
-F:/pr_website/dep/glfw/src/win32_time.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/win32_time.h
 windows.h
 -
 
-F:/pr_website/dep/glfw/src/win32_window.c
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/window.c
 internal.h
-F:/pr_website/dep/glfw/src/internal.h
-limits.h
--
-stdlib.h
--
-string.h
--
-windowsx.h
--
-shellapi.h
--
-
-F:/pr_website/dep/glfw/src/window.c
-internal.h
-F:/pr_website/dep/glfw/src/internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
 assert.h
 -
 string.h
@@ -354,7 +348,7 @@ stdlib.h
 float.h
 -
 
-F:/pr_website/dep/glfw/src/wl_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/wl_platform.h
 wayland-client-core.h
 -
 xkbcommon/xkbcommon.h
@@ -362,9 +356,37 @@ xkbcommon/xkbcommon.h
 xkbcommon/xkbcommon-compose.h
 -
 xkb_unicode.h
-F:/pr_website/dep/glfw/src/xkb_unicode.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/xkb_unicode.h
 
-F:/pr_website/dep/glfw/src/x11_platform.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_init.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+stdlib.h
+-
+string.h
+-
+limits.h
+-
+stdio.h
+-
+locale.h
+-
+unistd.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_monitor.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+limits.h
+-
+stdlib.h
+-
+string.h
+-
+math.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_platform.h
 unistd.h
 -
 signal.h
@@ -392,7 +414,33 @@ X11/extensions/XInput2.h
 X11/extensions/shape.h
 -
 xkb_unicode.h
-F:/pr_website/dep/glfw/src/xkb_unicode.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/xkb_unicode.h
 
-F:/pr_website/dep/glfw/src/xkb_unicode.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/x11_window.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+X11/cursorfont.h
+-
+X11/Xmd.h
+-
+sys/select.h
+-
+string.h
+-
+stdio.h
+-
+stdlib.h
+-
+limits.h
+-
+errno.h
+-
+assert.h
+-
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/xkb_unicode.c
+internal.h
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/internal.h
+
+/home/fern/Desktop/mc_modding/pr_website/dep/glfw/src/xkb_unicode.h
 

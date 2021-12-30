@@ -3,9 +3,12 @@
 #include <glad/glad.h>
 
 #include <cglm/cglm.h>
+#include <stb_image.h>
 
 #include "shaders.h"
+#include "background_renderer.h"
 #include "input.h"
+#include "ui_render.h"
 
 #include <stdio.h>
 
@@ -15,22 +18,42 @@ char mouseLocked = 0;
 vec3 camPos;
 vec3 camLook;
 
-vec2 windowSize;
-
 mat4 projectionMatrix;
 mat4 modelViewMatrix;
 
-void printShaderLog(GLuint shader, const char* shaderType);
-void printProgramLog(GLuint program, const char* programName);
 void loadShaders();
-void setupQuad();
+void setupCube();
 void clearGLErrors();
 
 void handleKeyEvents(GLFWwindow* window);
 void handleMouseEvents(GLFWwindow* window);
 void handleCursorMovement(GLFWwindow* window);
-void onResize(GLFWwindow* window, int width, int height);
 
+void loadTexture(const char* fileName, GLuint* texId)
+{
+    int x, y, channels;
+    stbi_set_flip_vertically_on_load(1);
+    stbi_uc* image = stbi_load(fileName, &x, &y, &channels, STBI_rgb);
+
+    if(!image)
+    {
+        printf("failed to load texture!");
+        exit(1);
+    }
+
+    glGenTextures(1, texId);
+
+    glBindTexture(GL_TEXTURE_2D, *texId);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    stbi_image_free(image);
+}
+#define NAV_BAR_HEIGHT 15
+#define MARGIN 3
 int main()
 {
     glfwInit();
@@ -42,20 +65,12 @@ int main()
 
     prwiRegisterWindow(window);
     prwiSetActiveWindow(window);
-
-    int width, height;
-    glfwGetWindowSize(window, &width, &height);
-    windowSize[0] = width; windowSize[1] = height;
-
-    glfwSetWindowSizeCallback(window, onResize);
-
-    glfwMakeContextCurrent(window);
-
-    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+    prwuiSetWindow(window);
 
     glfwSwapInterval(1);
 
-    setupQuad();
+    setupCube();
+    prwbrLoad();
 
     while(!glfwWindowShouldClose(window))
     {
@@ -63,10 +78,13 @@ int main()
         handleMouseEvents(window);
         handleCursorMovement(window);
 
-        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        float wX = prwuiGetWindowWidth(), wY = prwuiGetWindowHeight();
+        glViewport(0, 0, wX, wY);
 
-        glm_perspective(120, windowSize[0] / windowSize[1], 0.1, 100, projectionMatrix);
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glm_perspective(glm_rad(60), wX / wY, 0.1, 100, projectionMatrix);
         glm_mat4_identity(modelViewMatrix);
         vec3 axis = {1.0f, 0.0f, 0.0f};
         glm_rotate(modelViewMatrix, glm_rad(camLook[0]), axis);
@@ -74,12 +92,22 @@ int main()
         glm_rotate(modelViewMatrix, glm_rad(camLook[1]), axis);
         glm_translate(modelViewMatrix, camPos);
 
+        glEnable(GL_DEPTH_TEST);
         prwsSetProjectionMatrix(projectionMatrix);
         prwsSetModelViewMatrix(modelViewMatrix);
-        prwsUsePOSshader();
 
-        glBindVertexArray(quadVAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
+        prwbrRender();
+
+        glDisable(GL_DEPTH_TEST);
+        prwuiSetupUIrendering();
+        {
+            float uiWidth = prwuiGetUIwidth();
+
+            prwuiGenQuad(0, 0, uiWidth, NAV_BAR_HEIGHT, -1308622848, 0);
+            prwuiGenQuad(0, NAV_BAR_HEIGHT, uiWidth, NAV_BAR_HEIGHT + MARGIN, -16749608, 0);
+            prwuiGenGradientQuad(PRWUI_TO_BOTTOM, 0, NAV_BAR_HEIGHT + MARGIN, uiWidth, NAV_BAR_HEIGHT * 2 + MARGIN, 1275068416, 0, 0);
+        }
+        prwuiRenderBatch();
 
         prwiPollInputs();
         clearGLErrors();
@@ -93,7 +121,7 @@ int main()
     return 0;
 }
 
-void setupQuad()
+void setupCube()
 {
     GLuint glBuffer;
     GLuint glElemBuffer;
@@ -110,16 +138,16 @@ void setupQuad()
 
     struct Vertex verticies[] =
     {
-        {{-0.5f, -0.5f, -4.0f}, {0.0f, 0.0f}},
-        {{ 0.5f, -0.5f, -4.0f}, {1.0f, 0.0f}},
-        {{ 0.5f,  0.5f, -4.0f}, {1.0f, 1.0f}},
-        {{-0.5f,  0.5f, -4.0f}, {0.0f, 1.0f}}
+        {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f}},
+        {{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f}},
+        {{ 0.5f,  0.5f, -0.5f}, {1.0f, 1.0f}},
+        {{-0.5f,  0.5f, -0.5f}, {0.0f, 1.0f}},
     };
 
     int indicies[] =
     {
         0, 1, 2,
-        0, 2, 3
+        0, 2, 3,
     };
 
     glBindVertexArray(quadVAO);
@@ -171,13 +199,14 @@ void handleKeyEvents(GLFWwindow* window)
     if(!mouseLocked) return;
 
     float speed = 0.05f;
-    vec3 strafe; glm_vec2_zero(strafe);
+    vec3 strafe; glm_vec3_zero(strafe);
     if(prwiIsKeyPressed(GLFW_KEY_SPACE)) camPos[1] -= speed;
     if(prwiIsKeyPressed(GLFW_KEY_LEFT_SHIFT)) camPos[1] += speed;
     if(prwiIsKeyPressed(GLFW_KEY_W)) strafe[2] += speed;
     if(prwiIsKeyPressed(GLFW_KEY_S)) strafe[2] -= speed;
     if(prwiIsKeyPressed(GLFW_KEY_A)) strafe[0] += speed;
     if(prwiIsKeyPressed(GLFW_KEY_D)) strafe[0] -= speed;
+    if(prwiKeyJustPressed(GLFW_KEY_R)) glm_vec3_zero(camPos);
 
     vec3 axis = {0.0f, 1.0f, 0.0f};
     glm_vec3_rotate(strafe, -glm_rad(camLook[1]), axis);
@@ -201,12 +230,4 @@ void handleCursorMovement(GLFWwindow* window)
         camLook[0] += prwiCursorYDelta() * 0.15f;
         camLook[1] += prwiCursorXDelta() * 0.15f;
     }
-}
-
-void onResize(GLFWwindow* window, int width, int height)
-{
-    windowSize[0] = width;
-    windowSize[1] = height;
-
-    glViewport(0, 0, width, height);
 }

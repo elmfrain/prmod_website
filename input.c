@@ -160,7 +160,7 @@ struct InputContext* i_getContextFromWindow(GLFWwindow* window)
     return 0;
 }
 
-static void i_setNthBit(uint32_t* flagBuffer, int bit)
+static inline void i_setNthBit(uint32_t* flagBuffer, int bit)
 {
     uint32_t* flagChunk = flagBuffer + (bit / sizeof(int32_t));
     int bitPos = bit % 32;
@@ -169,7 +169,7 @@ static void i_setNthBit(uint32_t* flagBuffer, int bit)
     *flagChunk |= set;
 }
 
-static void i_clearNthBit(uint32_t* flagBuffer, int bit)
+static inline void i_clearNthBit(uint32_t* flagBuffer, int bit)
 {
     uint32_t* flagChunk = flagBuffer + (bit / sizeof(int32_t));
     int bitPos = bit % 32;
@@ -178,7 +178,7 @@ static void i_clearNthBit(uint32_t* flagBuffer, int bit)
     *flagChunk &= set;
 }
 
-static int i_getNthBit(uint32_t* flagBuffer, int bit)
+static inline int i_getNthBit(uint32_t* flagBuffer, int bit)
 {
     uint32_t* flagChunk = flagBuffer + (bit / sizeof(int32_t));
     int bitPos = bit % 32;
