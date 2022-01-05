@@ -6,6 +6,8 @@ project(pr_web)
 add_subdirectory("dep/glad")
 
 #Add glm
+option(CGLM_SHARED "Shared build" OFF)
+option(CGLM_STATIC "Static build" ON)
 add_subdirectory("dep/cglm")
 
 #add glfw
@@ -16,8 +18,11 @@ add_executable(${PROJECT_NAME}
     stb_image.c
     input.c
     shaders.c
-    background_renderer.c
     ui_render.c
+    widget.c
+    screen_renderer.c
+    animation.c
+    mesh.c
 )
 
 target_link_libraries(${PROJECT_NAME}

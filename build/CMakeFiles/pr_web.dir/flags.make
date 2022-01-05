@@ -4,7 +4,7 @@
 # compile C with /bin/x86_64-linux-gnu-gcc-8
 C_FLAGS = -g  
 
-C_DEFINES = 
+C_DEFINES = -DCGLM_STATIC
 
 C_INCLUDES = -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include 
 

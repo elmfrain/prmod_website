@@ -9,11 +9,11 @@ void prwsSetModelViewMatrix(mat4 matrix);
 
 void prwsSetColorv(vec4 color);
 
-const float* prwsGetProjectionMatrix();
+vec4* prwsGetProjectionMatrix();
 
-const float* prwsGetModelViewMatrix();
+vec4* prwsGetModelViewMatrix();
 
-const float* prwsGetColor();
+float* prwsGetColor();
 
 void prwsSetColor(float r, float g, float b, float a);
 

@@ -1,33 +1,48 @@
 [
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
-  "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/main.c.o   -c /home/fern/Desktop/mc_modding/pr_website/main.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/main.c.o   -c /home/fern/Desktop/mc_modding/pr_website/main.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/main.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
-  "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/stb_image.c.o   -c /home/fern/Desktop/mc_modding/pr_website/stb_image.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/stb_image.c.o   -c /home/fern/Desktop/mc_modding/pr_website/stb_image.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/stb_image.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
-  "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/input.c.o   -c /home/fern/Desktop/mc_modding/pr_website/input.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/input.c.o   -c /home/fern/Desktop/mc_modding/pr_website/input.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/input.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
-  "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/shaders.c.o   -c /home/fern/Desktop/mc_modding/pr_website/shaders.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/shaders.c.o   -c /home/fern/Desktop/mc_modding/pr_website/shaders.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/shaders.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
-  "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/background_renderer.c.o   -c /home/fern/Desktop/mc_modding/pr_website/background_renderer.c",
-  "file": "/home/fern/Desktop/mc_modding/pr_website/background_renderer.c"
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/ui_render.c.o   -c /home/fern/Desktop/mc_modding/pr_website/ui_render.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/ui_render.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
-  "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/ui_render.c.o   -c /home/fern/Desktop/mc_modding/pr_website/ui_render.c",
-  "file": "/home/fern/Desktop/mc_modding/pr_website/ui_render.c"
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/widget.c.o   -c /home/fern/Desktop/mc_modding/pr_website/widget.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/widget.c"
+},
+{
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/screen_renderer.c.o   -c /home/fern/Desktop/mc_modding/pr_website/screen_renderer.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/screen_renderer.c"
+},
+{
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/animation.c.o   -c /home/fern/Desktop/mc_modding/pr_website/animation.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/animation.c"
+},
+{
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/mesh.c.o   -c /home/fern/Desktop/mc_modding/pr_website/mesh.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/mesh.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/glad",
@@ -36,167 +51,167 @@
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/euler.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/euler.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/euler.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/euler.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/euler.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/affine.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/affine.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/io.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/io.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/io.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/io.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/io.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/quat.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/quat.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/quat.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/quat.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/quat.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/cam.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/cam.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/cam.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/cam.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/cam.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/vec2.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec2.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/vec2.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec2.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec2.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/vec3.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec3.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/vec3.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec3.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec3.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/vec4.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec4.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/vec4.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec4.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/vec4.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/mat2.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat2.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/mat2.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat2.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat2.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/mat3.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat3.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/mat3.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat3.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat3.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/mat4.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat4.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/mat4.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat4.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/mat4.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/plane.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/plane.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/plane.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/plane.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/plane.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/frustum.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/frustum.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/frustum.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/frustum.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/frustum.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/box.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/box.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/box.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/box.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/box.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/project.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/project.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/project.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/project.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/project.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/sphere.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/sphere.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/sphere.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/sphere.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/sphere.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/ease.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ease.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/ease.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ease.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ease.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/curve.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/curve.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/curve.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/curve.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/curve.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/bezier.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/bezier.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/bezier.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/bezier.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/bezier.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/ray.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ray.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/ray.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ray.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/ray.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/affine2d.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine2d.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/affine2d.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine2d.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/affine2d.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_lh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_zo.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_lh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_zo.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_zo.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_rh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_zo.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_rh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_zo.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_zo.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_lh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_no.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_lh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_no.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_lh_no.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_rh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_no.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/persp_rh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_no.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/persp_rh_no.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_lh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_zo.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_lh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_zo.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_zo.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_rh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_zo.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_rh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_zo.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_zo.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_lh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_no.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_lh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_no.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_lh_no.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_rh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_no.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/ortho_rh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_no.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/ortho_rh_no.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_lh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_zo.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_lh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_zo.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_zo.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_rh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_zo.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_rh_zo.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_zo.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_zo.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_lh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_no.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_lh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_no.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_lh_no.c"
 },
 {
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm",
-  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_EXPORTS -Dcglm_EXPORTS -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g -fPIC   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_rh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_no.c",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src  -g   -Wall -Werror -O3 -std=gnu11 -o CMakeFiles/cglm.dir/src/clipspace/view_rh_no.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_no.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/src/clipspace/view_rh_no.c"
 },
 {

@@ -23,6 +23,8 @@ static struct InputContext
 
     vec2 prevCursorPos;
     vec2 cursorPos;
+    vec2 scrollDelta;
+    char justScrolled;
 } InputContext;
 
 static size_t m_contextListSize = 0;
@@ -33,6 +35,7 @@ static struct InputContext* m_activeContext;
 static void onKeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
 static void onMouseEvent(GLFWwindow* window, int button, int action, int mods);
 static void onCursorMove(GLFWwindow* window, double cursorX, double cursorY);
+static void onScroll(GLFWwindow* window, double scrollX, double scrollY);
 
 static struct InputContext* i_getContextFromWindow(GLFWwindow* window);
 static int i_getNthBit(uint32_t* flagBuffer, int bit);
@@ -51,11 +54,13 @@ void prwiRegisterWindow(GLFWwindow* window)
     memset(&m_contexts[m_contextListSize], 0, sizeof(struct InputContext));
 
     m_contexts[m_contextListSize].window = window;
+    glm_vec2_zero(m_contexts[m_contextListSize].scrollDelta);
     m_contextListSize++;
 
     glfwSetKeyCallback(window, onKeyEvent);
     glfwSetMouseButtonCallback(window, onMouseEvent);
     glfwSetCursorPosCallback(window, onCursorMove);
+    glfwSetScrollCallback(window, onScroll);
 }
 
 void prwiSetActiveWindow(GLFWwindow* window)
@@ -80,6 +85,7 @@ void prwiPollInputs()
         memset(&m_contexts[i].mouseReleasedStates, 0, sizeof(uint32_t));
 
         glm_vec2_copy(m_contexts[i].cursorPos, m_contexts[i].prevCursorPos);
+        m_contexts[i].justScrolled = 0;
     }
 }
 
@@ -147,6 +153,24 @@ float prwiCursorYDelta()
 {
     if(!m_activeContext) return 0;
     return m_activeContext->cursorPos[1] - m_activeContext->prevCursorPos[1];
+}
+
+int prwiJustScrolled()
+{
+    if(!m_activeContext) return 0;
+    return m_activeContext->justScrolled;
+}
+
+float prwiScrollDeltaX()
+{
+    if(!m_activeContext) return 0;
+    return m_activeContext->scrollDelta[0];
+}
+
+float prwiScrollDeltaY()
+{
+    if(!m_activeContext) return 0;
+    return m_activeContext->scrollDelta[1];
 }
 
 struct InputContext* i_getContextFromWindow(GLFWwindow* window)
@@ -235,4 +259,14 @@ static void onCursorMove(GLFWwindow* window, double cursorX, double cursorY)
     
     context->cursorPos[0] = cursorX;
     context->cursorPos[1] = cursorY;
+}
+
+static void onScroll(GLFWwindow* window, double scrollX, double scrollY)
+{
+    struct InputContext* context = i_getContextFromWindow(window);
+    if(!context) return;
+
+    context->scrollDelta[0] = scrollX;
+    context->scrollDelta[1] = scrollY;
+    context->justScrolled = 1;
 }

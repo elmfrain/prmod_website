@@ -1,10 +1,13 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/pr_web.dir/background_renderer.c.o"
+  "CMakeFiles/pr_web.dir/animation.c.o"
   "CMakeFiles/pr_web.dir/input.c.o"
   "CMakeFiles/pr_web.dir/main.c.o"
+  "CMakeFiles/pr_web.dir/mesh.c.o"
+  "CMakeFiles/pr_web.dir/screen_renderer.c.o"
   "CMakeFiles/pr_web.dir/shaders.c.o"
   "CMakeFiles/pr_web.dir/stb_image.c.o"
   "CMakeFiles/pr_web.dir/ui_render.c.o"
+  "CMakeFiles/pr_web.dir/widget.c.o"
   "pr_web"
   "pr_web.pdb"
 )

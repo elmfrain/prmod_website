@@ -109,22 +109,9 @@ CMakeFiles/pr_web.dir/shaders.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/shaders.c.s"
 	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/shaders.c -o CMakeFiles/pr_web.dir/shaders.c.s
 
-CMakeFiles/pr_web.dir/background_renderer.c.o: CMakeFiles/pr_web.dir/flags.make
-CMakeFiles/pr_web.dir/background_renderer.c.o: ../background_renderer.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/pr_web.dir/background_renderer.c.o"
-	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/pr_web.dir/background_renderer.c.o   -c /home/fern/Desktop/mc_modding/pr_website/background_renderer.c
-
-CMakeFiles/pr_web.dir/background_renderer.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/background_renderer.c.i"
-	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fern/Desktop/mc_modding/pr_website/background_renderer.c > CMakeFiles/pr_web.dir/background_renderer.c.i
-
-CMakeFiles/pr_web.dir/background_renderer.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/background_renderer.c.s"
-	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/background_renderer.c -o CMakeFiles/pr_web.dir/background_renderer.c.s
-
 CMakeFiles/pr_web.dir/ui_render.c.o: CMakeFiles/pr_web.dir/flags.make
 CMakeFiles/pr_web.dir/ui_render.c.o: ../ui_render.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/pr_web.dir/ui_render.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/pr_web.dir/ui_render.c.o"
 	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/pr_web.dir/ui_render.c.o   -c /home/fern/Desktop/mc_modding/pr_website/ui_render.c
 
 CMakeFiles/pr_web.dir/ui_render.c.i: cmake_force
@@ -135,14 +122,69 @@ CMakeFiles/pr_web.dir/ui_render.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/ui_render.c.s"
 	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/ui_render.c -o CMakeFiles/pr_web.dir/ui_render.c.s
 
+CMakeFiles/pr_web.dir/widget.c.o: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/widget.c.o: ../widget.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/pr_web.dir/widget.c.o"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/pr_web.dir/widget.c.o   -c /home/fern/Desktop/mc_modding/pr_website/widget.c
+
+CMakeFiles/pr_web.dir/widget.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/widget.c.i"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fern/Desktop/mc_modding/pr_website/widget.c > CMakeFiles/pr_web.dir/widget.c.i
+
+CMakeFiles/pr_web.dir/widget.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/widget.c.s"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/widget.c -o CMakeFiles/pr_web.dir/widget.c.s
+
+CMakeFiles/pr_web.dir/screen_renderer.c.o: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/screen_renderer.c.o: ../screen_renderer.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/pr_web.dir/screen_renderer.c.o"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/pr_web.dir/screen_renderer.c.o   -c /home/fern/Desktop/mc_modding/pr_website/screen_renderer.c
+
+CMakeFiles/pr_web.dir/screen_renderer.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/screen_renderer.c.i"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fern/Desktop/mc_modding/pr_website/screen_renderer.c > CMakeFiles/pr_web.dir/screen_renderer.c.i
+
+CMakeFiles/pr_web.dir/screen_renderer.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/screen_renderer.c.s"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/screen_renderer.c -o CMakeFiles/pr_web.dir/screen_renderer.c.s
+
+CMakeFiles/pr_web.dir/animation.c.o: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/animation.c.o: ../animation.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/pr_web.dir/animation.c.o"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/pr_web.dir/animation.c.o   -c /home/fern/Desktop/mc_modding/pr_website/animation.c
+
+CMakeFiles/pr_web.dir/animation.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/animation.c.i"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fern/Desktop/mc_modding/pr_website/animation.c > CMakeFiles/pr_web.dir/animation.c.i
+
+CMakeFiles/pr_web.dir/animation.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/animation.c.s"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/animation.c -o CMakeFiles/pr_web.dir/animation.c.s
+
+CMakeFiles/pr_web.dir/mesh.c.o: CMakeFiles/pr_web.dir/flags.make
+CMakeFiles/pr_web.dir/mesh.c.o: ../mesh.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/pr_web.dir/mesh.c.o"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/pr_web.dir/mesh.c.o   -c /home/fern/Desktop/mc_modding/pr_website/mesh.c
+
+CMakeFiles/pr_web.dir/mesh.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/pr_web.dir/mesh.c.i"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fern/Desktop/mc_modding/pr_website/mesh.c > CMakeFiles/pr_web.dir/mesh.c.i
+
+CMakeFiles/pr_web.dir/mesh.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/pr_web.dir/mesh.c.s"
+	/bin/x86_64-linux-gnu-gcc-8 $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fern/Desktop/mc_modding/pr_website/mesh.c -o CMakeFiles/pr_web.dir/mesh.c.s
+
 # Object files for target pr_web
 pr_web_OBJECTS = \
 "CMakeFiles/pr_web.dir/main.c.o" \
 "CMakeFiles/pr_web.dir/stb_image.c.o" \
 "CMakeFiles/pr_web.dir/input.c.o" \
 "CMakeFiles/pr_web.dir/shaders.c.o" \
-"CMakeFiles/pr_web.dir/background_renderer.c.o" \
-"CMakeFiles/pr_web.dir/ui_render.c.o"
+"CMakeFiles/pr_web.dir/ui_render.c.o" \
+"CMakeFiles/pr_web.dir/widget.c.o" \
+"CMakeFiles/pr_web.dir/screen_renderer.c.o" \
+"CMakeFiles/pr_web.dir/animation.c.o" \
+"CMakeFiles/pr_web.dir/mesh.c.o"
 
 # External object files for target pr_web
 pr_web_EXTERNAL_OBJECTS =
@@ -151,16 +193,19 @@ pr_web: CMakeFiles/pr_web.dir/main.c.o
 pr_web: CMakeFiles/pr_web.dir/stb_image.c.o
 pr_web: CMakeFiles/pr_web.dir/input.c.o
 pr_web: CMakeFiles/pr_web.dir/shaders.c.o
-pr_web: CMakeFiles/pr_web.dir/background_renderer.c.o
 pr_web: CMakeFiles/pr_web.dir/ui_render.c.o
+pr_web: CMakeFiles/pr_web.dir/widget.c.o
+pr_web: CMakeFiles/pr_web.dir/screen_renderer.c.o
+pr_web: CMakeFiles/pr_web.dir/animation.c.o
+pr_web: CMakeFiles/pr_web.dir/mesh.c.o
 pr_web: CMakeFiles/pr_web.dir/build.make
 pr_web: dep/glad/libglad.a
-pr_web: dep/cglm/libcglm.so.0.8.5
+pr_web: dep/cglm/libcglm.a
 pr_web: dep/glfw/src/libglfw3.a
 pr_web: /usr/lib/x86_64-linux-gnu/librt.so
 pr_web: /usr/lib/x86_64-linux-gnu/libm.so
 pr_web: CMakeFiles/pr_web.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable pr_web"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C executable pr_web"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pr_web.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

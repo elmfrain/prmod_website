@@ -11,7 +11,8 @@
 #include <ctype.h>
 #include <time.h>
 
-#define BATCH_BUFFER_SIZE 131054
+#define BATCH_BUFFER_SIZE 500000
+#define STACK_SIZE 128
 
 static struct Vertex
 {
@@ -23,6 +24,7 @@ static struct Vertex
 
 static GLFWwindow* m_window = NULL;
 
+//Batch Rendering
 static int m_vbPos = 0;
 static struct Vertex* m_batchVertexBuffer = NULL;
 static int m_ibPos = 0;
@@ -35,9 +37,15 @@ static inline int i_pushVerticies(struct Vertex* verticies, size_t nb);
 static inline int i_pushIndicies(uint32_t* indicies, size_t nb);
 static inline void i_orient(float* dst, int mode, float left, float top, float right, float bottom);
 
+//Windowing
 static int m_windowWidth = 0;
 static int m_windowHeight = 0;
 static float m_UIscaleFctor = 2.0f;
+
+//Modelview Stacking
+static mat4* m_modelviewStack = NULL;
+static int m_currentStackIndex = 0;
+static vec4* m_currentModelview = NULL;
 
 static void i_onWindowResize(GLFWwindow*, int, int);
 static void i_init();
@@ -70,12 +78,15 @@ void prwuiSetWindow(GLFWwindow* window)
 
 void prwuiSetupUIrendering()
 {
-    mat4 projection; glm_ortho(0, prwuiGetUIwidth(), prwuiGetUIheight(), 0, 1000, 3000, projection);
+    mat4 projection; glm_ortho(0, prwuiGetUIwidth(), prwuiGetUIheight(), 0, -500, 500, projection);
     prwsSetProjectionMatrix(projection);
 
-    mat4 modelView; glm_mat4_identity(modelView); 
-    vec3 t = { 0, 0, -2000 }; glm_translate(modelView, t);
-    prwsSetModelViewMatrix(modelView);
+    m_currentModelview = *m_modelviewStack;
+    glm_mat4_identity(m_currentModelview);
+    m_currentStackIndex = 0;
+
+    glDisable(GL_DEPTH_TEST);
+    prwsSetModelViewMatrix(m_currentModelview);
 }
 
 void prwuiGenQuad(float left, float top, float right, float bottom, uint32_t color, int texID)
@@ -167,13 +178,14 @@ void prwuiRenderBatch()
 
     glBindVertexArray(m_batchVAO);
     glDrawElements(GL_TRIANGLES, m_ibPos + 1, GL_UNSIGNED_INT, NULL);
+    glBindVertexArray(0);
 
     m_vbPos = m_ibPos = 0;
 }
 
 float prwuiGetStringHeight()
 {
-    return 8;
+    return 9;
 }
 
 float prwuiGetStringWidth(const char* str)
@@ -211,6 +223,63 @@ float prwuiGetUIScaleFactor()
     return m_UIscaleFctor;
 }
 
+void prwuiPushStack()
+{
+    if(!(m_currentStackIndex + 1 < STACK_SIZE))
+    {
+        printf("[UIRender][Error]: Exceeded max stack size of %d", STACK_SIZE);
+        return;
+    }
+
+    m_currentStackIndex++;
+    m_currentModelview = m_modelviewStack[m_currentStackIndex];
+    glm_mat4_copy(m_modelviewStack[m_currentStackIndex - 1], m_currentModelview);
+}
+
+void prwuiScale(float x, float y)
+{
+    vec3 v = { x, y, 1 };
+    glm_scale(m_currentModelview, v);
+}
+
+void prwuiTranslate(float x, float y)
+{
+    vec3 v = { x, y, 0 };
+    glm_translate(m_currentModelview, v);
+}
+
+void prwuiRotate(float x, float y, float z)
+{
+    vec3 axis = { 1, 0, 0 };
+    glm_rotate(m_currentModelview, glm_rad(x), axis);
+    axis[0] = 0; axis[1] = 1;
+    glm_rotate(m_currentModelview, glm_rad(y), axis);
+    axis[1] = 0; axis[2] = 1;
+    glm_rotate(m_currentModelview, glm_rad(z), axis);
+}
+
+void prwuiMult(mat4 val)
+{
+    glm_mat4_mul(m_currentModelview, val, m_currentModelview);
+}
+
+void prwuiPopStack()
+{
+    if(m_currentStackIndex - 1 < 0)
+    {
+        printf("[UIRender][Error]: A stack underflow occured");
+        return;
+    }
+
+    m_currentStackIndex--;
+    m_currentModelview = m_modelviewStack[m_currentStackIndex];
+}
+
+vec4* prwuiGetModelView()
+{
+    return m_currentModelview;
+}
+
 static void i_init()
 {
     glfwMakeContextCurrent(m_window);
@@ -219,6 +288,12 @@ static void i_init()
 
     if(!m_batchVertexBuffer) m_batchVertexBuffer = malloc(BATCH_BUFFER_SIZE);
     if(!m_batchIndexBuffer) m_batchIndexBuffer = malloc(BATCH_BUFFER_SIZE);
+    if(!m_modelviewStack)
+    {
+        m_modelviewStack = malloc(STACK_SIZE * sizeof(mat4));
+        m_currentModelview = *m_modelviewStack;
+        glm_mat4_identity(m_currentModelview);
+    }
 
     if(!m_batchVAO)
     {
@@ -261,6 +336,7 @@ static inline void i_createVertex(struct Vertex* dst, float x, float y, float z,
     dst->pos[0] = x;
     dst->pos[1] = y;
     dst->pos[2] = z;
+    glm_mat4_mulv3(m_currentModelview, dst->pos, 1.0f, dst->pos);
     dst->uv[0] = u;
     dst->uv[1] = v;
     dst->a = (color >> 24 & 255);
@@ -544,7 +620,7 @@ static inline uint32_t i_frMixColors(uint32_t color)
     return result;
 }
 
-static int i_frUnicodeFromUTF8(const unsigned char* str, int* bytesRead)
+int prwfrUnicodeFromUTF8(const unsigned char* str, int* bytesRead)
 {
     int unicode = 0;
 
@@ -594,7 +670,7 @@ static inline float i_frGetStringWidth(const char* str)
     for(int i = 0; i < strLen;)
     {
         int bytesRead = 0;
-        int unicode = i_frUnicodeFromUTF8(&str[i], &bytesRead);
+        int unicode = prwfrUnicodeFromUTF8(&str[i], &bytesRead);
 
         if(unicode == 167 && i + bytesRead < strLen)
         {
@@ -636,7 +712,7 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
     for(int i = 0; i < strLen;)
     {
         int bytesRead = 0;
-        int unicode = i_frUnicodeFromUTF8(&str[i], &bytesRead);
+        int unicode = prwfrUnicodeFromUTF8(&str[i], &bytesRead);
 
         if(unicode == 167 && i + bytesRead < strLen)
         {
@@ -695,7 +771,7 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
             float advance = glyphWidth + (m_boldStyle ? 2 : 1);
             float italics = m_italicStyle ? 1 : 0;
     
-            i_frGenChar(chr, cursor, y, italics, mixedColor);
+            if(unicode != 32) i_frGenChar(chr, cursor, y, italics, mixedColor);
             if(m_boldStyle) i_frGenChar(chr, cursor + 1, y, italics, mixedColor);
             if(m_strikethroughStyle) prwuiGenHorizontalLine(y + 3, cursor, cursor + advance, mixedColor);
             if(m_underlineStyle) prwuiGenHorizontalLine(y + 8, cursor - 1, cursor + advance, mixedColor);

@@ -5,6 +5,9 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include <cglm/mat4.h>
+#include <cglm/vec4.h>
+
 #define PRWUI_TO_LEFT 0
 #define PRWUI_TO_RIGHT 1
 #define PRWUI_TO_BOTTOM 2
@@ -42,6 +45,8 @@ float prwuiGetStringWidth(const char* str);
 
 float prwuiGetCharWidth(int unicode);
 
+int prwfrUnicodeFromUTF8(const unsigned char* str, int* bytesRead);
+
 int prwuiGetWindowWidth();
 
 int prwuiGetWindowHeight();
@@ -51,3 +56,17 @@ float prwuiGetUIwidth();
 float prwuiGetUIheight();
 
 float prwuiGetUIScaleFactor();
+
+void prwuiPushStack();
+
+void prwuiScale(float x, float y);
+
+void prwuiTranslate(float x, float y);
+
+void prwuiRotate(float x, float y, float z);
+
+void prwuiMult(mat4 val);
+
+void prwuiPopStack();
+
+vec4* prwuiGetModelView();

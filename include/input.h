@@ -27,3 +27,9 @@ float prwiCursorY();
 float prwiCursorXDelta();
 
 float prwiCursorYDelta();
+
+int prwiJustScrolled();
+
+float prwiScrollDeltaX();
+
+float prwiScrollDeltaY();

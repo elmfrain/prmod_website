@@ -180,17 +180,17 @@ void prwsSetColor(float r, float g, float b, float a)
     i_setNthBit(&m_uniformUpdateFlags, U_COLOR_BIT);
 }
 
-const float* prwsGetProjectionMatrix()
+vec4* prwsGetProjectionMatrix()
 {
-    return (float*) m_projectionMatrix;
+    return (vec4*) m_projectionMatrix;
 }
 
-const float* prwsGetModelViewMatrix()
+vec4* prwsGetModelViewMatrix()
 {
-    return (float*) m_modelViewMatrix;
+    return (vec4*) m_modelViewMatrix;
 }
 
-const float* prwsGetColor()
+float* prwsGetColor()
 {
     return m_color;
 }

@@ -42,17 +42,18 @@ unset(_expectedTargets)
 
 
 # Create imported target cglm::cglm
-add_library(cglm::cglm SHARED IMPORTED)
+add_library(cglm::cglm STATIC IMPORTED)
 
 set_target_properties(cglm::cglm PROPERTIES
+  INTERFACE_COMPILE_DEFINITIONS "CGLM_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include"
 )
 
 # Import target "cglm::cglm" for configuration "Debug"
 set_property(TARGET cglm::cglm APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
 set_target_properties(cglm::cglm PROPERTIES
-  IMPORTED_LOCATION_DEBUG "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.so.0.8.5"
-  IMPORTED_SONAME_DEBUG "libcglm.so.0"
+  IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "C"
+  IMPORTED_LOCATION_DEBUG "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.a"
   )
 
 # This file does not depend on other imported targets which have

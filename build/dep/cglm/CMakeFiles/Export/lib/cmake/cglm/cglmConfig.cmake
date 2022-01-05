@@ -51,9 +51,10 @@ if(_IMPORT_PREFIX STREQUAL "/")
 endif()
 
 # Create imported target cglm::cglm
-add_library(cglm::cglm SHARED IMPORTED)
+add_library(cglm::cglm STATIC IMPORTED)
 
 set_target_properties(cglm::cglm PROPERTIES
+  INTERFACE_COMPILE_DEFINITIONS "CGLM_STATIC"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
 )
 

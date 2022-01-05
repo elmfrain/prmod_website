@@ -4,14 +4,22 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/fern/Desktop/mc_modding/pr_website/background_renderer.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/background_renderer.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/animation.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/animation.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/input.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/input.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/main.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/main.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/mesh.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/mesh.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/screen_renderer.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/screen_renderer.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/shaders.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/shaders.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/stb_image.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/stb_image.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/ui_render.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/ui_render.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/widget.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/widget.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
+
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_C
+  "CGLM_STATIC"
+  )
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH

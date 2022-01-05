@@ -6,13 +6,17 @@
 #include <stb_image.h>
 
 #include "shaders.h"
-#include "background_renderer.h"
 #include "input.h"
 #include "ui_render.h"
+#include "widget.h"
+#include "screen_renderer.h"
+#include "mesh.h"
 
 #include <stdio.h>
+#include <time.h>
 
 GLuint quadVAO = 0;
+PRWmesh* backgroundMesh = NULL;
 
 char mouseLocked = 0;
 vec3 camPos;
@@ -28,6 +32,11 @@ void clearGLErrors();
 void handleKeyEvents(GLFWwindow* window);
 void handleMouseEvents(GLFWwindow* window);
 void handleCursorMovement(GLFWwindow* window);
+
+void onAction(PRWwidget* widget)
+{
+    printf("widget clicked!\n");
+}
 
 void loadTexture(const char* fileName, GLuint* texId)
 {
@@ -52,14 +61,14 @@ void loadTexture(const char* fileName, GLuint* texId)
 
     stbi_image_free(image);
 }
-#define NAV_BAR_HEIGHT 15
-#define MARGIN 3
+
 int main()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
     GLFWwindow* window = glfwCreateWindow(1280, 720, "Parkour Recorder Website", NULL, NULL);
 
@@ -70,7 +79,14 @@ int main()
     glfwSwapInterval(1);
 
     setupCube();
-    prwbrLoad();
+    prwmLoad("res/cube_map.bin");
+    backgroundMesh = prwmMeshGet("cube_map");
+    prwInitMenuScreen();
+
+    double lastTime = glfwGetTime();
+
+    srand(time(0));
+    camLook[1] = ((double)rand() / RAND_MAX) * 360;
 
     while(!glfwWindowShouldClose(window))
     {
@@ -82,7 +98,11 @@ int main()
         glViewport(0, 0, wX, wY);
 
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+        double time = glfwGetTime();
+        camLook[1] += (time - lastTime) * 4;
+        lastTime = time;
 
         glm_perspective(glm_rad(60), wX / wY, 0.1, 100, projectionMatrix);
         glm_mat4_identity(modelViewMatrix);
@@ -95,20 +115,12 @@ int main()
         glEnable(GL_DEPTH_TEST);
         prwsSetProjectionMatrix(projectionMatrix);
         prwsSetModelViewMatrix(modelViewMatrix);
+        prws_POS_UV_shader();
+        prwmMeshRenderv(backgroundMesh);
 
-        prwbrRender();
+        prwRenderMenuScreen();
 
-        glDisable(GL_DEPTH_TEST);
-        prwuiSetupUIrendering();
-        {
-            float uiWidth = prwuiGetUIwidth();
-
-            prwuiGenQuad(0, 0, uiWidth, NAV_BAR_HEIGHT, -1308622848, 0);
-            prwuiGenQuad(0, NAV_BAR_HEIGHT, uiWidth, NAV_BAR_HEIGHT + MARGIN, -16749608, 0);
-            prwuiGenGradientQuad(PRWUI_TO_BOTTOM, 0, NAV_BAR_HEIGHT + MARGIN, uiWidth, NAV_BAR_HEIGHT * 2 + MARGIN, 1275068416, 0, 0);
-        }
-        prwuiRenderBatch();
-
+        prwwTickWidgets();
         prwiPollInputs();
         clearGLErrors();
         glfwSwapBuffers(window);
@@ -218,8 +230,8 @@ void handleMouseEvents(GLFWwindow* window)
 {
     if(prwiMButtonJustPressed(GLFW_MOUSE_BUTTON_1) && !mouseLocked)
     {
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        mouseLocked = 1;
+        //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        //mouseLocked = 1;
     }
 }
 

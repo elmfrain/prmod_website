@@ -525,53 +525,47 @@ cglm_OBJECTS = \
 # External object files for target cglm
 cglm_EXTERNAL_OBJECTS =
 
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/euler.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/affine.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/io.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/quat.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/cam.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/vec2.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/vec3.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/vec4.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/mat2.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/mat3.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/mat4.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/plane.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/frustum.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/box.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/project.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/sphere.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/ease.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/curve.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/bezier.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/ray.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/affine2d.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_zo.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_zo.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_no.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_no.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_zo.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_zo.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_no.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_no.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_zo.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_zo.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_no.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_no.c.o
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/build.make
-dep/cglm/libcglm.so.0.8.5: dep/cglm/CMakeFiles/cglm.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Linking C shared library libcglm.so"
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/euler.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/affine.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/io.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/quat.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/cam.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/vec2.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/vec3.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/vec4.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/mat2.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/mat3.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/mat4.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/plane.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/frustum.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/box.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/project.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/sphere.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/ease.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/curve.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/bezier.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/ray.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/affine2d.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_zo.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_zo.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_lh_no.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/persp_rh_no.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_zo.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_zo.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_lh_no.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/ortho_rh_no.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_zo.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_zo.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_lh_no.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/src/clipspace/view_rh_no.c.o
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/build.make
+dep/cglm/libcglm.a: dep/cglm/CMakeFiles/cglm.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Linking C static library libcglm.a"
+	cd /home/fern/Desktop/mc_modding/pr_website/build/dep/cglm && $(CMAKE_COMMAND) -P CMakeFiles/cglm.dir/cmake_clean_target.cmake
 	cd /home/fern/Desktop/mc_modding/pr_website/build/dep/cglm && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cglm.dir/link.txt --verbose=$(VERBOSE)
-	cd /home/fern/Desktop/mc_modding/pr_website/build/dep/cglm && $(CMAKE_COMMAND) -E cmake_symlink_library libcglm.so.0.8.5 libcglm.so.0 libcglm.so
-
-dep/cglm/libcglm.so.0: dep/cglm/libcglm.so.0.8.5
-	@$(CMAKE_COMMAND) -E touch_nocreate dep/cglm/libcglm.so.0
-
-dep/cglm/libcglm.so: dep/cglm/libcglm.so.0.8.5
-	@$(CMAKE_COMMAND) -E touch_nocreate dep/cglm/libcglm.so
 
 # Rule to build all files generated by this target.
-dep/cglm/CMakeFiles/cglm.dir/build: dep/cglm/libcglm.so
+dep/cglm/CMakeFiles/cglm.dir/build: dep/cglm/libcglm.a
 
 .PHONY : dep/cglm/CMakeFiles/cglm.dir/build
 

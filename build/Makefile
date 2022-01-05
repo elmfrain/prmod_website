@@ -256,32 +256,32 @@ glfw/fast:
 	$(MAKE) -f dep/glfw/src/CMakeFiles/glfw.dir/build.make dep/glfw/src/CMakeFiles/glfw.dir/build
 .PHONY : glfw/fast
 
-background_renderer.o: background_renderer.c.o
+animation.o: animation.c.o
 
-.PHONY : background_renderer.o
+.PHONY : animation.o
 
 # target to build an object file
-background_renderer.c.o:
-	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/background_renderer.c.o
-.PHONY : background_renderer.c.o
+animation.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/animation.c.o
+.PHONY : animation.c.o
 
-background_renderer.i: background_renderer.c.i
+animation.i: animation.c.i
 
-.PHONY : background_renderer.i
+.PHONY : animation.i
 
 # target to preprocess a source file
-background_renderer.c.i:
-	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/background_renderer.c.i
-.PHONY : background_renderer.c.i
+animation.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/animation.c.i
+.PHONY : animation.c.i
 
-background_renderer.s: background_renderer.c.s
+animation.s: animation.c.s
 
-.PHONY : background_renderer.s
+.PHONY : animation.s
 
 # target to generate assembly for a file
-background_renderer.c.s:
-	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/background_renderer.c.s
-.PHONY : background_renderer.c.s
+animation.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/animation.c.s
+.PHONY : animation.c.s
 
 input.o: input.c.o
 
@@ -336,6 +336,60 @@ main.s: main.c.s
 main.c.s:
 	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/main.c.s
 .PHONY : main.c.s
+
+mesh.o: mesh.c.o
+
+.PHONY : mesh.o
+
+# target to build an object file
+mesh.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/mesh.c.o
+.PHONY : mesh.c.o
+
+mesh.i: mesh.c.i
+
+.PHONY : mesh.i
+
+# target to preprocess a source file
+mesh.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/mesh.c.i
+.PHONY : mesh.c.i
+
+mesh.s: mesh.c.s
+
+.PHONY : mesh.s
+
+# target to generate assembly for a file
+mesh.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/mesh.c.s
+.PHONY : mesh.c.s
+
+screen_renderer.o: screen_renderer.c.o
+
+.PHONY : screen_renderer.o
+
+# target to build an object file
+screen_renderer.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/screen_renderer.c.o
+.PHONY : screen_renderer.c.o
+
+screen_renderer.i: screen_renderer.c.i
+
+.PHONY : screen_renderer.i
+
+# target to preprocess a source file
+screen_renderer.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/screen_renderer.c.i
+.PHONY : screen_renderer.c.i
+
+screen_renderer.s: screen_renderer.c.s
+
+.PHONY : screen_renderer.s
+
+# target to generate assembly for a file
+screen_renderer.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/screen_renderer.c.s
+.PHONY : screen_renderer.c.s
 
 shaders.o: shaders.c.o
 
@@ -418,6 +472,33 @@ ui_render.c.s:
 	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/ui_render.c.s
 .PHONY : ui_render.c.s
 
+widget.o: widget.c.o
+
+.PHONY : widget.o
+
+# target to build an object file
+widget.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/widget.c.o
+.PHONY : widget.c.o
+
+widget.i: widget.c.i
+
+.PHONY : widget.i
+
+# target to preprocess a source file
+widget.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/widget.c.i
+.PHONY : widget.c.i
+
+widget.s: widget.c.s
+
+.PHONY : widget.s
+
+# target to generate assembly for a file
+widget.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/widget.c.s
+.PHONY : widget.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -438,15 +519,21 @@ help:
 	@echo "... uninstall"
 	@echo "... update_mappings"
 	@echo "... glfw"
-	@echo "... background_renderer.o"
-	@echo "... background_renderer.i"
-	@echo "... background_renderer.s"
+	@echo "... animation.o"
+	@echo "... animation.i"
+	@echo "... animation.s"
 	@echo "... input.o"
 	@echo "... input.i"
 	@echo "... input.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mesh.o"
+	@echo "... mesh.i"
+	@echo "... mesh.s"
+	@echo "... screen_renderer.o"
+	@echo "... screen_renderer.i"
+	@echo "... screen_renderer.s"
 	@echo "... shaders.o"
 	@echo "... shaders.i"
 	@echo "... shaders.s"
@@ -456,6 +543,9 @@ help:
 	@echo "... ui_render.o"
 	@echo "... ui_render.i"
 	@echo "... ui_render.s"
+	@echo "... widget.o"
+	@echo "... widget.i"
+	@echo "... widget.s"
 .PHONY : help
 
 
