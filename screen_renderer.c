@@ -6,6 +6,7 @@
 #include "input.h"
 #include "shaders.h"
 #include "mesh.h"
+#include "https_fetcher.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -98,8 +99,7 @@ void prwInitMenuScreen()
 
 static PRWwidget* m_changeLogVP = NULL;
 static PRWwidget* m_changeLogButtons[2] = { 0 };
-static char* m_changelog = NULL;
-static int m_changelogLen = 0;
+static PRWfetcher* m_changelogFetcher = NULL;
 static PRWsmoother m_changelogScroll;
 static PRWsmoother m_logoFov;
 static PRWsmoother m_logoAngleSpd;
@@ -155,12 +155,14 @@ static void i_drawChangeLog()
         int lineStart = 0;
         char line[1024];
 
-        for(int i = 0; i < m_changelogLen; i++)
+        int changelogLen = 0;
+        const char* changelog = prwfFetchString(m_changelogFetcher, &changelogLen);
+        for(int i = 0; i < changelogLen; i++)
         {
-            if(m_changelog[i] == '\n' || m_changelog[i] == '\00')
+            if(changelog[i] == '\n' || changelog[i] == '\00')
             {
                 memset(line, 0, sizeof(line));
-                memcpy(line, m_changelog + lineStart, (i - lineStart) < sizeof(line) ? i - lineStart : sizeof(line) - 1);
+                memcpy(line, changelog + lineStart, (i - lineStart) < sizeof(line) ? i - lineStart : sizeof(line) - 1);
                 lineStart = i + 1;
 
                 //Split line if it's too long
@@ -257,27 +259,8 @@ static void i_drawTitleView()
         prwaInitTimer(&m_timer);
     }
 
-    if(!m_changelog)
-    {
-        FILE* file = fopen("res/changelog.txt", "r");
-        if(!file)
-        {
-            printf("[Screen Renderer][Error]: Unable to open changelog.txt");
-            return;
-        }
-        fseek(file, 0, SEEK_END);
-        size_t fileSize = ftell(file);
-        fseek(file, 0, SEEK_SET);
-
-        m_changelog = malloc(fileSize + 1);
-        m_changelog[fileSize] = 0;
-
-        fread(m_changelog, fileSize, 1, file);
-        fclose(file);
-        m_changelogLen = fileSize;
-
-        prwaInitSmoother(&m_changelogScroll);
-    }
+    if(!m_changelogFetcher)
+        m_changelogFetcher = prwfFetch("elmfer.com", "/parkour_recorder/changelog.txt");
 
     if(!m_changeLogVP)
     {
@@ -288,6 +271,7 @@ static void i_drawTitleView()
         m_changeLogButtons[0]->height = m_changeLogButtons[1]->height = 15;
         prwwWidgetSetText(m_changeLogButtons[0], "Up");
         prwwWidgetSetText(m_changeLogButtons[1], "Down");
+        prwaInitSmoother(&m_changelogScroll);
     }
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();

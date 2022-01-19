@@ -31,7 +31,7 @@ void prwaInitSmoother(PRWsmoother* smoother)
     smoother->velocity = 0;
     smoother->p_previousTime = 0;
     smoother->p_currentTime = 0;
-    smoother->grabbed = 0;
+    smoother->grabbed = 1;
     smoother->grabbingTo = 0;
     smoother->p_value = 0;
     smoother->springy = 0;

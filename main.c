@@ -11,12 +11,16 @@
 #include "widget.h"
 #include "screen_renderer.h"
 #include "mesh.h"
+#include "animation.h"
+#include "https_fetcher.h"
 
 #include <stdio.h>
 #include <time.h>
 
+GLuint texID = 0;
 GLuint quadVAO = 0;
 PRWmesh* backgroundMesh = NULL;
+PRWsmoother smoother;
 
 char mouseLocked = 0;
 vec3 camPos;
@@ -38,22 +42,26 @@ void onAction(PRWwidget* widget)
     printf("widget clicked!\n");
 }
 
-void loadTexture(const char* fileName, GLuint* texId)
+void loadTexture(const char* url, GLuint* texId)
 {
-    int x, y, channels;
+    PRWfetcher* imageFetcher = prwfFetchURL(url);
+    prwfFetchWait(imageFetcher);
+
+    int x, y, channels, len;
     stbi_set_flip_vertically_on_load(1);
-    stbi_uc* image = stbi_load(fileName, &x, &y, &channels, STBI_rgb);
+    const char* imgf = prwfFetchString(imageFetcher, &len);
+    stbi_uc* image = stbi_load_from_memory(imgf, len, &x, &y, &channels, STBI_rgb_alpha);
 
     if(!image)
     {
-        printf("failed to load texture!");
+        printf("failed to load texture! %s\n", stbi_failure_reason());
         exit(1);
     }
 
     glGenTextures(1, texId);
 
     glBindTexture(GL_TEXTURE_2D, *texId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -82,11 +90,15 @@ int main()
     prwmLoad("res/cube_map.bin");
     backgroundMesh = prwmMeshGet("cube_map");
     prwInitMenuScreen();
+    prwaInitSmoother(&smoother);
+    smoother.speed = 5;
 
     double lastTime = glfwGetTime();
 
     srand(time(0));
     camLook[1] = ((double)rand() / RAND_MAX) * 360;
+
+    //loadTexture("https://elmfer.com/parkour_recorder/parkour_recorder_logo.png", &texID);
 
     while(!glfwWindowShouldClose(window))
     {
@@ -101,6 +113,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         double time = glfwGetTime();
+        camLook[0] = prwaSmootherValue(&smoother);
         camLook[1] += (time - lastTime) * 4;
         lastTime = time;
 
@@ -119,6 +132,10 @@ int main()
         prwmMeshRenderv(backgroundMesh);
 
         prwRenderMenuScreen();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texID);
+        prwuiGenQuad(0, 0, 250, 250, -1, 1);
+        prwuiRenderBatch();
 
         prwwTickWidgets();
         prwiPollInputs();
@@ -237,6 +254,7 @@ void handleMouseEvents(GLFWwindow* window)
 
 void handleCursorMovement(GLFWwindow* window)
 {
+    smoother.grabbingTo = 5 * ((prwiCursorY() - prwuiGetWindowHeight() / 2) / (prwuiGetWindowHeight() / 2));
     if(mouseLocked)
     {
         camLook[0] += prwiCursorYDelta() * 0.15f;

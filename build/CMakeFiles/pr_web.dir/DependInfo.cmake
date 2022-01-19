@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/fern/Desktop/mc_modding/pr_website/animation.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/animation.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/https_fetcher.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/https_fetcher.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/input.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/input.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/main.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/main.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/mesh.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/mesh.c.o"

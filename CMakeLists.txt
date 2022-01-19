@@ -13,6 +13,10 @@ add_subdirectory("dep/cglm")
 #add glfw
 add_subdirectory("dep/glfw")
 
+#add ssl
+set(OPENSSL_USE_STATIC_LIBS TRUE)
+find_package(OpenSSL REQUIRED)
+
 add_executable(${PROJECT_NAME}
     main.c
     stb_image.c
@@ -23,12 +27,16 @@ add_executable(${PROJECT_NAME}
     screen_renderer.c
     animation.c
     mesh.c
+    https_fetcher.c
 )
 
 target_link_libraries(${PROJECT_NAME}
     glad
     cglm
     glfw
+    ${OPENSSL_SSL_LIBRARY}
+    ${OPENSSL_LIBRARIES}
+    pthread
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

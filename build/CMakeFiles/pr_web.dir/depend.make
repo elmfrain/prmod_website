@@ -5,6 +5,9 @@ CMakeFiles/pr_web.dir/animation.c.o: ../dep/glfw/include/GLFW/glfw3.h
 CMakeFiles/pr_web.dir/animation.c.o: ../include/animation.h
 CMakeFiles/pr_web.dir/animation.c.o: ../animation.c
 
+CMakeFiles/pr_web.dir/https_fetcher.c.o: ../include/https_fetcher.h
+CMakeFiles/pr_web.dir/https_fetcher.c.o: ../https_fetcher.c
+
 CMakeFiles/pr_web.dir/input.c.o: ../dep/cglm/include/cglm/common.h
 CMakeFiles/pr_web.dir/input.c.o: ../dep/cglm/include/cglm/simd/arm.h
 CMakeFiles/pr_web.dir/input.c.o: ../dep/cglm/include/cglm/simd/intrin.h
@@ -81,6 +84,8 @@ CMakeFiles/pr_web.dir/main.c.o: ../dep/cglm/include/cglm/vec4.h
 CMakeFiles/pr_web.dir/main.c.o: ../dep/glad/include/KHR/khrplatform.h
 CMakeFiles/pr_web.dir/main.c.o: ../dep/glad/include/glad/glad.h
 CMakeFiles/pr_web.dir/main.c.o: ../dep/glfw/include/GLFW/glfw3.h
+CMakeFiles/pr_web.dir/main.c.o: ../include/animation.h
+CMakeFiles/pr_web.dir/main.c.o: ../include/https_fetcher.h
 CMakeFiles/pr_web.dir/main.c.o: ../include/input.h
 CMakeFiles/pr_web.dir/main.c.o: ../include/mesh.h
 CMakeFiles/pr_web.dir/main.c.o: ../include/screen_renderer.h
@@ -160,6 +165,7 @@ CMakeFiles/pr_web.dir/screen_renderer.c.o: ../dep/glad/include/KHR/khrplatform.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../dep/glad/include/glad/glad.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../dep/glfw/include/GLFW/glfw3.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../include/animation.h
+CMakeFiles/pr_web.dir/screen_renderer.c.o: ../include/https_fetcher.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../include/input.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../include/mesh.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../include/screen_renderer.h

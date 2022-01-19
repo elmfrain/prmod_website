@@ -283,6 +283,33 @@ animation.c.s:
 	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/animation.c.s
 .PHONY : animation.c.s
 
+https_fetcher.o: https_fetcher.c.o
+
+.PHONY : https_fetcher.o
+
+# target to build an object file
+https_fetcher.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/https_fetcher.c.o
+.PHONY : https_fetcher.c.o
+
+https_fetcher.i: https_fetcher.c.i
+
+.PHONY : https_fetcher.i
+
+# target to preprocess a source file
+https_fetcher.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/https_fetcher.c.i
+.PHONY : https_fetcher.c.i
+
+https_fetcher.s: https_fetcher.c.s
+
+.PHONY : https_fetcher.s
+
+# target to generate assembly for a file
+https_fetcher.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/https_fetcher.c.s
+.PHONY : https_fetcher.c.s
+
 input.o: input.c.o
 
 .PHONY : input.o
@@ -522,6 +549,9 @@ help:
 	@echo "... animation.o"
 	@echo "... animation.i"
 	@echo "... animation.s"
+	@echo "... https_fetcher.o"
+	@echo "... https_fetcher.i"
+	@echo "... https_fetcher.s"
 	@echo "... input.o"
 	@echo "... input.i"
 	@echo "... input.s"

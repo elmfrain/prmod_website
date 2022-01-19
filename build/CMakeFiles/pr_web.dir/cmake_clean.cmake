@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pr_web.dir/animation.c.o"
+  "CMakeFiles/pr_web.dir/https_fetcher.c.o"
   "CMakeFiles/pr_web.dir/input.c.o"
   "CMakeFiles/pr_web.dir/main.c.o"
   "CMakeFiles/pr_web.dir/mesh.c.o"
