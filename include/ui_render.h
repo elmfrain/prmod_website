@@ -45,6 +45,12 @@ float prwuiGetStringWidth(const char* str);
 
 float prwuiGetCharWidth(int unicode);
 
+int prwfrSplitToFit(char* dst, const char* src, float maxWidth);
+
+int prwfrSplitToFitr(char* dst, const char* src, float maxWidth, const char* regex);
+
+void prwfrGetFormats(char* dst, const char* src);
+
 int prwfrUnicodeFromUTF8(const unsigned char* str, int* bytesRead);
 
 int prwuiGetWindowWidth();

@@ -4,14 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/fern/Desktop/mc_modding/pr_website/about_view.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/about_view.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/animation.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/animation.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/download_view.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/download_view.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/https_fetcher.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/https_fetcher.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/input.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/input.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/main.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/main.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/markdown_viewer.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/markdown_viewer.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/mesh.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/mesh.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/screen_renderer.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/screen_renderer.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/shaders.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/shaders.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/stb_image.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/stb_image.c.o"
+  "/home/fern/Desktop/mc_modding/pr_website/title_view.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/title_view.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/ui_render.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/ui_render.c.o"
   "/home/fern/Desktop/mc_modding/pr_website/widget.c" "/home/fern/Desktop/mc_modding/pr_website/build/CMakeFiles/pr_web.dir/widget.c.o"
   )

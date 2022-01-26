@@ -28,6 +28,10 @@ add_executable(${PROJECT_NAME}
     animation.c
     mesh.c
     https_fetcher.c
+    title_view.c
+    about_view.c
+    markdown_viewer.c
+    download_view.c
 )
 
 target_link_libraries(${PROJECT_NAME}

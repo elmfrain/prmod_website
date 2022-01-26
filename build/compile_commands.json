@@ -50,6 +50,26 @@
   "file": "/home/fern/Desktop/mc_modding/pr_website/https_fetcher.c"
 },
 {
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/title_view.c.o   -c /home/fern/Desktop/mc_modding/pr_website/title_view.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/title_view.c"
+},
+{
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/about_view.c.o   -c /home/fern/Desktop/mc_modding/pr_website/about_view.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/about_view.c"
+},
+{
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/markdown_viewer.c.o   -c /home/fern/Desktop/mc_modding/pr_website/markdown_viewer.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/markdown_viewer.c"
+},
+{
+  "directory": "/home/fern/Desktop/mc_modding/pr_website/build",
+  "command": "/bin/x86_64-linux-gnu-gcc-8 -DCGLM_STATIC -I/home/fern/Desktop/mc_modding/pr_website/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glfw/include -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include -I/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include  -g   -o CMakeFiles/pr_web.dir/download_view.c.o   -c /home/fern/Desktop/mc_modding/pr_website/download_view.c",
+  "file": "/home/fern/Desktop/mc_modding/pr_website/download_view.c"
+},
+{
   "directory": "/home/fern/Desktop/mc_modding/pr_website/build/dep/glad",
   "command": "/bin/x86_64-linux-gnu-gcc-8  -I/home/fern/Desktop/mc_modding/pr_website/dep/glad/include  -g   -o CMakeFiles/glad.dir/src/glad.c.o   -c /home/fern/Desktop/mc_modding/pr_website/dep/glad/src/glad.c",
   "file": "/home/fern/Desktop/mc_modding/pr_website/dep/glad/src/glad.c"

@@ -98,8 +98,7 @@ int main()
     srand(time(0));
     camLook[1] = ((double)rand() / RAND_MAX) * 360;
 
-    //loadTexture("https://elmfer.com/parkour_recorder/parkour_recorder_logo.png", &texID);
-
+#ifndef EMSCRIPTEN
     while(!glfwWindowShouldClose(window))
     {
         handleKeyEvents(window);
@@ -132,9 +131,6 @@ int main()
         prwmMeshRenderv(backgroundMesh);
 
         prwRenderMenuScreen();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texID);
-        prwuiGenQuad(0, 0, 250, 250, -1, 1);
         prwuiRenderBatch();
 
         prwwTickWidgets();
@@ -143,6 +139,8 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+#else
+#endif
 
     glfwTerminate();
     printf("Hellow Worlds!\n");

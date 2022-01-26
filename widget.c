@@ -334,9 +334,8 @@ static inline void i_lUpdate()
         if(m_widgetList[i].shouldRemove)
         {
             free(m_widgetList[i].ptr);
-            if(i + 1 < m_listSize) memcpy(&m_widgetList[i], &m_widgetList[i + 1], m_listSize - (i + 1));
+            if(i + 1 < m_listSize) memcpy(&m_widgetList[i], &m_widgetList[i + 1], (m_listSize - (i + 1)) * sizeof(struct l_Element));
             m_listSize--;
-            i--;
         }
     }
 }

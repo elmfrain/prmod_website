@@ -453,7 +453,7 @@ static const int m_ASCII_INDECIES[] =
     0x00B0, 0x2219, 0x00B7, 0x221A, 0x207F, 0x00B2, 0x25A0, 0x0000, 
 };
 
-static const char* m_FORMATTING_KEYS = "0123456789abcdefklmnor";
+static const char* m_FORMATTING_KEYS = "0123456789abcdefklmnors";
 
 static const uint32_t m_COLOR_CODES[] = 
 {
@@ -467,6 +467,7 @@ static bool m_boldStyle = false;
 static bool m_strikethroughStyle = false;
 static bool m_underlineStyle = false;
 static bool m_italicStyle = false;
+static bool m_hiddenStyle = false;
 
 static int m_maxTexUnits = 0;
 static GLuint m_asciiAtlasTex = 0;
@@ -560,7 +561,8 @@ static void i_frGenChar(int unicode, float x , float y, float italics, u_int32_t
         uint8_t glyphID = i_frGetCharID(unicode);
         uint8_t glpyhWidth = m_asciiGlyphWidths[glyphID];
         float uStart = (glyphID % 16) * 8;
-        float vStart = (glyphID / 16) * 8;
+        float vStart = (glyphID / 16) * 8 - 0.01;
+        float uiScale = prwuiGetUIScaleFactor();
         
         struct Vertex verticies[4];
         uint32_t indicies[6] =
@@ -654,6 +656,102 @@ int prwfrUnicodeFromUTF8(const unsigned char* str, int* bytesRead)
     return unicode;
 }
 
+int prwfrSplitToFitr(char* dst, const char* src, float maxWidth, const char* regex)
+{
+    m_boldStyle = false;
+    m_hiddenStyle = false;
+
+    int strLen = strlen(src);
+    float cursor = 0.0f;
+
+    int i;
+    int regexLen = strlen(regex);
+    int regexCount = 0;
+    int lstRgx = 0;
+    for(i = 0; i < strLen;)
+    {
+        int bytesRead = 0;
+        int unicode = prwfrUnicodeFromUTF8(&src[i], &bytesRead);
+
+        if(0 < regexLen && strncmp(&src[i], regex, regexLen) == 0)
+        {
+            regexCount++;
+            lstRgx = i + regexLen;
+        }
+
+        if(unicode == 167 && i + bytesRead < strLen)
+        {
+            char key[] = { tolower(src[i + bytesRead]), 0 };
+            int formatKey = strstr(m_FORMATTING_KEYS, key) - m_FORMATTING_KEYS;
+
+            if(formatKey < 16 || formatKey == 21)
+            {
+                m_boldStyle = false;
+                m_hiddenStyle = false;
+            }
+            else if(formatKey == 17) m_boldStyle = true;
+            else if(formatKey == 22) m_hiddenStyle = true;
+
+            i++;
+        }
+        else if(!m_hiddenStyle)
+        {
+            uint8_t glyphID = i_frGetCharID(unicode);
+            uint8_t glyphWidth = m_asciiGlyphWidths[glyphID];
+    
+            float advance = glyphWidth + (m_boldStyle ? 2 : 1);
+    
+            cursor += advance;
+
+            if(maxWidth < cursor)
+            {
+                int numRead = i;
+                if(0 < regexLen && 0 < regexCount) numRead = lstRgx;
+
+                strncpy(dst, src, numRead);
+                dst[numRead] = '\0';
+                return numRead;
+            }
+        }
+        i += bytesRead;
+    }
+
+    strcpy(dst, src);
+    return i;
+}
+
+int prwfrSplitToFit(char* dst, const char* src, float maxWidth)
+{
+    return prwfrSplitToFitr(dst, src, maxWidth, "");
+}
+
+void prwfrGetFormats(char* dst, const char* src)
+{
+    int strLen = strlen(src);
+    int formatLen = 0;
+
+    for(int i = 0; i < strLen;)
+    {
+        int bytesRead = 0;
+        int unicode = prwfrUnicodeFromUTF8(&src[i], &bytesRead);
+
+        if(unicode == 167 && i + bytesRead < strLen)
+        {
+            char key[] = { tolower(src[i + bytesRead]), 0 };
+            int formatKey = strstr(m_FORMATTING_KEYS, key) - m_FORMATTING_KEYS;
+
+            if(0 <= formatKey && formatKey <= 22) //only copy known formats
+            {
+                strncat(dst, src + i, 3);
+                formatLen += 3;
+            }
+            i++;
+        }
+        i += bytesRead;
+    }
+    dst[formatLen] = '\0';
+}
+
 static inline float i_frGetCharWidth(int unicode)
 {
     uint8_t glyphID = i_frGetCharID(unicode);
@@ -663,6 +761,7 @@ static inline float i_frGetCharWidth(int unicode)
 static inline float i_frGetStringWidth(const char* str)
 {
     m_boldStyle = false;
+    m_hiddenStyle = false;
 
     int strLen = strlen(str);
     float cursor = 0.0f;
@@ -677,11 +776,17 @@ static inline float i_frGetStringWidth(const char* str)
             char key[] = { tolower(str[i + bytesRead]), 0 };
             int formatKey = strstr(m_FORMATTING_KEYS, key) - m_FORMATTING_KEYS;
 
-            if(formatKey == 17) m_boldStyle = true;
+            if(formatKey < 16 || formatKey == 21) 
+            {
+                m_boldStyle = false;
+                m_hiddenStyle = false;
+            }
+            else if(formatKey == 17) m_boldStyle = true;
+            else if(formatKey == 22) m_hiddenStyle = true;
 
             i++;
         }
-        else
+        else if(!m_hiddenStyle)
         {
             uint8_t glyphID = i_frGetCharID(unicode);
             uint8_t glyphWidth = m_asciiGlyphWidths[glyphID];
@@ -703,6 +808,7 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
     m_strikethroughStyle = false;
     m_underlineStyle = false;
     m_italicStyle = false;
+    m_hiddenStyle = false;
     m_fontColor = color;
 
     uint32_t charColor = m_fontColor;
@@ -726,6 +832,7 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                 m_strikethroughStyle = false;
                 m_underlineStyle = false;
                 m_italicStyle = false;
+                m_hiddenStyle = false;
 
                 if(formatKey < 0) formatKey = 15;
 
@@ -756,12 +863,16 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                     m_strikethroughStyle = false;
                     m_underlineStyle = false;
                     m_italicStyle = false;
+                    m_hiddenStyle = false;
                     charColor = m_fontColor;
+                    break;
+                case 22:
+                    m_hiddenStyle = true;
                 }
             }
             i++;
         }
-        else
+        else if(!m_hiddenStyle)
         {
             uint8_t glyphID = i_frGetCharID(unicode);
             uint8_t glyphWidth = m_asciiGlyphWidths[glyphID];

@@ -256,6 +256,33 @@ glfw/fast:
 	$(MAKE) -f dep/glfw/src/CMakeFiles/glfw.dir/build.make dep/glfw/src/CMakeFiles/glfw.dir/build
 .PHONY : glfw/fast
 
+about_view.o: about_view.c.o
+
+.PHONY : about_view.o
+
+# target to build an object file
+about_view.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/about_view.c.o
+.PHONY : about_view.c.o
+
+about_view.i: about_view.c.i
+
+.PHONY : about_view.i
+
+# target to preprocess a source file
+about_view.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/about_view.c.i
+.PHONY : about_view.c.i
+
+about_view.s: about_view.c.s
+
+.PHONY : about_view.s
+
+# target to generate assembly for a file
+about_view.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/about_view.c.s
+.PHONY : about_view.c.s
+
 animation.o: animation.c.o
 
 .PHONY : animation.o
@@ -282,6 +309,33 @@ animation.s: animation.c.s
 animation.c.s:
 	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/animation.c.s
 .PHONY : animation.c.s
+
+download_view.o: download_view.c.o
+
+.PHONY : download_view.o
+
+# target to build an object file
+download_view.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/download_view.c.o
+.PHONY : download_view.c.o
+
+download_view.i: download_view.c.i
+
+.PHONY : download_view.i
+
+# target to preprocess a source file
+download_view.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/download_view.c.i
+.PHONY : download_view.c.i
+
+download_view.s: download_view.c.s
+
+.PHONY : download_view.s
+
+# target to generate assembly for a file
+download_view.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/download_view.c.s
+.PHONY : download_view.c.s
 
 https_fetcher.o: https_fetcher.c.o
 
@@ -363,6 +417,33 @@ main.s: main.c.s
 main.c.s:
 	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/main.c.s
 .PHONY : main.c.s
+
+markdown_viewer.o: markdown_viewer.c.o
+
+.PHONY : markdown_viewer.o
+
+# target to build an object file
+markdown_viewer.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/markdown_viewer.c.o
+.PHONY : markdown_viewer.c.o
+
+markdown_viewer.i: markdown_viewer.c.i
+
+.PHONY : markdown_viewer.i
+
+# target to preprocess a source file
+markdown_viewer.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/markdown_viewer.c.i
+.PHONY : markdown_viewer.c.i
+
+markdown_viewer.s: markdown_viewer.c.s
+
+.PHONY : markdown_viewer.s
+
+# target to generate assembly for a file
+markdown_viewer.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/markdown_viewer.c.s
+.PHONY : markdown_viewer.c.s
 
 mesh.o: mesh.c.o
 
@@ -472,6 +553,33 @@ stb_image.c.s:
 	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/stb_image.c.s
 .PHONY : stb_image.c.s
 
+title_view.o: title_view.c.o
+
+.PHONY : title_view.o
+
+# target to build an object file
+title_view.c.o:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/title_view.c.o
+.PHONY : title_view.c.o
+
+title_view.i: title_view.c.i
+
+.PHONY : title_view.i
+
+# target to preprocess a source file
+title_view.c.i:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/title_view.c.i
+.PHONY : title_view.c.i
+
+title_view.s: title_view.c.s
+
+.PHONY : title_view.s
+
+# target to generate assembly for a file
+title_view.c.s:
+	$(MAKE) -f CMakeFiles/pr_web.dir/build.make CMakeFiles/pr_web.dir/title_view.c.s
+.PHONY : title_view.c.s
+
 ui_render.o: ui_render.c.o
 
 .PHONY : ui_render.o
@@ -546,9 +654,15 @@ help:
 	@echo "... uninstall"
 	@echo "... update_mappings"
 	@echo "... glfw"
+	@echo "... about_view.o"
+	@echo "... about_view.i"
+	@echo "... about_view.s"
 	@echo "... animation.o"
 	@echo "... animation.i"
 	@echo "... animation.s"
+	@echo "... download_view.o"
+	@echo "... download_view.i"
+	@echo "... download_view.s"
 	@echo "... https_fetcher.o"
 	@echo "... https_fetcher.i"
 	@echo "... https_fetcher.s"
@@ -558,6 +672,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... markdown_viewer.o"
+	@echo "... markdown_viewer.i"
+	@echo "... markdown_viewer.s"
 	@echo "... mesh.o"
 	@echo "... mesh.i"
 	@echo "... mesh.s"
@@ -570,6 +687,9 @@ help:
 	@echo "... stb_image.o"
 	@echo "... stb_image.i"
 	@echo "... stb_image.s"
+	@echo "... title_view.o"
+	@echo "... title_view.i"
+	@echo "... title_view.s"
 	@echo "... ui_render.o"
 	@echo "... ui_render.i"
 	@echo "... ui_render.s"

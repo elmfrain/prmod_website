@@ -128,6 +128,7 @@ void prwfFreeFetcher(PRWfetcher* fetcher)
     struct Fetcher* f = (struct Fetcher*) fetcher;
     pthread_join(f->threadID, NULL);
 
+    SSL_free(f->sslConn);
     free(f->rawData);
     free(fetcher);
 }
@@ -135,6 +136,7 @@ void prwfFreeFetcher(PRWfetcher* fetcher)
 static void* i_fetcherWorker(void* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
+    int ret;
 
     f->connection = socket(AF_INET, SOCK_STREAM, 0);
     if(f->connection < 0)
@@ -166,9 +168,10 @@ static void* i_fetcherWorker(void* fetcher)
 
     f->sslConn = SSL_new(m_sslContext);
     SSL_set_fd(f->sslConn, f->connection);
-    if(SSL_connect(f->sslConn) <= 0)
+    SSL_set_connect_state(f->sslConn);
+    if(ret = (SSL_connect(f->sslConn)) <= 0)
     {
-        printf("[Fetcher][Error]: Unable to establish SSL to %s\n", f->ip);
+        printf("[Fetcher][Error]: Unable to establish SSL to %s. Code : %d\n", f->ip, ret);
         strcpy(f->statusStr, "Fetch Failed");
         return NULL;
     } else strcpy(f->statusStr, "Established SSL");
@@ -257,8 +260,9 @@ static void* i_fetcherWorker(void* fetcher)
 static void i_init()
 {
     SSL_library_init();
+    SSLeay_add_ssl_algorithms();
     SSL_load_error_strings();
-    m_sslContext = SSL_CTX_new(SSLv23_client_method());
+    m_sslContext = SSL_CTX_new(TLS_client_method());
 }
 
 static void i_getIPfromName(const char* hostname, char* ip)
