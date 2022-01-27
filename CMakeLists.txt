@@ -73,6 +73,7 @@ if(NOT EMSCRIPTEN)
         ${OPENSSL_LIBRARIES}
         pthread
         assimp
+        m
     )
 else()
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
@@ -83,6 +84,7 @@ else()
         #${CMAKE_SOURCE_DIR}/build/libssl.a
         #${CMAKE_SOURCE_DIR}/build/libcrypto.a
         assimp
+        m
     )
 endif()
 
