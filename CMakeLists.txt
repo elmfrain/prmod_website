@@ -76,8 +76,6 @@ if(NOT EMSCRIPTEN)
         m
     )
 else()
-    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
-
     target_link_libraries(${PROJECT_NAME}
         cglm
         glfw
