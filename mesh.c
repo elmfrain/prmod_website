@@ -272,7 +272,7 @@ static void i_meshLoadBIN(const char* filename)
 
         char* bufferedInput = malloc(fileSize);
         rewind(file);
-        fread((char*) bufferedInput, fileSize, 1, file);
+        size_t ret = fread((char*) bufferedInput, fileSize, 1, file);
         fclose(file);
 
         char* bufferReadPtr = bufferedInput;

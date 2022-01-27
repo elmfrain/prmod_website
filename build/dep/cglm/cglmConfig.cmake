@@ -49,11 +49,11 @@ set_target_properties(cglm::cglm PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "/home/fern/Desktop/mc_modding/pr_website/dep/cglm/include"
 )
 
-# Import target "cglm::cglm" for configuration "Debug"
-set_property(TARGET cglm::cglm APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+# Import target "cglm::cglm" for configuration "Release"
+set_property(TARGET cglm::cglm APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(cglm::cglm PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "C"
-  IMPORTED_LOCATION_DEBUG "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglmd.a"
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "C"
+  IMPORTED_LOCATION_RELEASE "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.a"
   )
 
 # This file does not depend on other imported targets which have

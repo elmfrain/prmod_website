@@ -160,6 +160,9 @@ CMakeFiles/pr_web.dir/markdown_viewer.c.o
  ../dep/cglm/include/cglm/vec3.h
  ../dep/cglm/include/cglm/vec4-ext.h
  ../dep/cglm/include/cglm/vec4.h
+ ../dep/glad/include/KHR/khrplatform.h
+ ../dep/glad/include/glad/glad.h
+ ../dep/glfw/include/GLFW/glfw3.h
  ../include/animation.h
  ../include/https_fetcher.h
  ../include/input.h

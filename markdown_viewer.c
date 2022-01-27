@@ -139,6 +139,7 @@ static void i_onLinkClick(PRWwidget* widget)
         struct MDlink* l = i_listGet(&currentMDviewer->linkList, i);
         if(l->button == widget)
         {
+            int ret;
             char command[3000];
 #ifdef EMSCRIPTEN
             //printf("I got this link!: %s", l->url);
@@ -146,13 +147,13 @@ static void i_onLinkClick(PRWwidget* widget)
             emscripten_run_script(command);
 #elif defined(__unix__)
             sprintf(command, "xdg-open %s", l->url);
-            system(command);
+            ret = system(command);
 #elif defined(_WIN32)
             sprintf(command, "start %s", l->url);
-            system(command);
+            ret = system(command);
 #elif defined(__APPLE__)
             sprintf(command, "open %s", l->url);
-            system(command);
+            ret = system(command);
 #endif
         }
     }

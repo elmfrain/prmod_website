@@ -274,13 +274,13 @@ pr_web: CMakeFiles/pr_web.dir/about_view.c.o
 pr_web: CMakeFiles/pr_web.dir/markdown_viewer.c.o
 pr_web: CMakeFiles/pr_web.dir/download_view.c.o
 pr_web: CMakeFiles/pr_web.dir/build.make
-pr_web: dep/glad/libgladd.a
-pr_web: dep/cglm/libcglmd.a
-pr_web: dep/glfw/src/libglfw3d.a
+pr_web: dep/glad/libglad.a
+pr_web: dep/cglm/libcglm.a
+pr_web: dep/glfw/src/libglfw3.a
 pr_web: /usr/lib/x86_64-linux-gnu/libssl.a
 pr_web: /usr/lib/x86_64-linux-gnu/libssl.a
 pr_web: /usr/lib/x86_64-linux-gnu/libcrypto.a
-pr_web: dep/assimp/lib/libassimpd.a
+pr_web: dep/assimp/lib/libassimp.a
 pr_web: /usr/lib/x86_64-linux-gnu/libm.so
 pr_web: /usr/lib/x86_64-linux-gnu/libz.so
 pr_web: /usr/lib/x86_64-linux-gnu/librt.so

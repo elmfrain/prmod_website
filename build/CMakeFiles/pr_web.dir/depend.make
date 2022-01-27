@@ -159,6 +159,9 @@ CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec3-ext.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec3.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec4-ext.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec4.h
+CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/glad/include/KHR/khrplatform.h
+CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/glad/include/glad/glad.h
+CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/glfw/include/GLFW/glfw3.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/animation.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/https_fetcher.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/input.h
