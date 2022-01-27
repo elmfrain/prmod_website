@@ -6,6 +6,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define DEFAULT_WIDTH 150
 #define DEFAULT_HEIGHT 20

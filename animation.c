@@ -11,6 +11,9 @@ static void i_updateSmoother(PRWsmoother* smoother)
 	smoother->p_currentTime = glfwGetTime();
 	if (smoother->p_previousTime == 0) smoother->p_previousTime = smoother->p_currentTime;
 	double delta = smoother->p_currentTime - smoother->p_previousTime;
+
+    if(0.2 < delta) delta = 0.2;
+
 	if (smoother->grabbed)
 	{
 		if (smoother->p_acceleration)

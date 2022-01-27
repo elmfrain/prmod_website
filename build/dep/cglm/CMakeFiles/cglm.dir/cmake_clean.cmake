@@ -32,8 +32,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/cglm.dir/src/vec2.c.o"
   "CMakeFiles/cglm.dir/src/vec3.c.o"
   "CMakeFiles/cglm.dir/src/vec4.c.o"
-  "libcglm.a"
-  "libcglm.pdb"
+  "libcglmd.a"
+  "libcglmd.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

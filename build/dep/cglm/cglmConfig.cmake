@@ -53,7 +53,7 @@ set_target_properties(cglm::cglm PROPERTIES
 set_property(TARGET cglm::cglm APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
 set_target_properties(cglm::cglm PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "C"
-  IMPORTED_LOCATION_DEBUG "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglm.a"
+  IMPORTED_LOCATION_DEBUG "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/libcglmd.a"
   )
 
 # This file does not depend on other imported targets which have

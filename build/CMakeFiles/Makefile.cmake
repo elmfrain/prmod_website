@@ -11,6 +11,16 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.16.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.16.3/CMakeSystem.cmake"
+  "../dep/assimp/CMakeLists.txt"
+  "../dep/assimp/assimp.pc.in"
+  "../dep/assimp/cmake-modules/FindPkgMacros.cmake"
+  "../dep/assimp/cmake-modules/FindRT.cmake"
+  "../dep/assimp/cmake-modules/FindZLIB.cmake"
+  "../dep/assimp/cmake-modules/PrecompiledHeader.cmake"
+  "../dep/assimp/cmake-modules/assimp-plain-config.cmake.in"
+  "../dep/assimp/code/CMakeLists.txt"
+  "../dep/assimp/include/assimp/config.h.in"
+  "../dep/assimp/revision.h.in"
   "../dep/cglm/CMakeLists.txt"
   "../dep/cglm/cglm.pc.in"
   "../dep/glad/CMakeLists.txt"
@@ -72,8 +82,10 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "dep/glad/CMakeFiles/CMakeDirectoryInformation.cmake"
   "dep/cglm/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "dep/assimp/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "dep/assimp/code/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "dep/glad/CMakeFiles/CMakeDirectoryInformation.cmake"
   "dep/glfw/CMakeFiles/CMakeDirectoryInformation.cmake"
   "dep/glfw/src/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
@@ -81,8 +93,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/pr_web.dir/DependInfo.cmake"
-  "dep/glad/CMakeFiles/glad.dir/DependInfo.cmake"
   "dep/cglm/CMakeFiles/cglm.dir/DependInfo.cmake"
+  "dep/assimp/code/CMakeFiles/assimp.dir/DependInfo.cmake"
+  "dep/glad/CMakeFiles/glad.dir/DependInfo.cmake"
   "dep/glfw/CMakeFiles/uninstall.dir/DependInfo.cmake"
   "dep/glfw/src/CMakeFiles/update_mappings.dir/DependInfo.cmake"
   "dep/glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"

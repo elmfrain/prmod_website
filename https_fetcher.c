@@ -1,15 +1,23 @@
 #include "https_fetcher.h"
 
+#include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
 
+#ifndef EMSCRIPTEN
 #include <openssl/ssl.h>
+#endif
+
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <arpa/inet.h>
 
 #include <pthread.h>
+
+#ifdef EMSCRIPTEN
+#include <emscripten/fetch.h>
+#endif
 
 static struct Fetcher
 {
@@ -21,17 +29,20 @@ static struct Fetcher
     int headerlen;
     short statusCode;
 
-    struct sockaddr_in address;
     char hostname[256];
     char dir[2048];
     char ip[100];
+#ifndef EMSCRIPTEN //Fetcher will use the Fetch API if compiling with emscripten
+    struct sockaddr_in address;
     int connection;
     SSL* sslConn;
-
+#endif
     pthread_t threadID;
 } Fetcher;
 
+#ifndef EMSCRIPTEN
 static SSL_CTX* m_sslContext = NULL;
+#endif
 
 static void i_init();
 static void i_getIPfromName(const char* hostname, char* ip);
@@ -40,9 +51,9 @@ static void* i_fetcherWorker(void* fetcher);
 PRWfetcher* prwfFetch(const char* host, const char* dir)
 {
     struct Fetcher* newFetcher = malloc(sizeof(struct Fetcher));
-
+#ifndef EMSCRIPTEN
     if(!m_sslContext) i_init();
-
+#endif
     if(newFetcher)
     {
         newFetcher->complete = 0;
@@ -127,8 +138,9 @@ void prwfFreeFetcher(PRWfetcher* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
     pthread_join(f->threadID, NULL);
-
+#ifndef EMSCRIPTEN
     SSL_free(f->sslConn);
+#endif
     free(f->rawData);
     free(fetcher);
 }
@@ -137,7 +149,7 @@ static void* i_fetcherWorker(void* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
     int ret;
-
+#ifndef EMSCRIPTEN
     f->connection = socket(AF_INET, SOCK_STREAM, 0);
     if(f->connection < 0)
     {
@@ -253,10 +265,44 @@ static void* i_fetcherWorker(void* fetcher)
         }
         break;
     }
-    
+#else
+    strcpy(f->statusStr, "Initializing Fetcher");
+    emscripten_fetch_attr_t attr;
+    emscripten_fetch_attr_init(&attr);
+    strcpy(attr.requestMethod, "GET");
+    attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
+
+    char url[4098] = {0};
+    strcat(url, "https://");
+    strcat(url, f->hostname);
+    strcat(url, f->dir);
+
+    strcpy(f->statusStr, "Sent Request");
+    emscripten_fetch_t *fetch = emscripten_fetch(&attr, url);
+    f->statusCode = fetch->status;
+    sprintf(f->statusStr, "Recived Data. Status: %d", f->statusCode);
+
+    switch(f->statusCode)
+    {
+    case 0:
+        printf("[Fetcher][Error]: Unable to fetch %s. Ensure that \'Access-Control-Allow-Origin\' is enabled for that resource.\n", url);
+        break;
+    case 200:
+        f->datalen = fetch->numBytes + 1;
+        f->rawData = malloc(f->datalen);
+        memcpy(f->rawData, fetch->data, fetch->numBytes);
+        f->rawData[fetch->numBytes] = '\0';
+        f->data = f->rawData;
+        f->complete = 1;
+        break;
+    }
+
+    emscripten_fetch_close(fetch);
+#endif  
     return NULL;
 }
 
+#ifndef EMSCRIPTEN
 static void i_init()
 {
     SSL_library_init();
@@ -264,6 +310,7 @@ static void i_init()
     SSL_load_error_strings();
     m_sslContext = SSL_CTX_new(TLS_client_method());
 }
+#endif
 
 static void i_getIPfromName(const char* hostname, char* ip)
 {

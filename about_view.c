@@ -9,7 +9,11 @@
 
 #include "screen_renderer.h"
 
+#ifndef EMSCRIPTEN
 #include <glad/glad.h>
+#else
+#include <GLES3/gl3.h>
+#endif
 #include <stb_image.h>
 
 #include <string.h>

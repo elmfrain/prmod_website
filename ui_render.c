@@ -22,8 +22,6 @@ static struct Vertex
     int8_t texID;
 } Vertex;
 
-static GLFWwindow* m_window = NULL;
-
 //Batch Rendering
 static int m_vbPos = 0;
 static struct Vertex* m_batchVertexBuffer = NULL;
@@ -38,6 +36,7 @@ static inline int i_pushIndicies(uint32_t* indicies, size_t nb);
 static inline void i_orient(float* dst, int mode, float left, float top, float right, float bottom);
 
 //Windowing
+static GLFWwindow* m_window = NULL;
 static int m_windowWidth = 0;
 static int m_windowHeight = 0;
 static float m_UIscaleFctor = 2.0f;
@@ -56,6 +55,17 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
 static inline float i_frGetStringWidth(const char* str);
 static inline float i_frGetCharWidth(int unicode);
 static inline void i_frAnchor(int mode, const char* str, float x, float y, float* newpos);
+
+#ifdef EMSCRIPTEN //Called when the canvas size changes
+void prwuiResize(int width, int height)
+{
+    if(!m_window) return;
+
+    if(width < 128 || 8192 < width) width = 1280;
+    if(height < 128 || 8192 < height) height = 720;
+    glfwSetWindowSize(m_window, width, height);
+}
+#endif
 
 void prwuiSetWindow(GLFWwindow* window)
 {
@@ -284,7 +294,9 @@ static void i_init()
 {
     glfwMakeContextCurrent(m_window);
 
+#ifndef EMSCRIPTEN
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+#endif
 
     if(!m_batchVertexBuffer) m_batchVertexBuffer = malloc(BATCH_BUFFER_SIZE);
     if(!m_batchIndexBuffer) m_batchIndexBuffer = malloc(BATCH_BUFFER_SIZE);
@@ -554,7 +566,7 @@ static void i_frInit()
     m_maxTexUnits = m_maxTexUnits <= 16 ? m_maxTexUnits : 16;
 }
 
-static void i_frGenChar(int unicode, float x , float y, float italics, u_int32_t color)
+static void i_frGenChar(int unicode, float x , float y, float italics, uint32_t color)
 {
     if(unicode < 256)
     {

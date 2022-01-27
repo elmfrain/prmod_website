@@ -1,6 +1,12 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+
+#ifndef EMSCRIPTEN
 #include <glad/glad.h>
+#else
+#include <GLES3/gl3.h>
+#include <emscripten.h>
+#endif
 
 #include <cglm/cglm.h>
 #include <stb_image.h>
@@ -16,6 +22,9 @@
 
 #include <stdio.h>
 #include <time.h>
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 GLuint texID = 0;
 GLuint quadVAO = 0;
@@ -37,48 +46,106 @@ void handleKeyEvents(GLFWwindow* window);
 void handleMouseEvents(GLFWwindow* window);
 void handleCursorMovement(GLFWwindow* window);
 
-void onAction(PRWwidget* widget)
-{
-    printf("widget clicked!\n");
-}
+static GLFWwindow* window;
+static double lastTime = 0.0;
 
-void loadTexture(const char* url, GLuint* texId)
-{
-    PRWfetcher* imageFetcher = prwfFetchURL(url);
-    prwfFetchWait(imageFetcher);
+void loadBackground()
+{   
+    float wX = prwuiGetWindowWidth(), wY = prwuiGetWindowHeight();
+    glViewport(0, 0, wX, wY);
 
-    int x, y, channels, len;
-    stbi_set_flip_vertically_on_load(1);
-    const char* imgf = prwfFetchString(imageFetcher, &len);
-    stbi_uc* image = stbi_load_from_memory(imgf, len, &x, &y, &channels, STBI_rgb_alpha);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-    if(!image)
+    float uiWidth = prwuiGetUIwidth();
+    float uiHeight = prwuiGetUIheight();
+
+    //Make sure ui shader is absolutely ready
+    prws_POS_UV_COLOR_TEXID_shader();
+    glFinish();
+
+    //Display loading screen
+    prwuiSetupUIrendering();
+    prwuiGenGradientQuad(PRWUI_TO_BOTTOM, 0, 0, uiWidth, uiHeight, -11776948, 0, 0);
+    prwuiPushStack();
     {
-        printf("failed to load texture! %s\n", stbi_failure_reason());
-        exit(1);
+        prwuiTranslate(uiWidth / 2, uiHeight / 2);
+        prwuiScale(3, 3);
+        prwuiGenString(PRWUI_CENTER, "Loading Assets...", 0, 0, -9276814);
+        prwuiGenString(PRWUI_CENTER, "Loading Assets...", 0, -1, -1);
     }
+    prwuiPopStack();
+    prwuiRenderBatch();
 
-    glGenTextures(1, texId);
+    glfwSwapBuffers(window);
+    glfwPollEvents();
 
-    glBindTexture(GL_TEXTURE_2D, *texId);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    stbi_image_free(image);
+    prwmLoad("res/cube_map.obj");
+    backgroundMesh = prwmMeshGet("cube_map");
 }
 
-int main()
+static void mainLoop()
 {
+    handleKeyEvents(window);
+    handleMouseEvents(window);
+    handleCursorMovement(window);
+
+    float wX = prwuiGetWindowWidth(), wY = prwuiGetWindowHeight();
+    glViewport(0, 0, wX, wY);
+
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    double time = glfwGetTime();
+    camLook[0] = prwaSmootherValue(&smoother);
+    camLook[1] += (time - lastTime) * 4;
+    lastTime = time;
+
+    glm_perspective(glm_rad(60), wX / wY, 0.1, 100, projectionMatrix);
+    glm_mat4_identity(modelViewMatrix);
+    vec3 axis = {1.0f, 0.0f, 0.0f};
+    glm_rotate(modelViewMatrix, glm_rad(camLook[0]), axis);
+    axis[0] = 0.0f; axis[1] = 1.0f;
+    glm_rotate(modelViewMatrix, glm_rad(camLook[1]), axis);
+    glm_translate(modelViewMatrix, camPos);
+
+    glEnable(GL_DEPTH_TEST);
+    prwsSetProjectionMatrix(projectionMatrix);
+    prwsSetModelViewMatrix(modelViewMatrix);
+    prws_POS_UV_shader();
+    prwmMeshRenderv(backgroundMesh);
+
+    prwRenderMenuScreen();
+    prwuiRenderBatch();
+
+    prwwTickWidgets();
+    prwiPollInputs();
+    clearGLErrors();
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+
+int main(int argc, char** argv)
+{
+    int initWidth = 1280, initHeight = 720;
+    if(argc == 3)
+    {
+        initWidth = atoi(argv[1]);
+        initHeight = atoi(argv[2]);
+        if(initWidth < 128 || 8192 < initWidth) initWidth = 1280;
+        if(initHeight < 128 || 8192 < initHeight) initHeight = 720;
+        printf("[Main][Info]: Running program with args: %s, %s\n", argv[1], argv[2]);
+    }
+    printf("[Main][Info]: Setting initial window size to (%d, %d)\n", initWidth, initHeight);
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Parkour Recorder Website", NULL, NULL);
+    window = glfwCreateWindow(initWidth, initHeight, "Parkour Recorder Website", NULL, NULL);
 
     prwiRegisterWindow(window);
     prwiSetActiveWindow(window);
@@ -86,112 +153,26 @@ int main()
 
     glfwSwapInterval(1);
 
-    setupCube();
-    prwmLoad("res/cube_map.bin");
-    backgroundMesh = prwmMeshGet("cube_map");
+    loadBackground();
     prwInitMenuScreen();
     prwaInitSmoother(&smoother);
     smoother.speed = 5;
 
-    double lastTime = glfwGetTime();
+    lastTime = glfwGetTime();
 
     srand(time(0));
     camLook[1] = ((double)rand() / RAND_MAX) * 360;
 
 #ifndef EMSCRIPTEN
-    while(!glfwWindowShouldClose(window))
-    {
-        handleKeyEvents(window);
-        handleMouseEvents(window);
-        handleCursorMovement(window);
-
-        float wX = prwuiGetWindowWidth(), wY = prwuiGetWindowHeight();
-        glViewport(0, 0, wX, wY);
-
-        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-        double time = glfwGetTime();
-        camLook[0] = prwaSmootherValue(&smoother);
-        camLook[1] += (time - lastTime) * 4;
-        lastTime = time;
-
-        glm_perspective(glm_rad(60), wX / wY, 0.1, 100, projectionMatrix);
-        glm_mat4_identity(modelViewMatrix);
-        vec3 axis = {1.0f, 0.0f, 0.0f};
-        glm_rotate(modelViewMatrix, glm_rad(camLook[0]), axis);
-        axis[0] = 0.0f; axis[1] = 1.0f;
-        glm_rotate(modelViewMatrix, glm_rad(camLook[1]), axis);
-        glm_translate(modelViewMatrix, camPos);
-
-        glEnable(GL_DEPTH_TEST);
-        prwsSetProjectionMatrix(projectionMatrix);
-        prwsSetModelViewMatrix(modelViewMatrix);
-        prws_POS_UV_shader();
-        prwmMeshRenderv(backgroundMesh);
-
-        prwRenderMenuScreen();
-        prwuiRenderBatch();
-
-        prwwTickWidgets();
-        prwiPollInputs();
-        clearGLErrors();
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    while(!glfwWindowShouldClose(window)) mainLoop();
 #else
+    emscripten_set_main_loop(mainLoop, 0, true);
 #endif
 
     glfwTerminate();
     printf("Hellow Worlds!\n");
 
     return 0;
-}
-
-void setupCube()
-{
-    GLuint glBuffer;
-    GLuint glElemBuffer;
-
-    glGenBuffers(1, &glBuffer);
-    glGenBuffers(1, &glElemBuffer);
-    glGenVertexArrays(1, &quadVAO);
-
-    struct Vertex
-    {
-        vec3 pos;
-        vec2 uv;
-    } Vertex;
-
-    struct Vertex verticies[] =
-    {
-        {{-0.5f, -0.5f, -0.5f}, {0.0f, 0.0f}},
-        {{ 0.5f, -0.5f, -0.5f}, {1.0f, 0.0f}},
-        {{ 0.5f,  0.5f, -0.5f}, {1.0f, 1.0f}},
-        {{-0.5f,  0.5f, -0.5f}, {0.0f, 1.0f}},
-    };
-
-    int indicies[] =
-    {
-        0, 1, 2,
-        0, 2, 3,
-    };
-
-    glBindVertexArray(quadVAO);
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, glElemBuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, glBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(struct Vertex), 0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(Vertex), (void *) sizeof(vec3));
-    }
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void clearGLErrors()

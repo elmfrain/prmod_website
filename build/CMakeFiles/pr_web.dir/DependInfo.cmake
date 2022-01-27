@@ -32,6 +32,8 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   "../dep/glfw/include"
   "../dep/glad/include"
   "../dep/cglm/include"
+  "../dep/assimp/code/../include"
+  "dep/assimp/code/../include"
   )
 
 # Targets to which this target links.
@@ -39,6 +41,7 @@ set(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/fern/Desktop/mc_modding/pr_website/build/dep/glad/CMakeFiles/glad.dir/DependInfo.cmake"
   "/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/CMakeFiles/cglm.dir/DependInfo.cmake"
   "/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/src/CMakeFiles/glfw.dir/DependInfo.cmake"
+  "/home/fern/Desktop/mc_modding/pr_website/build/dep/assimp/code/CMakeFiles/assimp.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

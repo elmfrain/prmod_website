@@ -9,7 +9,11 @@
 #include "shaders.h"
 #include "input.h"
 
+#ifndef EMSCRIPTEN
 #include <glad/glad.h>
+#else
+#include <GLES3/gl3.h>
+#endif
 #include <cglm/cglm.h>
 
 #include <string.h>
@@ -33,7 +37,7 @@ static mat4 m_modelviewMatrix;
 static PRWwidget* m_body = NULL;
 
 //String insert
-char strbuffer[2048];
+static char strbuffer[2048];
 #define strins(dst, src, rep) {strcpy(strbuffer, dst + rep); strcpy(dst, src); strcat(dst, strbuffer);}
 
 static void i_drawChangeLog()
@@ -138,7 +142,7 @@ void prwDrawTitleView()
 {
     if(!m_modLogoMesh)
     {
-        prwmLoad("res/3d_logo_baked.bin");
+        prwmLoad("res/3d_logo_baked.obj");
         m_modLogoMesh = prwmMeshGet("pr_logo");
         m_modLogoShadowMesh = prwmMeshGet("shadow_plane");
         prwaInitSmoother(&m_logoFov);

@@ -159,9 +159,6 @@ CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec3-ext.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec3.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec4-ext.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/cglm/include/cglm/vec4.h
-CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/glad/include/KHR/khrplatform.h
-CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/glad/include/glad/glad.h
-CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../dep/glfw/include/GLFW/glfw3.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/animation.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/https_fetcher.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/input.h
@@ -171,10 +168,43 @@ CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/ui_render.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../include/widget.h
 CMakeFiles/pr_web.dir/markdown_viewer.c.o: ../markdown_viewer.c
 
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/Compiler/poppack1.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/Compiler/pstdint.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/Compiler/pushpack1.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/MathFunctions.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/aabb.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/anim.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/camera.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/cimport.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/color4.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/color4.inl
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/defs.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/importerdesc.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/light.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/material.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/material.inl
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/matrix3x3.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/matrix3x3.inl
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/matrix4x4.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/matrix4x4.inl
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/mesh.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/metadata.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/postprocess.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/quaternion.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/quaternion.inl
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/scene.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/texture.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/types.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/vector2.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/vector2.inl
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/vector3.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../dep/assimp/include/assimp/vector3.inl
 CMakeFiles/pr_web.dir/mesh.c.o: ../dep/glad/include/KHR/khrplatform.h
 CMakeFiles/pr_web.dir/mesh.c.o: ../dep/glad/include/glad/glad.h
 CMakeFiles/pr_web.dir/mesh.c.o: ../include/mesh.h
+CMakeFiles/pr_web.dir/mesh.c.o: ../include/stb_image.h
 CMakeFiles/pr_web.dir/mesh.c.o: ../mesh.c
+CMakeFiles/pr_web.dir/mesh.c.o: dep/assimp/include/assimp/config.h
 
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../dep/cglm/include/cglm/affine-mat.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o: ../dep/cglm/include/cglm/affine.h
@@ -269,6 +299,8 @@ CMakeFiles/pr_web.dir/shaders.c.o: ../dep/cglm/include/cglm/vec4-ext.h
 CMakeFiles/pr_web.dir/shaders.c.o: ../dep/cglm/include/cglm/vec4.h
 CMakeFiles/pr_web.dir/shaders.c.o: ../dep/glad/include/KHR/khrplatform.h
 CMakeFiles/pr_web.dir/shaders.c.o: ../dep/glad/include/glad/glad.h
+CMakeFiles/pr_web.dir/shaders.c.o: ../include/gl3_shaders.h
+CMakeFiles/pr_web.dir/shaders.c.o: ../include/gles3_shaders.h
 CMakeFiles/pr_web.dir/shaders.c.o: ../include/shaders.h
 CMakeFiles/pr_web.dir/shaders.c.o: ../shaders.c
 

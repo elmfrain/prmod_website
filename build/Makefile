@@ -116,7 +116,7 @@ install/fast: preinstall/fast
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\" \"assimp-dev\" \"libassimp5.2.0-dev\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -192,19 +192,6 @@ pr_web/fast:
 .PHONY : pr_web/fast
 
 #=============================================================================
-# Target rules for targets named glad
-
-# Build rule for target.
-glad: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 glad
-.PHONY : glad
-
-# fast build rule for target.
-glad/fast:
-	$(MAKE) -f dep/glad/CMakeFiles/glad.dir/build.make dep/glad/CMakeFiles/glad.dir/build
-.PHONY : glad/fast
-
-#=============================================================================
 # Target rules for targets named cglm
 
 # Build rule for target.
@@ -216,6 +203,32 @@ cglm: cmake_check_build_system
 cglm/fast:
 	$(MAKE) -f dep/cglm/CMakeFiles/cglm.dir/build.make dep/cglm/CMakeFiles/cglm.dir/build
 .PHONY : cglm/fast
+
+#=============================================================================
+# Target rules for targets named assimp
+
+# Build rule for target.
+assimp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 assimp
+.PHONY : assimp
+
+# fast build rule for target.
+assimp/fast:
+	$(MAKE) -f dep/assimp/code/CMakeFiles/assimp.dir/build.make dep/assimp/code/CMakeFiles/assimp.dir/build
+.PHONY : assimp/fast
+
+#=============================================================================
+# Target rules for targets named glad
+
+# Build rule for target.
+glad: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 glad
+.PHONY : glad
+
+# fast build rule for target.
+glad/fast:
+	$(MAKE) -f dep/glad/CMakeFiles/glad.dir/build.make dep/glad/CMakeFiles/glad.dir/build
+.PHONY : glad/fast
 
 #=============================================================================
 # Target rules for targets named uninstall
@@ -649,8 +662,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... package"
 	@echo "... pr_web"
-	@echo "... glad"
 	@echo "... cglm"
+	@echo "... assimp"
+	@echo "... glad"
 	@echo "... uninstall"
 	@echo "... update_mappings"
 	@echo "... glfw"

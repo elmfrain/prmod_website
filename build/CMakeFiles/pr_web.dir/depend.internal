@@ -160,9 +160,6 @@ CMakeFiles/pr_web.dir/markdown_viewer.c.o
  ../dep/cglm/include/cglm/vec3.h
  ../dep/cglm/include/cglm/vec4-ext.h
  ../dep/cglm/include/cglm/vec4.h
- ../dep/glad/include/KHR/khrplatform.h
- ../dep/glad/include/glad/glad.h
- ../dep/glfw/include/GLFW/glfw3.h
  ../include/animation.h
  ../include/https_fetcher.h
  ../include/input.h
@@ -172,10 +169,43 @@ CMakeFiles/pr_web.dir/markdown_viewer.c.o
  ../include/widget.h
  /home/fern/Desktop/mc_modding/pr_website/markdown_viewer.c
 CMakeFiles/pr_web.dir/mesh.c.o
+ ../dep/assimp/include/assimp/Compiler/poppack1.h
+ ../dep/assimp/include/assimp/Compiler/pstdint.h
+ ../dep/assimp/include/assimp/Compiler/pushpack1.h
+ ../dep/assimp/include/assimp/MathFunctions.h
+ ../dep/assimp/include/assimp/aabb.h
+ ../dep/assimp/include/assimp/anim.h
+ ../dep/assimp/include/assimp/camera.h
+ ../dep/assimp/include/assimp/cimport.h
+ ../dep/assimp/include/assimp/color4.h
+ ../dep/assimp/include/assimp/color4.inl
+ ../dep/assimp/include/assimp/defs.h
+ ../dep/assimp/include/assimp/importerdesc.h
+ ../dep/assimp/include/assimp/light.h
+ ../dep/assimp/include/assimp/material.h
+ ../dep/assimp/include/assimp/material.inl
+ ../dep/assimp/include/assimp/matrix3x3.h
+ ../dep/assimp/include/assimp/matrix3x3.inl
+ ../dep/assimp/include/assimp/matrix4x4.h
+ ../dep/assimp/include/assimp/matrix4x4.inl
+ ../dep/assimp/include/assimp/mesh.h
+ ../dep/assimp/include/assimp/metadata.h
+ ../dep/assimp/include/assimp/postprocess.h
+ ../dep/assimp/include/assimp/quaternion.h
+ ../dep/assimp/include/assimp/quaternion.inl
+ ../dep/assimp/include/assimp/scene.h
+ ../dep/assimp/include/assimp/texture.h
+ ../dep/assimp/include/assimp/types.h
+ ../dep/assimp/include/assimp/vector2.h
+ ../dep/assimp/include/assimp/vector2.inl
+ ../dep/assimp/include/assimp/vector3.h
+ ../dep/assimp/include/assimp/vector3.inl
  ../dep/glad/include/KHR/khrplatform.h
  ../dep/glad/include/glad/glad.h
  ../include/mesh.h
+ ../include/stb_image.h
  /home/fern/Desktop/mc_modding/pr_website/mesh.c
+ dep/assimp/include/assimp/config.h
 CMakeFiles/pr_web.dir/screen_renderer.c.o
  ../dep/cglm/include/cglm/affine-mat.h
  ../dep/cglm/include/cglm/affine.h
@@ -270,6 +300,8 @@ CMakeFiles/pr_web.dir/shaders.c.o
  ../dep/cglm/include/cglm/vec4.h
  ../dep/glad/include/KHR/khrplatform.h
  ../dep/glad/include/glad/glad.h
+ ../include/gl3_shaders.h
+ ../include/gles3_shaders.h
  ../include/shaders.h
  /home/fern/Desktop/mc_modding/pr_website/shaders.c
 CMakeFiles/pr_web.dir/stb_image.c.o

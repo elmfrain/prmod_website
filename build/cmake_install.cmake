@@ -39,8 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/fern/Desktop/mc_modding/pr_website/build/dep/glad/cmake_install.cmake")
   include("/home/fern/Desktop/mc_modding/pr_website/build/dep/cglm/cmake_install.cmake")
+  include("/home/fern/Desktop/mc_modding/pr_website/build/dep/assimp/cmake_install.cmake")
+  include("/home/fern/Desktop/mc_modding/pr_website/build/dep/glad/cmake_install.cmake")
   include("/home/fern/Desktop/mc_modding/pr_website/build/dep/glfw/cmake_install.cmake")
 
 endif()
