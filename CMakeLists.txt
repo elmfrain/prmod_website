@@ -5,11 +5,12 @@ project(pr_web)
 #Emscripten enviornment flags
 if(EMSCRIPTEN)
     message("Compiling with Emscripten, for the web!")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread") 
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 --preload-file res")
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s PTHREAD_POOL_SIZE=4")
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s USE_WEBGL2=1 -s FETCH=1 -pthread")
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s EXPORTED_FUNCTIONS=_main,_prwuiResize -s EXPORTED_RUNTIME_METHODS=ccall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif()
 
 #Copy resource files to current binary folder
@@ -31,6 +32,7 @@ set(ASSIMP_NO_EXPORT          ON  CACHE BOOL " " FORCE)
 set(ASSIMP_BUILD_TESTS        OFF CACHE BOOL " " FORCE)
 set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL " " FORCE)
 set(ASSIMP_INSTALL            OFF CACHE BOOL " " FORCE)
+set(BUILD_SHARED_LIBS         OFF CACHE BOOL " " FORCE)
 add_subdirectory("dep/assimp")
 
 if(NOT EMSCRIPTEN)
