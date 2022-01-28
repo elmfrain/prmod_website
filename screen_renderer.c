@@ -34,18 +34,32 @@ static PRWsmoother m_tabSelectorX1;
 static PRWsmoother m_tabSelectorX2;
 
 static PRWtimer m_timer;
+static float m_tabsWidth = 250;
 
 void i_drawTabs()
 {
-    prwuiGenGradientQuad(PRWUI_TO_BOTTOM, prwaSmootherValue(&m_tabSelectorX1), 0, prwaSmootherValue(&m_tabSelectorX2), NAV_BAR_HEIGHT, -16741121, -16749608, 0);
+    prwuiPushStack();
 
-    float tabPosition = NAV_BAR_HEIGHT;
+    float uiWidth = prwuiGetUIwidth();
+    float selectorX1 = prwaSmootherValue(&m_tabSelectorX1);
+    float selectorX2 = prwaSmootherValue(&m_tabSelectorX2);
+
+    if(uiWidth < m_tabsWidth * 1.5f)
+    {
+        float translatex = (selectorX1 + selectorX2) / 2;
+        translatex -= uiWidth / 2;
+        prwuiTranslate(-translatex, 0);
+    }
+
+    prwuiGenGradientQuad(PRWUI_TO_BOTTOM, selectorX1, 0, selectorX2, NAV_BAR_HEIGHT, -16741121, -16749608, 0);
+
+    m_tabsWidth = NAV_BAR_HEIGHT;
     PRWwidget* tabs[] = { titleTab, otherTab, downloadTab };
     for(int i = 0; i < 3; i++)
     {
         PRWwidget* tab = tabs[i];
-        tab->x = tabPosition;
-        tabPosition += tab->width + NAV_BAR_HEIGHT;
+        tab->x = m_tabsWidth;
+        m_tabsWidth += tab->width + NAV_BAR_HEIGHT;
 
         tab->height = NAV_BAR_HEIGHT;
         prwwWidgetDraw(tab);
@@ -54,7 +68,9 @@ void i_drawTabs()
         prwuiGenString(PRWUI_CENTER, prwwWidgetText(tab), tab->x + tab->width / 2, tab->y + tab->height / 2, textColor);
     }
 
-    if(prwaSmootherValue(&m_tabSelectorX1) == 0)
+    prwuiPopStack();
+
+    if(selectorX1 == 0)
     {
         prwaSmootherGrabTo(&m_tabSelectorX1, titleTab->x - MARGIN);
         prwaSmootherGrabTo(&m_tabSelectorX2, titleTab->x + titleTab->width + MARGIN);

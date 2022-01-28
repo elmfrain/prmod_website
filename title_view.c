@@ -54,10 +54,26 @@ static void i_drawChangeLog()
         prwuiGenQuad(0, 0, m_changeLogVP->width, 12, 1711276032, 0);
         prwuiGenString(PRWUI_MID_LEFT, "Changelog", 6, 6, -1);
 
+        m_changeLogButtons[0]->height = m_changeLogButtons[1]->height = m_changeLogVP->height * 0.48f;
         m_changeLogButtons[0]->x = m_changeLogButtons[1]->x = m_changeLogVP->width + MARGIN;
         m_changeLogButtons[1]->y = m_changeLogVP->height - m_changeLogButtons[1]->height;
-        prwwWidgetDraw(m_changeLogButtons[0]);
-        prwwWidgetDraw(m_changeLogButtons[1]);
+
+        //Draw scroll buttons
+        for(int i = 0; i < 2; i++)
+        {
+            PRWwidget* b = m_changeLogButtons[i];
+            prwwWidgetDraw(b);
+            prwuiGenQuad(b->x, b->y, b->x + b->width, b->y + b->height, 1711276032, 0);
+            prwuiPushStack();
+            {
+                float translateX = b->x + b->width / 2;
+                float translateY = b->y + b->height / 2;
+                prwuiTranslate(translateX, translateY);
+                prwuiRotate(0, 0, 90);
+                prwuiGenString(PRWUI_CENTER, prwwWidgetText(b), 0, 0, -1);
+            }
+            prwuiPopStack();
+        }
     }
     prwwViewportEnd(m_changeLogVP);
 
@@ -163,12 +179,12 @@ void prwDrawTitleView()
     if(!m_changeLogVP)
     {
         m_changeLogVP = prwwGenWidget(PRWW_TYPE_VIEWPORT);
-        m_changeLogButtons[0] = prwwGenWidget(PRWW_TYPE_BUTTON);
-        m_changeLogButtons[1] = prwwGenWidget(PRWW_TYPE_BUTTON);
-        m_changeLogButtons[0]->width = m_changeLogButtons[1]->width = 30;
+        m_changeLogButtons[0] = prwwGenWidget(PRWW_TYPE_WIDGET);
+        m_changeLogButtons[1] = prwwGenWidget(PRWW_TYPE_WIDGET);
+        m_changeLogButtons[0]->width = m_changeLogButtons[1]->width = 13;
         m_changeLogButtons[0]->height = m_changeLogButtons[1]->height = 15;
-        prwwWidgetSetText(m_changeLogButtons[0], "Up");
-        prwwWidgetSetText(m_changeLogButtons[1], "Down");
+        prwwWidgetSetText(m_changeLogButtons[0], "<<");
+        prwwWidgetSetText(m_changeLogButtons[1], ">>");
         prwaInitSmoother(&m_changelogScroll);
     }
     float uiWidth = prwuiGetUIwidth();

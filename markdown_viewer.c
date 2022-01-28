@@ -473,6 +473,11 @@ void prwmdDrawMarkdown(PRWmarkdownViewer* viewer)
 
     //Handle and constrain scroll
     if(prwiJustScrolled() && prwwWidgetHovered(v->widget)) v->scroll.grabbingTo += prwiScrollDeltaY() * 35;
+    if(prwwWidgetJustPressed(v->widget))
+    {
+        if(prwwWidgetLCursorY(v->widget) < v->widget->height / 2) v->scroll.grabbingTo -= 80;
+        else v->scroll.grabbingTo += 80;
+    }
     float MAX_SCROLL = cursorY - height * 2 / 3;
     if(MAX_SCROLL < 0) MAX_SCROLL = 0;
     if(scroll < 0) prwaSmootherGrabTo(&v->scroll, 0);

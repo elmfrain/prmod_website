@@ -4,6 +4,8 @@
 #include "ui_render.h"
 #include "input.h"
 
+#include <cglm/vec2.h>
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,6 +22,7 @@ static struct Widget
     int zLevel;
     int type;
     mat4 modelView;
+    vec2 localCursor;
 
     char justPressed, pressed, released;
     char clipping;
@@ -59,6 +62,7 @@ PRWwidget* prwwGenWidget(int widgetType)
     widget.width = DEFAULT_WIDTH;
     widget.height = DEFAULT_HEIGHT;
     widget.visible = widget.enabled = 1;
+    glm_vec2_zero(widget.localCursor);
     widget.hovered = 0;
     widget.zLevel = 0;
     switch(widgetType)
@@ -143,6 +147,18 @@ int prwwWidgetEnabled(PRWwidget* widget)
 {
     struct Widget* w = (struct Widget*) widget;
     return w->enabled;
+}
+
+float prwwWidgetLCursorX(PRWwidget* widget)
+{
+    struct Widget* w = (struct Widget*) widget;
+    return w->localCursor[0];
+}
+
+float prwwWidgetLCursorY(PRWwidget* widget)
+{
+    struct Widget* w = (struct Widget*) widget;
+    return w->localCursor[1];
 }
 
 void prwwWidgetSetEnabled(PRWwidget* widget, int enabled)
@@ -322,6 +338,8 @@ static inline void i_updateHoverState(struct Widget* w)
 
     glm_mat4_inv(w->modelView, inverseModelView);
     glm_mat4_mulv(inverseModelView, uiCursorWidget, uiCursorWidget);
+    w->localCursor[0] = uiCursorWidget[0] - w->x;
+    w->localCursor[1] = uiCursorWidget[1] - w->y;
 
     char hovered = uiCursorWidget[0] >= w->x && uiCursorWidget[1] >= w->y && uiCursorWidget[0] < w->x + w->width && uiCursorWidget[1] < w->y + w->height;
 
