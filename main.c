@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -48,6 +49,8 @@ void handleCursorMovement(GLFWwindow* window);
 
 static GLFWwindow* window;
 static double lastTime = 0.0;
+
+char PRW_ON_MOBILE = 0;
 
 void loadBackground()
 {   
@@ -80,7 +83,7 @@ void loadBackground()
     glfwSwapBuffers(window);
     glfwPollEvents();
 
-    prwmLoad("res/cube_map.obj");
+    prwmLoad(PRW_ON_MOBILE ? "res/cube_map_512.obj" : "res/cube_map.obj");
     backgroundMesh = prwmMeshGet("cube_map");
 }
 
@@ -134,9 +137,13 @@ int main(int argc, char** argv)
         initHeight = atoi(argv[2]);
         if(initWidth < 128 || 8192 < initWidth) initWidth = 1280;
         if(initHeight < 128 || 8192 < initHeight) initHeight = 720;
-        printf("[Main][Info]: Running program with args: %s, %s\n", argv[1], argv[2]);
+    }
+    for(int a = 1; a < argc; a++)
+    {
+        if(strcmp(argv[a], "-on-mobile") == 0) PRW_ON_MOBILE = 1;
     }
     printf("[Main][Info]: Setting initial window size to (%d, %d)\n", initWidth, initHeight);
+    if(PRW_ON_MOBILE) printf("[Main][Info]: Program is running for mobile\n");
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
