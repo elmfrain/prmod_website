@@ -136,6 +136,11 @@ static void i_drawChangeLog()
         }
     }
     float MAX_SCROLL = yCursor - m_changeLogVP->height / 2;
+    if(prwwWidgetJustPressed(m_changeLogVP))
+    {
+        if(prwwWidgetLCursorY(m_changeLogVP) < m_changeLogVP->height / 2) m_changelogScroll.grabbingTo -= 35;
+        else m_changelogScroll.grabbingTo += 35;
+    }
     if(MAX_SCROLL < 0) MAX_SCROLL = 0;
     if(scroll < 0) prwaSmootherGrabTo(&m_changelogScroll, 0);
     else if(scroll > MAX_SCROLL) prwaSmootherGrabTo(&m_changelogScroll, MAX_SCROLL);
