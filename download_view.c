@@ -26,7 +26,7 @@ void prwDrawDownloadView()
     }
 
     if(!m_pageViewer)
-        m_pageViewer = prwmdGenMarkdown("https://elmfer.com/parkour_recorder/download.md");
+        m_pageViewer = prwmdGenMarkdown("https://prmod.elmfer.com/download.md");
 
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();

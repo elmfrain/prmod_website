@@ -176,7 +176,7 @@ void prwDrawTitleView()
     }
 
     if(!m_changelogFetcher)
-        m_changelogFetcher = prwfFetch("elmfer.com", "/parkour_recorder/changelog.txt");
+        m_changelogFetcher = prwfFetchURL("https://prmod.elmfer.com/changelog.txt");
 
     if(!m_body)
         m_body = prwwGenWidget(PRWW_TYPE_VIEWPORT);
