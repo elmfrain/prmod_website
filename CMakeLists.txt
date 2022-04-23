@@ -12,7 +12,9 @@ if(EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
     #Copy additional files needed to display program in a browser
-    file(COPY emscripten DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    file(COPY emscripten/index.html DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    file(COPY emscripten/htconfig.json DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    file(COPY emscripten/favicon.ico DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
 #Copy resource files to current binary folder
