@@ -11,8 +11,8 @@ if(EMSCRIPTEN)
     set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s EXPORTED_FUNCTIONS=_main,_prwuiResize -s EXPORTED_RUNTIME_METHODS=ccall")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-    #Copy html template if compiling for emscripten
-    file(COPY emscripten/index.html DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    #Copy additional files needed to display program in a browser
+    file(COPY emscripten DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
 #Copy resource files to current binary folder
