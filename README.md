@@ -1,6 +1,8 @@
 # Parkour Recorder Website
 An interactive website that is home to my Minecraft mod, Parkour Recorder.
 
+Website: [https://prmod.elmfer.com](https://prmod.elmfer.com)
+
 ![Main Screenshot](https://raw.githubusercontent.com/wiki/elmfrain/prmod_website/main_screenshot.png)
 
 It is made to mimic the GUI of the actual mod.
@@ -45,6 +47,12 @@ And run with command:
 ```
 emrun index.html
 ```
+
+## What's Missing
+* Website won't work on Safari because multithreading isn't enabled on that brower.
+* Use Emscripten's web API to remove the need to use a thread on each fetch.
+* Downloads section lists available downloads along with its metadata.
+* Maybe a 404 screen.
 
 ## How It's Made
 This project's workflow (stack) is unconventional because it is written in C instead of JavaScript, CSS, and HTML.
