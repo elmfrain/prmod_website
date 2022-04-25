@@ -53,6 +53,7 @@ emrun index.html
 * Use Emscripten's web API to remove the need to use a thread on each fetch.
 * Downloads section lists available downloads along with its metadata.
 * Maybe a 404 screen.
+* Use watered down version of Assimp. Helps reduce build times and aids in faster deploy times.
 
 ## How It's Made
 This project's workflow (stack) is unconventional because it is written in C instead of JavaScript, CSS, and HTML.
