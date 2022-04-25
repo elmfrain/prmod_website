@@ -2,20 +2,56 @@ cmake_minimum_required(VERSION 3.2)
 
 project(pr_web)
 
-#Add glad for OpenGL
-add_subdirectory("dep/glad")
+#Emscripten enviornment and build flags
+if(EMSCRIPTEN)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -Wno-implicit-function-declaration")
+    set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 --preload-file res")
+    set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s PTHREAD_POOL_SIZE=4")
+    set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s USE_WEBGL2=1 -s FETCH=1 -pthread")
+    set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s EXPORTED_FUNCTIONS=_main,_prwuiResize -s EXPORTED_RUNTIME_METHODS=ccall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
+    #Copy additional files needed to display program in a browser
+    file(COPY emscripten/index.html DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    file(COPY emscripten/htconfig.json DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    file(COPY emscripten/favicon.ico DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
+
+#Copy resource files to current binary folder
+if(NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
+
+    file(COPY res DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    
+endif()
 
 #Add glm
 option(CGLM_SHARED "Shared build" OFF)
 option(CGLM_STATIC "Static build" ON)
 add_subdirectory("dep/cglm")
 
-#add glfw
-add_subdirectory("dep/glfw")
+#Add assimp
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL " " FORCE)
+set(ASSIMP_BUILD_OBJ_IMPORTER ON  CACHE BOOL " " FORCE) #Only enable obj importer
+set(ASSIMP_NO_EXPORT          ON  CACHE BOOL " " FORCE)
+set(ASSIMP_BUILD_TESTS        OFF CACHE BOOL " " FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL " " FORCE)
+set(ASSIMP_INSTALL            OFF CACHE BOOL " " FORCE)
+set(BUILD_SHARED_LIBS         OFF CACHE BOOL " " FORCE)
+add_subdirectory("dep/assimp")
 
-#add ssl
-set(OPENSSL_USE_STATIC_LIBS TRUE)
-find_package(OpenSSL REQUIRED)
+if(NOT EMSCRIPTEN)
+    #Add glad for OpenGL
+    add_subdirectory("dep/glad")
+
+    #add glfw
+    add_subdirectory("dep/glfw")
+endif()
+
+if(NOT EMSCRIPTEN)
+    #add ssl
+    set(OPENSSL_USE_STATIC_LIBS TRUE)
+    find_package(OpenSSL REQUIRED)
+endif()
 
 add_executable(${PROJECT_NAME}
     main.c
@@ -34,18 +70,39 @@ add_executable(${PROJECT_NAME}
     download_view.c
 )
 
-target_link_libraries(${PROJECT_NAME}
-    glad
-    cglm
-    glfw
-    ${OPENSSL_SSL_LIBRARY}
-    ${OPENSSL_LIBRARIES}
-    pthread
-)
+if(NOT EMSCRIPTEN)
+    target_link_libraries(${PROJECT_NAME}
+        glad
+        cglm
+        glfw
+        ${OPENSSL_SSL_LIBRARY}
+        ${OPENSSL_LIBRARIES}
+        pthread
+        assimp
+        m
+    )
+else()
+    target_link_libraries(${PROJECT_NAME}
+        cglm
+        glfw
+        #${CMAKE_SOURCE_DIR}/build/libssl.a
+        #${CMAKE_SOURCE_DIR}/build/libcrypto.a
+        assimp
+        m
+    )
+endif()
 
-target_include_directories(${PROJECT_NAME} PRIVATE
-    include
-    dep/glfw/include
-    dep/glad/include
-    dep/cglm/include
-)
+if(NOT EMSCRIPTEN)
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        include
+        dep/glfw/include
+        dep/glad/include
+        dep/cglm/include
+    )
+else()
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        include
+        dep/cglm/include
+        dep/openssl/include
+    )
+endif()

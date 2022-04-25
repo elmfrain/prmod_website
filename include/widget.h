@@ -27,6 +27,10 @@ int prwwWidgetVisible(PRWwidget* widget);
 
 int prwwWidgetEnabled(PRWwidget* widget);
 
+float prwwWidgetLCursorX(PRWwidget* widget);
+
+float prwwWidgetLCursorY(PRWwidget* widget);
+
 void prwwWidgetSetEnabled(PRWwidget* widget, int enabled);
 
 void prwwWidgetSetVisible(PRWwidget* widget, int visible);

@@ -5,9 +5,15 @@
 #include "animation.h"
 #include "input.h"
 
+#ifndef EMSCRIPTEN
 #include <glad/glad.h>
+#else
+#include <GLES3/gl3.h>
+#include <emscripten.h>
+#endif
 #include <stb_image.h>
 
+#include <stdio.h>
 #include <string.h>
 
 //-------- LIST CONVINIENCE CLASS --------//
@@ -133,16 +139,21 @@ static void i_onLinkClick(PRWwidget* widget)
         struct MDlink* l = i_listGet(&currentMDviewer->linkList, i);
         if(l->button == widget)
         {
+            int ret;
             char command[3000];
-#ifdef __unix__
+#ifdef EMSCRIPTEN
+            //printf("I got this link!: %s", l->url);
+            sprintf(command, "window.open(\"%s\");", l->url);
+            emscripten_run_script(command);
+#elif defined(__unix__)
             sprintf(command, "xdg-open %s", l->url);
-            system(command);
+            ret = system(command);
 #elif defined(_WIN32)
             sprintf(command, "start %s", l->url);
-            system(command);
+            ret = system(command);
 #elif defined(__APPLE__)
             sprintf(command, "open %s", l->url);
-            system(command);
+            ret = system(command);
 #endif
         }
     }
@@ -216,9 +227,10 @@ static struct MDimage* i_getImage(struct MarkdownViewer* v, const char* url, con
 
                 glBindTexture(GL_TEXTURE_2D, im->glTexture);
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, im->width, im->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+                glGenerateMipmap(GL_TEXTURE_2D);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-                glGenerateMipmap(GL_TEXTURE_2D);
+                glBindTexture(GL_TEXTURE_2D, 0);
 
                 stbi_image_free(image);
             }
@@ -241,7 +253,7 @@ static struct MDimage* i_getImage(struct MarkdownViewer* v, const char* url, con
 }
 
 //String insert
-char strbuffer[2048];
+static char strbuffer[2048];
 #define strins(dst, src, rep) {strcpy(strbuffer, dst + rep); strcpy(dst, src); strcat(dst, strbuffer);}
 
 #define getviewer struct MarkdownViewer* v = (struct MarkdownViewer*) viewer
@@ -319,7 +331,7 @@ void prwmdDrawMarkdown(PRWmarkdownViewer* viewer)
                     res++;
                     for(j = 0; res[j] != ')'; j++);
                     char url[2048] = {0}; strncpy(url, res, j);
-                    if(alt) image = i_getImage(v, url, alt);
+                    if(*alt) image = i_getImage(v, url, alt);
                 }
             }
 
@@ -357,7 +369,7 @@ void prwmdDrawMarkdown(PRWmarkdownViewer* viewer)
                     res++;
                     for(j = 0; res[j] != ')'; j++);
                     char url[2048] = {0}; strncpy(url, res, j);
-                    if(alt) 
+                    if(*alt) 
                     {
                         struct MDlink* link = i_getLink(v, url, alt);
                         link->linkPos = lpos++;
@@ -461,6 +473,11 @@ void prwmdDrawMarkdown(PRWmarkdownViewer* viewer)
 
     //Handle and constrain scroll
     if(prwiJustScrolled() && prwwWidgetHovered(v->widget)) v->scroll.grabbingTo += prwiScrollDeltaY() * 35;
+    if(prwwWidgetJustPressed(v->widget))
+    {
+        if(prwwWidgetLCursorY(v->widget) < v->widget->height / 2) v->scroll.grabbingTo -= 80;
+        else v->scroll.grabbingTo += 80;
+    }
     float MAX_SCROLL = cursorY - height * 2 / 3;
     if(MAX_SCROLL < 0) MAX_SCROLL = 0;
     if(scroll < 0) prwaSmootherGrabTo(&v->scroll, 0);

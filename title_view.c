@@ -9,7 +9,11 @@
 #include "shaders.h"
 #include "input.h"
 
+#ifndef EMSCRIPTEN
 #include <glad/glad.h>
+#else
+#include <GLES3/gl3.h>
+#endif
 #include <cglm/cglm.h>
 
 #include <string.h>
@@ -33,7 +37,7 @@ static mat4 m_modelviewMatrix;
 static PRWwidget* m_body = NULL;
 
 //String insert
-char strbuffer[2048];
+static char strbuffer[2048];
 #define strins(dst, src, rep) {strcpy(strbuffer, dst + rep); strcpy(dst, src); strcat(dst, strbuffer);}
 
 static void i_drawChangeLog()
@@ -50,10 +54,26 @@ static void i_drawChangeLog()
         prwuiGenQuad(0, 0, m_changeLogVP->width, 12, 1711276032, 0);
         prwuiGenString(PRWUI_MID_LEFT, "Changelog", 6, 6, -1);
 
+        m_changeLogButtons[0]->height = m_changeLogButtons[1]->height = m_changeLogVP->height * 0.48f;
         m_changeLogButtons[0]->x = m_changeLogButtons[1]->x = m_changeLogVP->width + MARGIN;
         m_changeLogButtons[1]->y = m_changeLogVP->height - m_changeLogButtons[1]->height;
-        prwwWidgetDraw(m_changeLogButtons[0]);
-        prwwWidgetDraw(m_changeLogButtons[1]);
+
+        //Draw scroll buttons
+        for(int i = 0; i < 2; i++)
+        {
+            PRWwidget* b = m_changeLogButtons[i];
+            prwwWidgetDraw(b);
+            prwuiGenQuad(b->x, b->y, b->x + b->width, b->y + b->height, 1711276032, 0);
+            prwuiPushStack();
+            {
+                float translateX = b->x + b->width / 2;
+                float translateY = b->y + b->height / 2;
+                prwuiTranslate(translateX, translateY);
+                prwuiRotate(0, 0, 90);
+                prwuiGenString(PRWUI_CENTER, prwwWidgetText(b), 0, 0, -1);
+            }
+            prwuiPopStack();
+        }
     }
     prwwViewportEnd(m_changeLogVP);
 
@@ -116,6 +136,11 @@ static void i_drawChangeLog()
         }
     }
     float MAX_SCROLL = yCursor - m_changeLogVP->height / 2;
+    if(prwwWidgetJustPressed(m_changeLogVP))
+    {
+        if(prwwWidgetLCursorY(m_changeLogVP) < m_changeLogVP->height / 2) m_changelogScroll.grabbingTo -= 35;
+        else m_changelogScroll.grabbingTo += 35;
+    }
     if(MAX_SCROLL < 0) MAX_SCROLL = 0;
     if(scroll < 0) prwaSmootherGrabTo(&m_changelogScroll, 0);
     else if(scroll > MAX_SCROLL) prwaSmootherGrabTo(&m_changelogScroll, MAX_SCROLL);
@@ -138,7 +163,7 @@ void prwDrawTitleView()
 {
     if(!m_modLogoMesh)
     {
-        prwmLoad("res/3d_logo_baked.bin");
+        prwmLoad("res/3d_logo_baked.obj");
         m_modLogoMesh = prwmMeshGet("pr_logo");
         m_modLogoShadowMesh = prwmMeshGet("shadow_plane");
         prwaInitSmoother(&m_logoFov);
@@ -151,7 +176,7 @@ void prwDrawTitleView()
     }
 
     if(!m_changelogFetcher)
-        m_changelogFetcher = prwfFetch("elmfer.com", "/parkour_recorder/changelog.txt");
+        m_changelogFetcher = prwfFetchURL("https://prmod.elmfer.com/changelog.txt");
 
     if(!m_body)
         m_body = prwwGenWidget(PRWW_TYPE_VIEWPORT);
@@ -159,12 +184,12 @@ void prwDrawTitleView()
     if(!m_changeLogVP)
     {
         m_changeLogVP = prwwGenWidget(PRWW_TYPE_VIEWPORT);
-        m_changeLogButtons[0] = prwwGenWidget(PRWW_TYPE_BUTTON);
-        m_changeLogButtons[1] = prwwGenWidget(PRWW_TYPE_BUTTON);
-        m_changeLogButtons[0]->width = m_changeLogButtons[1]->width = 30;
+        m_changeLogButtons[0] = prwwGenWidget(PRWW_TYPE_WIDGET);
+        m_changeLogButtons[1] = prwwGenWidget(PRWW_TYPE_WIDGET);
+        m_changeLogButtons[0]->width = m_changeLogButtons[1]->width = 13;
         m_changeLogButtons[0]->height = m_changeLogButtons[1]->height = 15;
-        prwwWidgetSetText(m_changeLogButtons[0], "Up");
-        prwwWidgetSetText(m_changeLogButtons[1], "Down");
+        prwwWidgetSetText(m_changeLogButtons[0], "<<");
+        prwwWidgetSetText(m_changeLogButtons[1], ">>");
         prwaInitSmoother(&m_changelogScroll);
     }
     float uiWidth = prwuiGetUIwidth();

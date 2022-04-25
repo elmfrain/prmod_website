@@ -265,8 +265,13 @@ static void onScroll(GLFWwindow* window, double scrollX, double scrollY)
 {
     struct InputContext* context = i_getContextFromWindow(window);
     if(!context) return;
-
+#ifndef EMSCRIPTEN
     context->scrollDelta[0] = scrollX;
     context->scrollDelta[1] = scrollY;
     context->justScrolled = 1;
+#else
+    context->scrollDelta[0] = scrollX / 80.0f;
+    context->scrollDelta[1] = scrollY / 80.0f;
+    context->justScrolled = 1;
+#endif
 }
