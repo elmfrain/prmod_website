@@ -12,14 +12,17 @@ env:
 
 jobs:
   Linux-Build:
-    # Only build when no commits contatin [ci skip]. This is used for sending files to the
+    # Only build when no commits contain [ci skip]. This is used for sending files to the
     # the website hosting server more quickly.
     if: contains(toJson(github.event.commits), '[ci skip] ') == false
     
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -30,7 +33,7 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-## Testing should be implemented (e.g. HTTPSfetcher should work correctly)
+## Testing should be implemented (e.g. test if HTTPSfetcher works correctly)
 
 #    - name: Test
 #      working-directory: ${{github.workspace}}/build
