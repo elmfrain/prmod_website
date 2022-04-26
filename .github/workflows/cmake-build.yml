@@ -21,10 +21,7 @@ jobs:
     steps:
     - name: Setup OpenGL
       shell: sh
-      run: |
-        sudo add-apt-repository ppa:kisak/kisak-mesa
-        sudo apt update
-        sudo apt full-upgrade
+      run: sudo apt install mesa-common-dev libgl1-mesa-dev
       
     - name: Checkout Repository
       uses: actions/checkout@v3
