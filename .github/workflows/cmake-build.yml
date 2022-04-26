@@ -36,7 +36,33 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
+      
+  Emscripten-Build:
+    # Only build when no commits contain [ci skip]. This is used for sending files to the
+    # the website hosting server more quickly.
+    if: contains(toJson(github.event.commits), '[ci skip] ') == false
+    
+    runs-on: ubuntu-20.04
+    
+    steps:
+    - name: Setup Emscripten
+      uses: mymindstorm/setup-emsdk@v11
+      with:
+        version: 2.0.31
+        
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+        
+    - name: Configure CMake
+      run: |
+        mkdir build
+        cd build
+        emcmake cmake ..
+    
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 ## Testing should be implemented (e.g. test if HTTPSfetcher works correctly)
 
 #    - name: Test
