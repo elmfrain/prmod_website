@@ -8,10 +8,14 @@
 #include <openssl/ssl.h>
 #endif
 
+#ifdef __unix__
 #include <netdb.h>
 #include <sys/socket.h>
-#include <sys/select.h>
 #include <arpa/inet.h>
+#elif defined(_WIN32)
+#include <winsock2.h>
+#endif
+
 #include <unistd.h>
 
 #include <pthread.h>
@@ -310,6 +314,13 @@ static void i_init()
     SSLeay_add_ssl_algorithms();
     SSL_load_error_strings();
     m_sslContext = SSL_CTX_new(TLS_client_method());
+#ifdef _WIN32
+	int res;
+	WSADATA wsaData;
+	res = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if(res != 0)
+		printf("[Fetcher][Error]: WSAStartup failed with code %d\n", res);
+#endif
 }
 #endif
 
