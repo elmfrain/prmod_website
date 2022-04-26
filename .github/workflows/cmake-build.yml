@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Setup OpenGL
       shell: sh
-      run: sudo apt install mesa-common-dev libgl1-mesa-dev libxrandr-dev
+      run: sudo apt install mesa-common-dev libgl1-mesa-dev xorg-dev
       
     - name: Checkout Repository
       uses: actions/checkout@v3
