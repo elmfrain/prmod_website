@@ -70,7 +70,7 @@ add_executable(${PROJECT_NAME}
     download_view.c
 )
 
-if(NOT EMSCRIPTEN)
+if(UNIX AND NOT EMSCRIPTEN)
     target_link_libraries(${PROJECT_NAME}
         glad
         cglm
@@ -81,12 +81,22 @@ if(NOT EMSCRIPTEN)
         assimp
         m
     )
-else()
+elseif(WIN32)
     target_link_libraries(${PROJECT_NAME}
+        glad
         cglm
         glfw
-        #${CMAKE_SOURCE_DIR}/build/libssl.a
-        #${CMAKE_SOURCE_DIR}/build/libcrypto.a
+        ${OPENSSL_SSL_LIBRARY}
+        ${OPENSSL_LIBRARIES}
+        pthread
+        assimp
+        m
+		ws2_32
+    )
+else()
+	target_link_libraries(${PROJECT_NAME}
+        cglm
+        glfw
         assimp
         m
     )
@@ -98,6 +108,7 @@ if(NOT EMSCRIPTEN)
         dep/glfw/include
         dep/glad/include
         dep/cglm/include
+        ${OPENSSL_INCLUDE_DIR}
     )
 else()
     target_include_directories(${PROJECT_NAME} PRIVATE
