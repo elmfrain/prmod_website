@@ -20,7 +20,11 @@ jobs:
 
     steps:
     - name: Setup OpenGL
-      uses: openrndr/setup-opengl@v1.1
+      shell: sh
+      run: |
+        sudo add-apt-repository ppa:kisak/kisak-mesa
+        sudo apt update
+        sudo apt full-upgrade
       
     - name: Checkout Repository
       uses: actions/checkout@v3
