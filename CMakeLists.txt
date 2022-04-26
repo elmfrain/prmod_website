@@ -70,7 +70,7 @@ add_executable(${PROJECT_NAME}
     download_view.c
 )
 
-if(UNIX)
+if(UNIX AND NOT EMSCRIPTEN)
     target_link_libraries(${PROJECT_NAME}
         glad
         cglm
