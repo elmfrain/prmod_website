@@ -12,13 +12,11 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#elif defined(_WIN32)
-#include <winsock2.h>
-#endif
-
 #include <unistd.h>
-
 #include <pthread.h>
+#elif defined(_WIN32)
+#include <windows.h>
+#endif
 
 #ifdef EMSCRIPTEN
 #include <emscripten/fetch.h>
@@ -37,12 +35,18 @@ static struct Fetcher
     char hostname[256];
     char dir[2048];
     char ip[100];
+
 #ifndef EMSCRIPTEN //Fetcher will use the Fetch API if compiling with emscripten
     struct sockaddr_in address;
     int connection;
     SSL* sslConn;
 #endif
+
+#ifdef __unix__
     pthread_t threadID;
+#elif defined(_WIN32)
+    HANDLE threadID;
+#endif
 } Fetcher;
 
 #ifndef EMSCRIPTEN
@@ -51,7 +55,11 @@ static SSL_CTX* m_sslContext = NULL;
 
 static void i_init();
 static void i_getIPfromName(const char* hostname, char* ip);
+#ifdef __unix__
 static void* i_fetcherWorker(void* fetcher);
+#elif defined(_WIN32)
+static DWORD WINAPI i_fetcherWorker(void* fetcher);
+#endif
 
 PRWfetcher* prwfFetch(const char* host, const char* dir)
 {
@@ -75,7 +83,12 @@ PRWfetcher* prwfFetch(const char* host, const char* dir)
         strncpy(newFetcher->hostname, host, sizeof(newFetcher->hostname) - 1);
         strncpy(newFetcher->dir, dir, sizeof(newFetcher->dir) - 1);
 
+#ifdef __unix__
         pthread_create(&newFetcher->threadID, NULL, i_fetcherWorker, newFetcher);
+#elif defined(_WIN32)
+        newFetcher->threadID =  CreateThread(NULL, 0, i_fetcherWorker, newFetcher, 0, NULL);
+#endif
+
     }
 
     return (PRWfetcher*) newFetcher;
@@ -136,13 +149,23 @@ const char* prwfFetchString(PRWfetcher* fetcher, int* length)
 void prwfFetchWait(PRWfetcher* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
+#ifdef __unix__
     pthread_join(f->threadID, NULL);
+#elif defined(_WIN32)
+    WaitForSingleObject(f->threadID, INFINITE);
+#endif
 }
 
 void prwfFreeFetcher(PRWfetcher* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
+
+#ifdef __unix__
     pthread_join(f->threadID, NULL);
+#elif defined(_WIN32)
+    WaitForSingleObject(f->threadID, INFINITE);
+#endif
+
 #ifndef EMSCRIPTEN
     SSL_free(f->sslConn);
 #endif
@@ -150,7 +173,11 @@ void prwfFreeFetcher(PRWfetcher* fetcher)
     free(fetcher);
 }
 
+#ifdef __unix__
 static void* i_fetcherWorker(void* fetcher)
+#elif defined(_WIN32)
+DWORD WINAPI i_fetcherWorker(void* fetcher)
+#endif
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
     int ret;
@@ -242,7 +269,11 @@ static void* i_fetcherWorker(void* fetcher)
     f->datalen = contentLength + 1;
     sprintf(f->statusStr, "Recived Data. Status %d", f->statusCode);
 
+#ifdef __unix__
     close(f->connection);
+#elif defined(_WIN32)
+    closesocket(f->connection);
+#endif
 
     switch(f->statusCode)
     {
@@ -304,7 +335,7 @@ static void* i_fetcherWorker(void* fetcher)
 
     emscripten_fetch_close(fetch);
 #endif  
-    return NULL;
+    return 0;
 }
 
 #ifndef EMSCRIPTEN
