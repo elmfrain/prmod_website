@@ -82,17 +82,29 @@ if(UNIX AND NOT EMSCRIPTEN)
         m
     )
 elseif(WIN32)
-    target_link_libraries(${PROJECT_NAME}
-        glad
-        cglm
-        glfw
-        ${OPENSSL_SSL_LIBRARY}
-        ${OPENSSL_LIBRARIES}
-        pthread
-        assimp
-        m
-		ws2_32
-    )
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        target_link_libraries(${PROJECT_NAME}
+            glad
+            cglm
+            glfw
+            ${OPENSSL_SSL_LIBRARY}
+            ${OPENSSL_LIBRARIES}
+            pthread
+            assimp
+            m
+            ws2_32
+        )
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        target_link_libraries(${PROJECT_NAME}
+            glad
+            cglm
+            glfw
+            ${OPENSSL_SSL_LIBRARY}
+            ${OPENSSL_LIBRARIES}
+            assimp
+            ws2_32
+        )
+    endif()
 else()
 	target_link_libraries(${PROJECT_NAME}
         cglm
