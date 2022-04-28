@@ -11,4 +11,6 @@ void prwmdDrawMarkdown(PRWmarkdownViewer* viewer);
 
 PRWmarkdownViewer* prwmdGenMarkdownURL(const char* url);
 
+PRWmarkdownViewer* prwmdGenMarkdownFile(const char* filePath);
+
 void prwmdFreeMarkdown(PRWmarkdownViewer* viewer);
