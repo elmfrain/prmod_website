@@ -17,13 +17,6 @@ if(EMSCRIPTEN)
     file(COPY emscripten/favicon.ico DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
-#Copy resource files to current binary folder
-if(NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
-
-    file(COPY res DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
-    
-endif()
-
 #Add glm
 option(CGLM_SHARED "Shared build" OFF)
 option(CGLM_STATIC "Static build" ON)
@@ -128,4 +121,24 @@ else()
         dep/cglm/include
         dep/openssl/include
     )
+endif()
+
+#Copy resource files to current binary folder
+if(NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
+
+    file(GLOB_RECURSE resfiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "res/*")
+
+    foreach(resfile ${resfiles})
+    
+        add_custom_command(
+            TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+            "${CMAKE_CURRENT_SOURCE_DIR}/${resfile}"
+            "${CMAKE_CURRENT_BINARY_DIR}/${resfile}"
+        )
+
+    endforeach(resfile)
+
+    file(COPY res DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+    
 endif()
