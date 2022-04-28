@@ -26,7 +26,7 @@ void prwDrawDownloadView()
     }
 
     if(!m_pageViewer)
-        m_pageViewer = prwmdGenMarkdown("https://prmod.elmfer.com/download.md");
+        m_pageViewer = prwmdGenMarkdownURL("https://prmod.elmfer.com/download.md");
 
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();

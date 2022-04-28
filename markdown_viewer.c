@@ -501,7 +501,7 @@ static void i_mdLinkDestructor(void* mdLink)
     free(mdLink);
 }
 
-PRWmarkdownViewer* prwmdGenMarkdown(const char* url)
+PRWmarkdownViewer* prwmdGenMarkdownURL(const char* url)
 {
     struct MarkdownViewer* viewer = malloc(sizeof(struct MarkdownViewer));
 

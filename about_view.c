@@ -35,7 +35,7 @@ void prwDrawAboutView()
     }
 
     if(!m_pageViewer)
-        m_pageViewer = prwmdGenMarkdown("https://raw.githubusercontent.com/elmfrain/parkour_recorder/master-1.12.2/README.md");
+        m_pageViewer = prwmdGenMarkdownURL("https://raw.githubusercontent.com/elmfrain/parkour_recorder/master-1.12.2/README.md");
 
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();
