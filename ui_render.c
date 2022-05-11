@@ -13,6 +13,7 @@
 #include <time.h>
 
 #define getVec4Color(intcolor) { ((intcolor >> 16) & 0xFF) / 255.0f, ((intcolor >> 8) & 0xFF) / 255.0f, (intcolor & 0xFF) / 255.0f, ((intcolor >> 24) & 0xFF) / 255.0f }
+#define vec4Color(vec4color) vec4color[0], vec4color[1], vec4color[2], vec4color[3]
 
 static inline void i_orient(float* dst, int mode, float left, float top, float right, float bottom);
 
@@ -82,25 +83,10 @@ void prwuiGenQuad(float left, float top, float right, float bottom, uint32_t col
 
     prwmbIndex(m_meshBuilder, 6, 0, 1, 2, 0, 2, 3);
 
-    prwmbPosition(m_meshBuilder, left, bottom, 0);
-    prwmbUV(m_meshBuilder, 0, 0);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
-
-    prwmbPosition(m_meshBuilder, right, bottom, 0);
-    prwmbUV(m_meshBuilder, 1, 0);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
-
-    prwmbPosition(m_meshBuilder, right, top, 0);
-    prwmbUV(m_meshBuilder, 1, 1);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
-
-    prwmbPosition(m_meshBuilder, left, top, 0);
-    prwmbUV(m_meshBuilder, 0, 1);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
+    prwmbVertex(m_meshBuilder, left , bottom, 0.f, 0.f, 0.f, vec4Color(colorv4), texID);
+    prwmbVertex(m_meshBuilder, right, bottom, 0.f, 1.f, 0.f, vec4Color(colorv4), texID);
+    prwmbVertex(m_meshBuilder, right, top   , 0.f, 1.f, 1.f, vec4Color(colorv4), texID);
+    prwmbVertex(m_meshBuilder, left , top   , 0.f, 0.f, 1.f, vec4Color(colorv4), texID);
 }
 
 void prwuiGenGradientQuad(int direction, float left, float top, float right, float bottom, uint32_t startColor, uint32_t endColor, int texID)
@@ -114,25 +100,10 @@ void prwuiGenGradientQuad(int direction, float left, float top, float right, flo
 
     prwmbIndex(m_meshBuilder, 6, 0, 1, 2, 0, 2, 3);
 
-    prwmbPosition(m_meshBuilder, positions[0], positions[1], 0);
-    prwmbUV(m_meshBuilder, 0, 0);
-    prwmbColorRGBA(m_meshBuilder, eColorv4[0], eColorv4[1], eColorv4[2], eColorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
-
-    prwmbPosition(m_meshBuilder, positions[2], positions[3], 0);
-    prwmbUV(m_meshBuilder, 1, 0);
-    prwmbColorRGBA(m_meshBuilder, eColorv4[0], eColorv4[1], eColorv4[2], eColorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
-
-    prwmbPosition(m_meshBuilder, positions[4], positions[5], 0);
-    prwmbUV(m_meshBuilder, 1, 1);
-    prwmbColorRGBA(m_meshBuilder, sColorv4[0], sColorv4[1], sColorv4[2], sColorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
-
-    prwmbPosition(m_meshBuilder, positions[6], positions[7], 0);
-    prwmbUV(m_meshBuilder, 0, 1);
-    prwmbColorRGBA(m_meshBuilder, sColorv4[0], sColorv4[1], sColorv4[2], sColorv4[3]);
-    prwmbTexid(m_meshBuilder, texID);
+    prwmbVertex(m_meshBuilder, positions[0], positions[1], 0.f, 0.f, 0.f, vec4Color(eColorv4), texID);
+    prwmbVertex(m_meshBuilder, positions[2], positions[3], 0.f, 1.f, 0.f, vec4Color(eColorv4), texID);
+    prwmbVertex(m_meshBuilder, positions[4], positions[5], 0.f, 1.f, 1.f, vec4Color(sColorv4), texID);
+    prwmbVertex(m_meshBuilder, positions[6], positions[7], 0.f, 0.f, 1.f, vec4Color(sColorv4), texID);
 }
 
 void prwuiGenVerticalLine(float x, float startY, float endY, uint32_t color)
@@ -264,7 +235,7 @@ static void i_init()
 
     prwvfVTXFMT vertexFormat;
 
-    vertexFormat[0] = 4;
+    vertexFormat[0] = 4; // Number of attributes
 
     vertexFormat[1] = PRWVF_ATTRB_USAGE_POS 
                     | PRWVF_ATTRB_TYPE_FLOAT
@@ -500,25 +471,10 @@ static void i_frGenChar(int unicode, float x , float y, float italics, uint32_t 
 
     prwmbIndex(m_meshBuilder, 6, 0, 1, 3, 2, 3, 1);
 
-    prwmbPosition(m_meshBuilder, x - italics,  y + 8, 0);
-    prwmbUV(m_meshBuilder, uStart / 128.0f, (vStart + 8) / 128.0f);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, m_maxTexUnits);
-
-    prwmbPosition(m_meshBuilder, x + glpyhWidth - italics, y + 8, 0);
-    prwmbUV(m_meshBuilder, (uStart + glpyhWidth) / 128.0f, (vStart + 8) / 128.0f);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, m_maxTexUnits);
-
-    prwmbPosition(m_meshBuilder, x + glpyhWidth + italics, y, 0);
-    prwmbUV(m_meshBuilder, (uStart + glpyhWidth) / 128.0f, vStart / 128.0f);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, m_maxTexUnits);
-
-    prwmbPosition(m_meshBuilder, x + italics, y, 0);
-    prwmbUV(m_meshBuilder, uStart / 128.0f, vStart / 128.0f);
-    prwmbColorRGBA(m_meshBuilder, colorv4[0], colorv4[1], colorv4[2], colorv4[3]);
-    prwmbTexid(m_meshBuilder, m_maxTexUnits);
+    prwmbVertex(m_meshBuilder,              x - italics,  y + 8, 0.f, (uStart             ) / 128.0f, (vStart + 8) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
+    prwmbVertex(m_meshBuilder, x + glpyhWidth - italics,  y + 8, 0.f, (uStart + glpyhWidth) / 128.0f, (vStart + 8) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
+    prwmbVertex(m_meshBuilder, x + glpyhWidth + italics,      y, 0.f, (uStart + glpyhWidth) / 128.0f, (vStart    ) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
+    prwmbVertex(m_meshBuilder,              x + italics,      y, 0.f, (uStart             ) / 128.0f, (vStart    ) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
 }
 
 static void i_frBindAtlases()
