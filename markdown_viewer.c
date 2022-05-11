@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <string.h>
 
+static const uint8_t* m_emptyString = " ";
+
 //-------- LIST CONVINIENCE CLASS --------//
 struct ListNode
 {
@@ -107,7 +109,12 @@ static void i_listClear(list_t* list)
 struct MarkdownViewer
 {
     PRWwidget* widget;
+    //Fetcher is used when markdown is generated with a given URL
     PRWfetcher* fetcher;
+    //Content is used when markdown is gernerated with a string or file
+    uint8_t* content;
+    long contentLen;
+
     PRWsmoother scroll;
     list_t imageList;
     list_t linkList;
@@ -258,6 +265,24 @@ static char strbuffer[2048];
 
 #define getviewer struct MarkdownViewer* v = (struct MarkdownViewer*) viewer
 
+static long i_mdGetContent(const struct MarkdownViewer* mdViewer, const char** dstContent)
+{
+    if(mdViewer->fetcher != NULL)
+    {
+        long len;
+        *dstContent = prwfFetchString(mdViewer->fetcher, &len);
+        return len;
+    }
+    else if(mdViewer->content != NULL)
+    {
+        *dstContent = mdViewer->content;
+        return mdViewer->contentLen;
+    }
+
+    *dstContent = m_emptyString;
+    return 1;
+}
+
 void prwmdDrawMarkdown(PRWmarkdownViewer* viewer)
 {
     getviewer;
@@ -265,15 +290,16 @@ void prwmdDrawMarkdown(PRWmarkdownViewer* viewer)
     prwwViewportStart(v->widget, 1);
     prwuiTranslate(0, 10);
 
-    int imgIndex = 0;
-    int len;
-    int lineLen = 0;
+    long imgIndex = 0;
+    long len;
+    long lineLen = 0;
 
     float width = v->widget->width;
     float height = v->widget->height;
     float cursorY = 0.0f;
     float scroll = prwaSmootherValue(&v->scroll);
-    const char* markdown = prwfFetchString(v->fetcher, &len);
+    const char* markdown;
+    len = i_mdGetContent(v, &markdown);
     for(int i = 0; i < len; i++, lineLen++)
     {
         //New line found
@@ -501,7 +527,45 @@ static void i_mdLinkDestructor(void* mdLink)
     free(mdLink);
 }
 
-PRWmarkdownViewer* prwmdGenMarkdown(const char* url)
+static long i_readFile(const char* filePath, uint8_t** fileContentPtr)
+{
+    FILE* file = fopen(filePath, "r");
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    rewind(file);
+
+    uint8_t* fileContent = malloc(fileSize + 1);
+    fread(fileContent, fileSize, 1, file);
+    fileContent[fileSize] = 0; //Null terminator
+
+    fclose(file);
+
+    *fileContentPtr = fileContent;
+
+    return fileSize + 1;
+}
+
+PRWmarkdownViewer* prwmdGenMarkdownFile(const char* filePath)
+{
+    struct MarkdownViewer* viewer = malloc(sizeof(struct MarkdownViewer));
+
+    if(viewer)
+    {
+        viewer->widget = prwwGenWidget(PRWW_TYPE_VIEWPORT);
+        viewer->fetcher = NULL;
+        viewer->contentLen = i_readFile(filePath, &viewer->content);
+        prwaInitSmoother(&viewer->scroll);
+        viewer->scroll.grabbed = 1;
+        viewer->imageList = i_listCreate();
+        viewer->linkList = i_listCreate();
+        viewer->imageList.destructor = i_mdImageDestructor;
+        viewer->linkList.destructor = i_mdLinkDestructor;
+    }
+
+    return (PRWmarkdownViewer*) viewer;
+}
+
+PRWmarkdownViewer* prwmdGenMarkdownURL(const char* url)
 {
     struct MarkdownViewer* viewer = malloc(sizeof(struct MarkdownViewer));
 
@@ -509,6 +573,7 @@ PRWmarkdownViewer* prwmdGenMarkdown(const char* url)
     {
         viewer->widget = prwwGenWidget(PRWW_TYPE_VIEWPORT);
         viewer->fetcher = prwfFetchURL(url);
+        viewer->content = NULL;
         prwaInitSmoother(&viewer->scroll);
         viewer->scroll.grabbed = 1;
         viewer->imageList = i_listCreate();

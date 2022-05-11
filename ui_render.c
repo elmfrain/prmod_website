@@ -1,6 +1,7 @@
 #include "ui_render.h"
 
 #include "shaders.h"
+#include "mesh_builder.h"
 
 #include <cglm/cam.h>
 #include <cglm/affine.h>
@@ -11,40 +12,19 @@
 #include <ctype.h>
 #include <time.h>
 
-#define BATCH_BUFFER_SIZE 500000
-#define STACK_SIZE 128
+#define getVec4Color(intcolor) { ((intcolor >> 16) & 0xFF) / 255.0f, ((intcolor >> 8) & 0xFF) / 255.0f, (intcolor & 0xFF) / 255.0f, ((intcolor >> 24) & 0xFF) / 255.0f }
+#define vec4Color(vec4color) vec4color[0], vec4color[1], vec4color[2], vec4color[3]
 
-static struct Vertex
-{
-    vec3 pos;
-    vec2 uv;
-    uint8_t r, g, b, a;
-    int8_t texID;
-} Vertex;
-
-//Batch Rendering
-static int m_vbPos = 0;
-static struct Vertex* m_batchVertexBuffer = NULL;
-static int m_ibPos = 0;
-static uint32_t* m_batchIndexBuffer = NULL;
-static GLuint m_batchVAO = 0;
-static GLuint m_batchVBO = 0;
-static GLuint m_batchEBO = 0;
-static inline void i_createVertex(struct Vertex* dst, float x, float y, float z, float u, float v, uint32_t color, int8_t texID);
-static inline int i_pushVerticies(struct Vertex* verticies, size_t nb);
-static inline int i_pushIndicies(uint32_t* indicies, size_t nb);
 static inline void i_orient(float* dst, int mode, float left, float top, float right, float bottom);
 
-//Windowing
+// Batch Rendering
+static PRWmeshBuilder* m_meshBuilder;
+
+// Windowing
 static GLFWwindow* m_window = NULL;
 static int m_windowWidth = 0;
 static int m_windowHeight = 0;
 static float m_UIscaleFctor = 2.0f;
-
-//Modelview Stacking
-static mat4* m_modelviewStack = NULL;
-static int m_currentStackIndex = 0;
-static vec4* m_currentModelview = NULL;
 
 static void i_onWindowResize(GLFWwindow*, int, int);
 static void i_init();
@@ -56,7 +36,7 @@ static inline float i_frGetStringWidth(const char* str);
 static inline float i_frGetCharWidth(int unicode);
 static inline void i_frAnchor(int mode, const char* str, float x, float y, float* newpos);
 
-#ifdef EMSCRIPTEN //Called when the canvas size changes
+#ifdef EMSCRIPTEN //Called when the canvas size changes in browser
 void prwuiResize(int width, int height)
 {
     if(!m_window) return;
@@ -91,65 +71,39 @@ void prwuiSetupUIrendering()
     mat4 projection; glm_ortho(0, prwuiGetUIwidth(), prwuiGetUIheight(), 0, -500, 500, projection);
     prwsSetProjectionMatrix(projection);
 
-    m_currentModelview = *m_modelviewStack;
-    glm_mat4_identity(m_currentModelview);
-    m_currentStackIndex = 0;
-
     glDisable(GL_DEPTH_TEST);
-    prwsSetModelViewMatrix(m_currentModelview);
+    prwsSetModelViewMatrix(prwmbGetModelView(m_meshBuilder));
 }
 
 void prwuiGenQuad(float left, float top, float right, float bottom, uint32_t color, int texID)
 {
     texID = texID <= 16 ? texID : 0;
-    struct Vertex verticies[4];
-    uint32_t indicies[6] =
-    {
-        m_vbPos, m_vbPos + 1, m_vbPos + 2,
-        m_vbPos, m_vbPos + 2, m_vbPos + 3,
-    };
 
-    i_createVertex(&verticies[0],  left, bottom, 0, 0, 0, color, texID);
-    i_createVertex(&verticies[1], right, bottom, 0, 1, 0, color, texID);
-    i_createVertex(&verticies[2], right,    top, 0, 1, 1, color, texID);
-    i_createVertex(&verticies[3],  left,    top, 0, 0, 1, color, texID);
+    vec4 colorv4 = getVec4Color(color);
 
-    int success = 1;
-    success &= i_pushVerticies(verticies, 4);
-    success &= i_pushIndicies(indicies, 6);
-    if(!success)
-    {
-        prwuiRenderBatch();
-        i_pushVerticies(verticies, 4);
-        i_pushIndicies(indicies, 6);
-    }
+    prwmbIndex(m_meshBuilder, 6, 0, 1, 2, 0, 2, 3);
+
+    prwmbVertex(m_meshBuilder, left , bottom, 0.f, 0.f, 0.f, vec4Color(colorv4), texID);
+    prwmbVertex(m_meshBuilder, right, bottom, 0.f, 1.f, 0.f, vec4Color(colorv4), texID);
+    prwmbVertex(m_meshBuilder, right, top   , 0.f, 1.f, 1.f, vec4Color(colorv4), texID);
+    prwmbVertex(m_meshBuilder, left , top   , 0.f, 0.f, 1.f, vec4Color(colorv4), texID);
 }
 
 void prwuiGenGradientQuad(int direction, float left, float top, float right, float bottom, uint32_t startColor, uint32_t endColor, int texID)
 {
     texID = texID <= 16 ? texID : 0;
+
+    vec4 sColorv4 = getVec4Color(startColor);
+    vec4 eColorv4 = getVec4Color(endColor);
+
     float positions[8]; i_orient(positions, direction, left, top, right, bottom);
-    struct Vertex verticies[4];
-    uint32_t indicies[6] =
-    {
-        m_vbPos, m_vbPos + 1, m_vbPos + 2,
-        m_vbPos, m_vbPos + 2, m_vbPos + 3,
-    };
 
-    i_createVertex(&verticies[0], positions[0], positions[1], 0, 0, 0, endColor, texID);
-    i_createVertex(&verticies[1], positions[2], positions[3], 0, 1, 0, endColor, texID);
-    i_createVertex(&verticies[2], positions[4], positions[5], 0, 1, 1, startColor, texID);
-    i_createVertex(&verticies[3], positions[6], positions[7], 0, 0, 1, startColor, texID);
+    prwmbIndex(m_meshBuilder, 6, 0, 1, 2, 0, 2, 3);
 
-    int success = 1;
-    success &= i_pushVerticies(verticies, 4);
-    success &= i_pushIndicies(indicies, 6);
-    if(!success)
-    {
-        prwuiRenderBatch();
-        i_pushVerticies(verticies, 4);
-        i_pushIndicies(indicies, 6);
-    }
+    prwmbVertex(m_meshBuilder, positions[0], positions[1], 0.f, 0.f, 0.f, vec4Color(eColorv4), texID);
+    prwmbVertex(m_meshBuilder, positions[2], positions[3], 0.f, 1.f, 0.f, vec4Color(eColorv4), texID);
+    prwmbVertex(m_meshBuilder, positions[4], positions[5], 0.f, 1.f, 1.f, vec4Color(sColorv4), texID);
+    prwmbVertex(m_meshBuilder, positions[6], positions[7], 0.f, 0.f, 1.f, vec4Color(sColorv4), texID);
 }
 
 void prwuiGenVerticalLine(float x, float startY, float endY, uint32_t color)
@@ -172,25 +126,16 @@ void prwuiGenString(int anchor, const char* str, float x, float y, uint32_t colo
 
 void prwuiRenderBatch()
 {
-    if(!m_vbPos || !m_ibPos) return;
-
     prws_POS_UV_COLOR_TEXID_shader();
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_batchVBO);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, m_vbPos * sizeof(struct Vertex), m_batchVertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_batchEBO);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_ibPos * sizeof(uint32_t), m_batchIndexBuffer);
-
     i_frBindAtlases();
 
-    glBindVertexArray(m_batchVAO);
-    glDrawElements(GL_TRIANGLES, m_ibPos + 1, GL_UNSIGNED_INT, NULL);
-    glBindVertexArray(0);
+    prwmbDrawElements(m_meshBuilder, GL_TRIANGLES);
 
-    m_vbPos = m_ibPos = 0;
+    prwmbReset(m_meshBuilder);
 }
 
 float prwuiGetStringHeight()
@@ -235,59 +180,49 @@ float prwuiGetUIScaleFactor()
 
 void prwuiPushStack()
 {
-    if(!(m_currentStackIndex + 1 < STACK_SIZE))
-    {
-        printf("[UIRender][Error]: Exceeded max stack size of %d", STACK_SIZE);
-        return;
-    }
-
-    m_currentStackIndex++;
-    m_currentModelview = m_modelviewStack[m_currentStackIndex];
-    glm_mat4_copy(m_modelviewStack[m_currentStackIndex - 1], m_currentModelview);
+    prwmbPushMatrix(m_meshBuilder);
 }
 
 void prwuiScale(float x, float y)
 {
     vec3 v = { x, y, 1 };
-    glm_scale(m_currentModelview, v);
+
+    glm_scale(prwmbGetModelView(m_meshBuilder), v);
 }
 
 void prwuiTranslate(float x, float y)
 {
     vec3 v = { x, y, 0 };
-    glm_translate(m_currentModelview, v);
+    glm_translate(prwmbGetModelView(m_meshBuilder), v);
 }
 
 void prwuiRotate(float x, float y, float z)
 {
+    vec4* modelView = prwmbGetModelView(m_meshBuilder);
+
     vec3 axis = { 1, 0, 0 };
-    glm_rotate(m_currentModelview, glm_rad(x), axis);
+    glm_rotate(modelView, glm_rad(x), axis);
     axis[0] = 0; axis[1] = 1;
-    glm_rotate(m_currentModelview, glm_rad(y), axis);
+    glm_rotate(modelView, glm_rad(y), axis);
     axis[1] = 0; axis[2] = 1;
-    glm_rotate(m_currentModelview, glm_rad(z), axis);
+    glm_rotate(modelView, glm_rad(z), axis);
 }
 
 void prwuiMult(mat4 val)
 {
-    glm_mat4_mul(m_currentModelview, val, m_currentModelview);
+    vec4* modelView = prwmbGetModelView(m_meshBuilder);
+
+    glm_mat4_mul(modelView, val, modelView);
 }
 
 void prwuiPopStack()
 {
-    if(m_currentStackIndex - 1 < 0)
-    {
-        printf("[UIRender][Error]: A stack underflow occured");
-        return;
-    }
-
-    m_currentStackIndex--;
-    m_currentModelview = m_modelviewStack[m_currentStackIndex];
+    prwmbPopMatrix(m_meshBuilder);
 }
 
 vec4* prwuiGetModelView()
 {
-    return m_currentModelview;
+    return prwmbGetModelView(m_meshBuilder);
 }
 
 static void i_init()
@@ -298,41 +233,31 @@ static void i_init()
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 #endif
 
-    if(!m_batchVertexBuffer) m_batchVertexBuffer = malloc(BATCH_BUFFER_SIZE);
-    if(!m_batchIndexBuffer) m_batchIndexBuffer = malloc(BATCH_BUFFER_SIZE);
-    if(!m_modelviewStack)
-    {
-        m_modelviewStack = malloc(STACK_SIZE * sizeof(mat4));
-        m_currentModelview = *m_modelviewStack;
-        glm_mat4_identity(m_currentModelview);
-    }
+    prwvfVTXFMT vertexFormat;
 
-    if(!m_batchVAO)
-    {
-        glGenBuffers(1, &m_batchEBO);
-        glGenBuffers(1, &m_batchVBO);
-        glGenVertexArrays(1, &m_batchVAO);
+    vertexFormat[0] = 4; // Number of attributes
 
-        glBindVertexArray(m_batchVAO);
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, m_batchVBO);
-            glBufferData(GL_ARRAY_BUFFER, BATCH_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_batchEBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, BATCH_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
+    vertexFormat[1] = PRWVF_ATTRB_USAGE_POS 
+                    | PRWVF_ATTRB_TYPE_FLOAT
+                    | PRWVF_ATTRB_SIZE(3)
+                    | PRWVF_ATTRB_NORMALIZED_FALSE;
 
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(struct Vertex), &((struct Vertex*) 0)->pos);
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(struct Vertex), &((struct Vertex*) 0)->uv);
-            glEnableVertexAttribArray(2);
-            glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(struct Vertex), &((struct Vertex*) 0)->r);
-            glEnableVertexAttribArray(3);
-            glVertexAttribPointer(3, 1, GL_BYTE, GL_FALSE, sizeof(struct Vertex), &((struct Vertex*) 0)->texID);
-        }
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
+    vertexFormat[2] = PRWVF_ATTRB_USAGE_UV
+                    | PRWVF_ATTRB_TYPE_FLOAT
+                    | PRWVF_ATTRB_SIZE(2)
+                    | PRWVF_ATTRB_NORMALIZED_FALSE;
+                
+    vertexFormat[3] = PRWVF_ATTRB_USAGE_COLOR 
+                    | PRWVF_ATTRB_TYPE_FLOAT
+                    | PRWVF_ATTRB_SIZE(4)
+                    | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+    vertexFormat[4] = PRWVF_ATTRB_USAGE_TEXID
+                    | PRWVF_ATTRB_TYPE_UBYTE
+                    | PRWVF_ATTRB_SIZE(1)
+                    | PRWVF_ATTRB_NORMALIZED_FALSE;
+    
+    m_meshBuilder = prwmbGenBuilder(vertexFormat);
 
     i_frInit();
 }
@@ -341,43 +266,6 @@ static void i_onWindowResize(GLFWwindow* window, int width, int height)
 {
     m_windowWidth = width;
     m_windowHeight = height;
-}
-
-static inline void i_createVertex(struct Vertex* dst, float x, float y, float z, float u, float v, uint32_t color, int8_t texID)
-{
-    dst->pos[0] = x;
-    dst->pos[1] = y;
-    dst->pos[2] = z;
-    glm_mat4_mulv3(m_currentModelview, dst->pos, 1.0f, dst->pos);
-    dst->uv[0] = u;
-    dst->uv[1] = v;
-    dst->a = (color >> 24 & 255);
-    dst->r = (color >> 16 & 255);
-    dst->g = (color >> 8  & 255);
-    dst->b = (color       & 255);
-    dst->texID = texID;
-}
-
-static inline int i_pushVerticies(struct Vertex* verticies, size_t nb)
-{
-    if(nb * sizeof(struct Vertex) + m_vbPos * sizeof(struct Vertex) > BATCH_BUFFER_SIZE)
-        return 0;
-
-    memcpy(&m_batchVertexBuffer[m_vbPos], verticies, nb * sizeof(struct Vertex));
-    m_vbPos += nb;
-
-    return 1;
-}
-
-static inline int i_pushIndicies(uint32_t* indicies, size_t nb)
-{
-    if(nb * sizeof(uint32_t) + m_ibPos *sizeof(uint32_t) > BATCH_BUFFER_SIZE)
-        return 0;
-
-    memcpy(&m_batchIndexBuffer[m_ibPos], indicies, nb * sizeof(uint32_t));
-    m_ibPos += nb;
-
-    return 1;
 }
 
 static inline void i_orient(float* dst, int mode, float left, float top, float right, float bottom)
@@ -568,36 +456,25 @@ static void i_frInit()
 
 static void i_frGenChar(int unicode, float x , float y, float italics, uint32_t color)
 {
-    if(unicode < 256)
+    if(256 <= unicode)
     {
-        uint8_t glyphID = i_frGetCharID(unicode);
-        uint8_t glpyhWidth = m_asciiGlyphWidths[glyphID];
-        float uStart = (glyphID % 16) * 8;
-        float vStart = (glyphID / 16) * 8 - 0.01;
-        float uiScale = prwuiGetUIScaleFactor();
-        
-        struct Vertex verticies[4];
-        uint32_t indicies[6] =
-        {
-            m_vbPos    , m_vbPos + 1, m_vbPos + 3,
-            m_vbPos + 2, m_vbPos + 3, m_vbPos + 1,
-        };
-
-        i_createVertex(&verticies[0],              x - italics,  y + 8, 0, (uStart             ) / 128.0f, (vStart + 8) / 128.0f, color, m_maxTexUnits);
-        i_createVertex(&verticies[1], x + glpyhWidth - italics,  y + 8, 0, (uStart + glpyhWidth) / 128.0f, (vStart + 8) / 128.0f, color, m_maxTexUnits);
-        i_createVertex(&verticies[2], x + glpyhWidth + italics,      y, 0, (uStart + glpyhWidth) / 128.0f, (vStart    ) / 128.0f, color, m_maxTexUnits);
-        i_createVertex(&verticies[3],              x + italics,      y, 0, (uStart             ) / 128.0f, (vStart    ) / 128.0f, color, m_maxTexUnits);
-
-        int success = 1;
-        success &= i_pushVerticies(verticies, 4);
-        success &= i_pushIndicies(indicies, 6);
-        if(!success)
-        {
-            prwuiRenderBatch();
-            i_pushVerticies(verticies, 4);
-            i_pushIndicies(indicies, 6);
-        }
+        return;
     }
+
+    uint8_t glyphID = i_frGetCharID(unicode);
+    uint8_t glpyhWidth = m_asciiGlyphWidths[glyphID];
+    float uStart = (glyphID % 16) * 8;
+    float vStart = (glyphID / 16) * 8 - 0.01;
+    float uiScale = prwuiGetUIScaleFactor();
+    
+    vec4 colorv4 = getVec4Color(color);
+
+    prwmbIndex(m_meshBuilder, 6, 0, 1, 3, 2, 3, 1);
+
+    prwmbVertex(m_meshBuilder,              x - italics,  y + 8, 0.f, (uStart             ) / 128.0f, (vStart + 8) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
+    prwmbVertex(m_meshBuilder, x + glpyhWidth - italics,  y + 8, 0.f, (uStart + glpyhWidth) / 128.0f, (vStart + 8) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
+    prwmbVertex(m_meshBuilder, x + glpyhWidth + italics,      y, 0.f, (uStart + glpyhWidth) / 128.0f, (vStart    ) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
+    prwmbVertex(m_meshBuilder,              x + italics,      y, 0.f, (uStart             ) / 128.0f, (vStart    ) / 128.0f, vec4Color(colorv4), m_maxTexUnits);
 }
 
 static void i_frBindAtlases()

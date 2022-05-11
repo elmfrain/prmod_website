@@ -138,10 +138,16 @@ const char* prwfFetchString(PRWfetcher* fetcher, int* length)
         return f->statusStr;
     }
     #ifndef RAW_DATA
-    *length = f->datalen;
+    if(length != NULL)
+    {
+        *length = f->datalen;
+    }
     return f->data;
     #else
-    *length = f->headerlen + f->datalen;
+    if(length != NULL)
+    {
+        *length = f->headerlen + f->datalen;
+    }
     return f->rawData;
     #endif
 }

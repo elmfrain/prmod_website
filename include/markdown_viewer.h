@@ -9,6 +9,8 @@ typedef struct PRWmarkdownViewer
 
 void prwmdDrawMarkdown(PRWmarkdownViewer* viewer);
 
-PRWmarkdownViewer* prwmdGenMarkdown(const char* url);
+PRWmarkdownViewer* prwmdGenMarkdownURL(const char* url);
+
+PRWmarkdownViewer* prwmdGenMarkdownFile(const char* filePath);
 
 void prwmdFreeMarkdown(PRWmarkdownViewer* viewer);
