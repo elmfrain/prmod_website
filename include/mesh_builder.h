@@ -52,6 +52,8 @@ void prwvfApply(prwvfVTXFMT vtxFmt);
 
 void prwvfUnapply(prwvfVTXFMT vtxFmt);
 
+uint32_t prwvfVertexNumBytes(prwvfVTXFMT vtxFmt);
+
 uint32_t prwvfaGetUsage(prwvfVTXATTRB attrib);
 
 uint32_t prwvfaGetSize(prwvfVTXATTRB attrib);

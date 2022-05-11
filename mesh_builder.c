@@ -10,12 +10,7 @@
 void prwvfApply(prwvfVTXFMT vtxFmt)
 {
     uint32_t numAttributes = vtxFmt[0];
-    int stride = 0;
-
-    for(uint32_t i = 1; i <= numAttributes; i++)
-    {
-        stride += prwvfaNumBytes(vtxFmt[i]);
-    }
+    uint32_t stride = prwvfVertexNumBytes(vtxFmt);
 
     size_t pointer = 0;
     for(uint32_t i = 1; i <= numAttributes; i++)
@@ -39,6 +34,19 @@ void prwvfUnapply(prwvfVTXFMT vtxFmt)
     {
         glDisableVertexAttribArray(i - 1);
     }
+}
+
+uint32_t prwvfVertexNumBytes(prwvfVTXFMT vtxFmt)
+{
+    uint32_t numAttributes = vtxFmt[0];
+    uint32_t numBytes = 0;
+
+    for(uint32_t i = 1; i <= numAttributes; i++)
+    {
+        numBytes += prwvfaNumBytes(vtxFmt[i]);
+    }
+
+    return numBytes;
 }
 
 uint32_t prwvfaGetUsage(prwvfVTXATTRB attrib)
