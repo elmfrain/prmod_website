@@ -39,6 +39,7 @@ typedef prwvfVTXATTRB prwvfVTXFMT[32];
 #define PRWVF_ATTRB_TYPE_USHORT     0x00240000 // Unsigned Short  , size 2, enum value 4
 #define PRWVF_ATTRB_TYPE_BYTE       0x00150000 // Byte            , size 1, enum value 5
 #define PRWVF_ATTRB_TYPE_UBYTE      0x00160000 // Unsigned Byte   , size 1, enum value 6
+#define PRWVF_ATTRB_TYPE_DOUBLE     0x00870000 // Double          , size 8, enum value 7
 
 // Vertex Attribute Size
 #define PRWVF_ATTRB_SIZE(x) ((uint32_t) x) << 8
