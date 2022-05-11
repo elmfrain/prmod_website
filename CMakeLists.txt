@@ -61,6 +61,7 @@ add_executable(${PROJECT_NAME}
     about_view.c
     markdown_viewer.c
     download_view.c
+    mesh_builder.c
 )
 
 if(UNIX AND NOT EMSCRIPTEN)
