@@ -291,7 +291,7 @@ void prwmbNormal(PRWmeshBuilder* builder, float x, float y, float z)
 
 void prwmbNormalDefault(PRWmeshBuilder* builder)
 {
-    prwmbNormal(builder, 0.0f, 1.0f, 0.0f);
+    prwmbNormal(builder, builder->defaultNormal[0], builder->defaultNormal[1], builder->defaultNormal[2]);
 }
 
 void prwmbUV(PRWmeshBuilder* builder, float u, float v)
@@ -305,12 +305,12 @@ void prwmbUV(PRWmeshBuilder* builder, float u, float v)
 
 void prwmbUVDefault(PRWmeshBuilder* builder)
 {
-    prwmbUV(builder, 0.0f, 0.0f);
+    prwmbUV(builder, builder->defualtUV[0], builder->defualtUV[1]);
 }
 
 void prwmbColorRGB(PRWmeshBuilder* builder, float r, float g, float b)
 {
-    prwmbColorRGBA(builder, r, g, b, 1.0f);
+    prwmbColorRGBA(builder, r, g, b, builder->defaultColor[3]);
 }
 
 void prwmbColorRGBA(PRWmeshBuilder* builder, float r, float g, float blue, float a)
@@ -324,7 +324,7 @@ void prwmbColorRGBA(PRWmeshBuilder* builder, float r, float g, float blue, float
 
 void prwmbColorDefault(PRWmeshBuilder* builder)
 {
-    prwmbColorRGBA(builder, 1.0f, 1.0f, 1.0f, 1.0f);
+    prwmbColorRGBA(builder, builder->defaultColor[0], builder->defaultColor[1], builder->defaultColor[2], builder->defaultColor[3]);
 }
 
 void prwmbIndex(PRWmeshBuilder* builder, size_t numIndicies, ...)
