@@ -181,15 +181,7 @@ PRWmeshBuilder* prwmbGenBuilder(prwvfVTXFMT vertexFormat)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, builder->m_glEBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, builder->m_glElementBufferSize, NULL, GL_DYNAMIC_DRAW);
 
-        //prwvfApply(builder->m_vertexFormat);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 37, 0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, false, 37, (void*) 12L);
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 4, GL_FLOAT, false, 37, (void*) 20L);
-        glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 1, GL_UNSIGNED_BYTE, false, 37, (void*) 36L);
+        prwvfApply(builder->m_vertexFormat);
 
     }
     glBindVertexArray(0);
