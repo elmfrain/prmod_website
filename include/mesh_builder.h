@@ -101,6 +101,8 @@ void prwmbColorRGBA(PRWmeshBuilder* builder, float r, float g, float b, float a)
 
 void prwmbColorDefault(PRWmeshBuilder* builder);
 
+void prwmbVertex(PRWmeshBuilder* builder, ...);
+
 void prwmbIndex(PRWmeshBuilder* builder, size_t numIndicies, ...);
 
 void prwmbTexid(PRWmeshBuilder* builder, uint8_t texid);

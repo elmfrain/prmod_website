@@ -335,6 +335,85 @@ void prwmbColorDefault(PRWmeshBuilder* builder)
     prwmbColorRGBA(builder, builder->defaultColor[0], builder->defaultColor[1], builder->defaultColor[2], builder->defaultColor[3]);
 }
 
+void prwmbVertex(PRWmeshBuilder* builder, ...)
+{
+    getMeshBuilder;
+
+    prwvfVTXFMT* vtxFmt = &b->m_vertexFormat;
+    uint8_t newVtxBuffer[1024];
+    int newVtxBufferPos = 0;
+
+    uint32_t numAttributes = (*vtxFmt)[0];
+    uint32_t vertexSize = prwvfVertexNumBytes(*vtxFmt);
+
+    va_list attribArgs;
+    va_start(attribArgs, builder);
+
+    float valuef;
+    double valued;
+    int32_t value4b;
+    int16_t value2b;
+    int8_t value1b;
+    float* posInVertex = NULL;
+
+    for(uint32_t i = 1; i <= numAttributes; i++)
+    {
+        uint32_t attribType = (*vtxFmt)[i] & PRWVF_ATTRB_TYPE_MASK;
+        uint32_t attribSize = prwvfaGetSize((*vtxFmt)[i]);
+        uint32_t attribUsage = (*vtxFmt)[i] & PRWVF_ATTRB_USAGE_MASK;
+ 
+        if(attribUsage == PRWVF_ATTRB_USAGE_POS)
+        {
+            posInVertex = (float*) (newVtxBuffer + newVtxBufferPos);
+        }
+
+        for(uint32_t j = 0; j < attribSize; j++)
+        {
+            switch (attribType)
+            {
+            case PRWVF_ATTRB_TYPE_INT:
+            case PRWVF_ATTRB_TYPE_UINT:
+                value4b = va_arg(attribArgs, int32_t);
+                memcpy(newVtxBuffer + newVtxBufferPos, &value4b, sizeof(int32_t));
+                newVtxBufferPos += sizeof(int32_t);
+                break;
+            case PRWVF_ATTRB_TYPE_SHORT:
+            case PRWVF_ATTRB_TYPE_USHORT:
+                value2b = va_arg(attribArgs, int32_t);
+                memcpy(newVtxBuffer + newVtxBufferPos, &value2b, sizeof(int16_t));
+                newVtxBufferPos += sizeof(int16_t);
+                break;
+            case PRWVF_ATTRB_TYPE_BYTE:
+            case PRWVF_ATTRB_TYPE_UBYTE:
+                value1b = va_arg(attribArgs, int32_t);
+                memcpy(newVtxBuffer + newVtxBufferPos, &value1b, sizeof(int8_t));
+                newVtxBufferPos += sizeof(uint8_t);
+                break;
+            case PRWVF_ATTRB_TYPE_FLOAT:
+                valuef = va_arg(attribArgs, double);
+                memcpy(newVtxBuffer + newVtxBufferPos, &valuef, sizeof(float));
+                newVtxBufferPos += sizeof(float);
+                break;
+            case PRWVF_ATTRB_TYPE_DOUBLE:
+                valued = va_arg(attribArgs, double);
+                memcpy(newVtxBuffer + newVtxBufferPos, &valued, sizeof(double));
+                newVtxBufferPos += sizeof(double);
+                break;
+            }
+        }
+    }
+
+    va_end(attribArgs);
+
+    if(posInVertex)
+    {
+        glm_mat4_mulv3(*b->m_currentModelView, posInVertex, 1.0f, posInVertex);
+    }
+
+    i_mbPushVertexData(b, vertexSize, newVtxBuffer);
+    b->m_numVerticies++;
+}
+
 void prwmbIndex(PRWmeshBuilder* builder, size_t numIndicies, ...)
 {
     getMeshBuilder;
