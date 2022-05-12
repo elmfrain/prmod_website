@@ -102,6 +102,10 @@ void prwmRemovev(PRWmesh* mesh)
 {
     Mesh* m = (Mesh*) mesh;
     if(m->m_glTexture) glDeleteTextures(1, &m->m_glTexture);
+    if(m->mesh.positions) free(m->mesh.positions);
+    if(m->mesh.uvs) free(m->mesh.uvs);
+    if(m->mesh.normals) free(m->mesh.normals);
+    if(m->mesh.colors) free(m->mesh.colors);
 
     i_lRemove(m);
 }
