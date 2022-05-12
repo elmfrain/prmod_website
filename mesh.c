@@ -10,6 +10,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <assimp/material.h>
+
 #include <stb_image.h>
 
 #include <string.h>
@@ -18,24 +19,9 @@
 
 typedef struct Mesh
 {
-    int nbIndicies;
-    int vertexFormat;
-    char name[1024];
-    GLuint glVAO;
-    GLuint glVBO;
-    GLuint glEBO;
-    GLuint glTexture;
+    PRWmesh mesh;
+    GLuint m_glTexture;
 } Mesh;
-
-struct pos_uvVertex
-{
-    struct aiVector3D pos;
-    struct aiVector2D uv;
-} pos_uvVertex;
-struct face
-{
-    int indicies[3];
-};
 
 //Internal Mesh list
 static int m_listSize = 0;
@@ -65,7 +51,7 @@ void prwmLoad(const char* filename)
 PRWmesh* prwmMeshGet(const char* meshName)
 {
     for(int i = 0; i < m_listSize; i++)
-        if(strcmp(m_meshList[i]->name, meshName) == 0) return (PRWmesh*) m_meshList[i];
+        if(strcmp(m_meshList[i]->mesh.name, meshName) == 0) return (PRWmesh*) m_meshList[i];
 
     return NULL;
 }
@@ -75,10 +61,10 @@ void prwmMeshRenderv(PRWmesh* mesh)
     Mesh* m = (Mesh*) mesh;
     if(!mesh) return;
 
-    if(m->glTexture)
+    if(m->m_glTexture)
     {
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m->glTexture);
+        glBindTexture(GL_TEXTURE_2D, m->m_glTexture);
     }
 
     glBindVertexArray(m->glVAO);
@@ -94,9 +80,7 @@ void prwmMeshRender(const char* meshName)
 void prwmRemovev(PRWmesh* mesh)
 {
     Mesh* m = (Mesh*) mesh;
-    glDeleteVertexArrays(1, &m->glVAO);
-    glDeleteBuffers(2, &m->glVBO);
-    if(m->glTexture) glDeleteTextures(1, &m->glTexture);
+    if(m->m_glTexture) glDeleteTextures(1, &m->m_glTexture);
 
     i_lRemove(m);
 }
@@ -176,26 +160,58 @@ static void i_meshLoadAssimp(const char* filename)
 
         printf("[Mesh][Info]: Loading mesh \"%s\"\n", mesh->mName.data);
 
-        strcpy(newMesh.name, mesh->mName.data);
+        strcpy(newMesh.mesh.name, mesh->mName.data);
 
-        //Collect vertex data
-        struct pos_uvVertex* vertexData = malloc(sizeof(struct pos_uvVertex) * mesh->mNumVertices);
-        for(int j = 0; j < mesh->mNumVertices; j++)
+        //Get position data
+        newMesh.mesh.positionsSize = mesh->mNumVertices * 3;
+        newMesh.mesh.positions = malloc(sizeof(float) * newMesh.mesh.positionsSize);
+        memcpy(newMesh.mesh.positions, mesh->mVertices, sizeof(float) * newMesh.mesh.positionsSize);
+
+        //Get uv data
+        if(mesh->mTextureCoords[0])
         {
-            vertexData[j].pos = mesh->mVertices[j];
-            struct aiVector3D uv = mesh->mTextureCoords[0][j];
-            vertexData[j].uv.x = uv.x;
-            vertexData[j].uv.y = uv.y;
+            newMesh.mesh.uvsSize = mesh->mNumVertices * 2;
+            newMesh.mesh.uvs = malloc(sizeof(float) * newMesh.mesh.uvsSize);
+            for(int j = 0; j < mesh->mNumVertices; j++)
+            {
+                struct aiVector3D uv = mesh->mTextureCoords[0][j];
+                newMesh.mesh.uvs[j * 2    ] = uv.x;
+                newMesh.mesh.uvs[j * 2 + 1] = uv.y;
+            }
+        }
+        else
+        {
+            newMesh.mesh.uvs = NULL;
+            newMesh.mesh.uvsSize = 0;
         }
 
-        //Collect face data
-        newMesh.nbIndicies = mesh->mNumFaces * 3;
-        struct face* indexData = malloc(sizeof(struct face) * mesh->mNumFaces);
+        //Get normal data
+        newMesh.mesh.normalsSize = mesh->mNumVertices * 3;
+        newMesh.mesh.normals = malloc(sizeof(float) * newMesh.mesh.normalsSize);
+        memcpy(newMesh.mesh.normals, mesh->mNormals, sizeof(float) * newMesh.mesh.normalsSize);
+
+        //Get color data
+        if(mesh->mColors[0])
+        {
+            newMesh.mesh.colorsSize = mesh->mNumVertices * 4;
+            newMesh.mesh.colors = malloc(sizeof(float) * newMesh.mesh.colorsSize);
+            memcpy(newMesh.mesh.colors, mesh->mColors[0], sizeof(float) * newMesh.mesh.colorsSize);
+        }
+        else
+        {
+            newMesh.mesh.colors = NULL;
+            newMesh.mesh.colorsSize = 0;
+        }
+
+        //Get index data
+        newMesh.mesh.indiciesSize = mesh->mNumFaces * 3;
+        newMesh.mesh.indicies = malloc(sizeof(uint32_t) * newMesh.mesh.indiciesSize);
         for(int j = 0; j < mesh->mNumFaces; j++)
         {
-            indexData[j].indicies[0] = mesh->mFaces[j].mIndices[0];
-            indexData[j].indicies[1] = mesh->mFaces[j].mIndices[1];
-            indexData[j].indicies[2] = mesh->mFaces[j].mIndices[2];
+            uint32_t* faceIndicies = mesh->mFaces[j].mIndices;
+            newMesh.mesh.indicies[j * 3    ] = faceIndicies[0];
+            newMesh.mesh.indicies[j * 3 + 1] = faceIndicies[1];
+            newMesh.mesh.indicies[j * 3 + 2] = faceIndicies[2];
         }
 
         //Get texture
@@ -218,28 +234,11 @@ static void i_meshLoadAssimp(const char* filename)
             }
         }
 
-        //Load to OpenGL
-        glGenVertexArrays(1, &newMesh.glVAO);
-        glGenBuffers(2, &newMesh.glVBO);
-        glBindVertexArray(newMesh.glVAO);
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, newMesh.glVBO);
-            glBufferData(GL_ARRAY_BUFFER, mesh->mNumVertices * sizeof(struct pos_uvVertex), vertexData, GL_STATIC_DRAW);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, newMesh.glEBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->mNumFaces * sizeof(struct face), indexData, GL_STATIC_DRAW);
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, 0);
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 20, (void*) 12);
-        }
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+        newMesh.m_glTexture = 0;
         if(image)
         {
-            glGenTextures(1, &newMesh.glTexture);
-            glBindTexture(GL_TEXTURE_2D, newMesh.glTexture);
+            glGenTextures(1, &newMesh.m_glTexture);
+            glBindTexture(GL_TEXTURE_2D, newMesh.m_glTexture);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -248,8 +247,6 @@ static void i_meshLoadAssimp(const char* filename)
             stbi_image_free(image);
         }
 
-        free(vertexData);
-        free(indexData);
         i_lAdd(newMesh);
     }
 }

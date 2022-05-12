@@ -1,5 +1,7 @@
 #pragma once
 
+#include "mesh_builder.h"
+
 typedef struct PRWmesh
 {
     char name[256];
@@ -26,6 +28,8 @@ void prwmMeshRenderv(PRWmesh* mesh);
 
 // deprecated: use prwmPutMesh(PRWmeshBuilder, PRWmesh) instead
 void prwmMeshRender(const char* meshName);
+
+void prwmPutMesh(PRWmeshBuilder* meshBuilder, PRWmesh* mesh);
 
 void prwmRemovev(PRWmesh* mesh);
 
