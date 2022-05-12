@@ -106,6 +106,7 @@ void prwmRemovev(PRWmesh* mesh)
     if(m->mesh.uvs) free(m->mesh.uvs);
     if(m->mesh.normals) free(m->mesh.normals);
     if(m->mesh.colors) free(m->mesh.colors);
+    if(m->mesh.indicies) free(m->mesh.indicies);
 
     i_lRemove(m);
 }
