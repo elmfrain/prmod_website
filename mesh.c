@@ -79,12 +79,13 @@ void prwmMeshRenderv(PRWmesh* mesh)
 
     prwmbReset(m_meshRenderer);
     uint32_t numIndicies = m->mesh.numIndicies;
+    float defaultUV[] = { 0.0f, 0.0f };
 
     for(uint32_t i = 0; i < numIndicies; i++)
     {
         uint32_t index = m->mesh.indicies[i];
         float* pos = &m->mesh.positions[index * 3];
-        float* uv = &m->mesh.uvs[index * 2];
+        float* uv = m->mesh.uvs ?  &m->mesh.uvs[index * 2] : defaultUV;
 
         prwmbVertex(m_meshRenderer, pos[0], pos[1], pos[2], uv[0], uv[1]);
     }
