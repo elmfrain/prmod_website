@@ -19,8 +19,12 @@ void prwmLoad(const char* filename);
 
 PRWmesh* prwmMeshGet(const char* meshName);
 
+uint32_t prwmGetGLTexture(PRWmesh* mesh);
+
+// deprecated: use prwmPutMesh(PRWmeshBuilder, PRWmesh) instead
 void prwmMeshRenderv(PRWmesh* mesh);
 
+// deprecated: use prwmPutMesh(PRWmeshBuilder, PRWmesh) instead
 void prwmMeshRender(const char* meshName);
 
 void prwmRemovev(PRWmesh* mesh);
