@@ -78,7 +78,7 @@ void prwmMeshRenderv(PRWmesh* mesh)
     }
 
     prwmbReset(m_meshRenderer);
-    uint32_t numIndicies = m->mesh.indiciesSize;
+    uint32_t numIndicies = m->mesh.numIndicies;
 
     for(uint32_t i = 0; i < numIndicies; i++)
     {
@@ -182,16 +182,16 @@ static void i_meshLoadAssimp(const char* filename)
 
         strcpy(newMesh.mesh.name, mesh->mName.data);
 
+        newMesh.mesh.numVerticies = mesh->mNumVertices;
+
         //Get position data
-        newMesh.mesh.positionsSize = mesh->mNumVertices * 3;
-        newMesh.mesh.positions = malloc(sizeof(float) * newMesh.mesh.positionsSize);
-        memcpy(newMesh.mesh.positions, mesh->mVertices, sizeof(float) * newMesh.mesh.positionsSize);
+        newMesh.mesh.positions = malloc(sizeof(float) * mesh->mNumVertices * 3);
+        memcpy(newMesh.mesh.positions, mesh->mVertices, sizeof(float) * mesh->mNumVertices * 3);
 
         //Get uv data
         if(mesh->mTextureCoords[0])
         {
-            newMesh.mesh.uvsSize = mesh->mNumVertices * 2;
-            newMesh.mesh.uvs = malloc(sizeof(float) * newMesh.mesh.uvsSize);
+            newMesh.mesh.uvs = malloc(sizeof(float) * mesh->mNumVertices * 2);
             for(int j = 0; j < mesh->mNumVertices; j++)
             {
                 struct aiVector3D uv = mesh->mTextureCoords[0][j];
@@ -202,30 +202,26 @@ static void i_meshLoadAssimp(const char* filename)
         else
         {
             newMesh.mesh.uvs = NULL;
-            newMesh.mesh.uvsSize = 0;
         }
 
         //Get normal data
-        newMesh.mesh.normalsSize = mesh->mNumVertices * 3;
-        newMesh.mesh.normals = malloc(sizeof(float) * newMesh.mesh.normalsSize);
-        memcpy(newMesh.mesh.normals, mesh->mNormals, sizeof(float) * newMesh.mesh.normalsSize);
+        newMesh.mesh.normals = malloc(sizeof(float) * mesh->mNumVertices * 3);
+        memcpy(newMesh.mesh.normals, mesh->mNormals, sizeof(float) * mesh->mNumVertices * 3);
 
         //Get color data
         if(mesh->mColors[0])
         {
-            newMesh.mesh.colorsSize = mesh->mNumVertices * 4;
-            newMesh.mesh.colors = malloc(sizeof(float) * newMesh.mesh.colorsSize);
-            memcpy(newMesh.mesh.colors, mesh->mColors[0], sizeof(float) * newMesh.mesh.colorsSize);
+            newMesh.mesh.colors = malloc(sizeof(float) * mesh->mNumVertices * 4);
+            memcpy(newMesh.mesh.colors, mesh->mColors[0], sizeof(float) * mesh->mNumVertices * 4);
         }
         else
         {
             newMesh.mesh.colors = NULL;
-            newMesh.mesh.colorsSize = 0;
         }
 
         //Get index data
-        newMesh.mesh.indiciesSize = mesh->mNumFaces * 3;
-        newMesh.mesh.indicies = malloc(sizeof(uint32_t) * newMesh.mesh.indiciesSize);
+        newMesh.mesh.numIndicies = mesh->mNumFaces * 3;
+        newMesh.mesh.indicies = malloc(sizeof(uint32_t) * newMesh.mesh.numIndicies);
         for(int j = 0; j < mesh->mNumFaces; j++)
         {
             uint32_t* faceIndicies = mesh->mFaces[j].mIndices;

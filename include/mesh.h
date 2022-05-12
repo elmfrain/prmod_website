@@ -6,15 +6,12 @@ typedef struct PRWmesh
 {
     char name[256];
     float* positions;
-    size_t positionsSize;
+    size_t numVerticies;
     float* uvs;
-    size_t uvsSize;
     float* normals;
-    size_t normalsSize;
     float* colors;
-    size_t colorsSize;
     uint32_t* indicies;
-    size_t indiciesSize;
+    size_t numIndicies;
 } PRWmesh;
 
 void prwmLoad(const char* filename);
