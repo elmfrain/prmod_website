@@ -1,16 +1,18 @@
 #pragma once
 
-#define PRWM_VERTF_POS 0
-#define PRWM_VERTF_POS_UV 1
-#define PRWM_VERTF_POS_COLOR 2
-#define PRWM_VERTF_POS_UV_COLOR 3
-#define PRWM_VERTF_POS_UV_COLOR_NORM 4
-
 typedef struct PRWmesh
 {
-    int nbIndicies;
-    int vertexFormat;
-    char name[128];
+    char name[256];
+    float* positions;
+    size_t positionsSize;
+    float* uvs;
+    size_t uvsSize;
+    float* normals;
+    size_t normalsSize;
+    float* colors;
+    size_t colorsSize;
+    uint32_t* indicies;
+    size_t indiciesSize;
 } PRWmesh;
 
 void prwmLoad(const char* filename);
