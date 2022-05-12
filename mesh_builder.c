@@ -435,6 +435,32 @@ void prwmbIndex(PRWmeshBuilder* builder, size_t numIndicies, ...)
     b->m_numIndicies += numIndicies;
 }
 
+void prwmbIndexv(PRWmeshBuilder* builder, size_t numIndicies, const uint32_t* indicies)
+{
+    getMeshBuilder;
+
+    uint32_t bufferedIndicies[128];
+    size_t bufferedIndiciesPos = 0;
+
+    for(size_t i = 0; i < numIndicies; i++)
+    {
+        bufferedIndicies[bufferedIndiciesPos++] = indicies[i] + b->m_numVerticies;
+
+        if(128 <= bufferedIndiciesPos)
+        {
+            i_mbPushIndexData(b, bufferedIndiciesPos * sizeof(uint32_t), bufferedIndicies);
+            bufferedIndiciesPos = 0;
+        }
+    }
+
+    if(0 < bufferedIndiciesPos)
+    {
+        i_mbPushIndexData(b, bufferedIndiciesPos * sizeof(uint32_t), bufferedIndicies);
+    }
+
+    b->m_numIndicies += numIndicies;
+}
+
 void prwmbTexid(PRWmeshBuilder* builder, uint8_t texid)
 {
     getMeshBuilder;
@@ -446,7 +472,7 @@ prwvfVTXFMT* prwmbGetVertexFormat(PRWmeshBuilder* builder)
 {
     getMeshBuilder;
 
-    return &b->m_vertexFormat;
+    return &(b->m_vertexFormat);
 }
 
 void prwmbPushMatrix(PRWmeshBuilder* builder)
