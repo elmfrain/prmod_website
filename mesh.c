@@ -30,6 +30,9 @@ static Mesh** m_meshList = NULL;
 static Mesh* i_lAdd(Mesh mesh);
 static void i_lRemove(Mesh* mesh);
 
+//Mesh Renderer (Deprecated)
+PRWmeshBuilder* m_meshRenderer = NULL;
+
 static void i_meshLoadAssimp(const char* filename);
 
 void prwmLoad(const char* filename)
@@ -50,15 +53,43 @@ void prwmMeshRenderv(PRWmesh* mesh)
     Mesh* m = (Mesh*) mesh;
     if(!mesh) return;
 
+    if(!m_meshRenderer)
+    {
+        prwvfVTXFMT vtxFmt;
+        vtxFmt[0] = 2; // Number of attributes
+
+        vtxFmt[1] = PRWVF_ATTRB_USAGE_POS 
+                  | PRWVF_ATTRB_TYPE_FLOAT
+                  | PRWVF_ATTRB_SIZE(3)
+                  | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        vtxFmt[2] = PRWVF_ATTRB_USAGE_UV
+                  | PRWVF_ATTRB_TYPE_FLOAT
+                  | PRWVF_ATTRB_SIZE(2)
+                  | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        m_meshRenderer = prwmbGenBuilder(vtxFmt);
+    }
+
     if(m->m_glTexture)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m->m_glTexture);
     }
 
-    glBindVertexArray(m->glVAO);
-    glDrawElements(GL_TRIANGLES, m->nbIndicies, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    prwmbReset(m_meshRenderer);
+    uint32_t numIndicies = m->mesh.indiciesSize;
+
+    for(uint32_t i = 0; i < numIndicies; i++)
+    {
+        uint32_t index = m->mesh.indicies[i];
+        float* pos = &m->mesh.positions[index * 3];
+        float* uv = &m->mesh.uvs[index * 2];
+
+        prwmbVertex(m_meshRenderer, pos[0], pos[1], pos[2], uv[0], uv[1]);
+    }
+
+    prwmbDrawArrays(m_meshRenderer, GL_TRIANGLES);
 }
 
 void prwmMeshRender(const char* meshName)
