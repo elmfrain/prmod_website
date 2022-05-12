@@ -26,7 +26,9 @@ void prwmMeshRenderv(PRWmesh* mesh);
 // deprecated: use prwmPutMesh(PRWmeshBuilder, PRWmesh) instead
 void prwmMeshRender(const char* meshName);
 
-void prwmPutMesh(PRWmeshBuilder* meshBuilder, PRWmesh* mesh);
+void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh);
+
+void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh);
 
 void prwmRemovev(PRWmesh* mesh);
 

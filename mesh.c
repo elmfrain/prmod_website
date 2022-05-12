@@ -34,6 +34,8 @@ static void i_lRemove(Mesh* mesh);
 PRWmeshBuilder* m_meshRenderer = NULL;
 
 static void i_meshLoadAssimp(const char* filename);
+static void i_initMeshRenderer();
+static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID);
 
 void prwmLoad(const char* filename)
 {
@@ -53,29 +55,18 @@ void prwmMeshRenderv(PRWmesh* mesh)
     Mesh* m = (Mesh*) mesh;
     if(!mesh) return;
 
-    if(!m_meshRenderer)
-    {
-        prwvfVTXFMT vtxFmt;
-        vtxFmt[0] = 2; // Number of attributes
-
-        vtxFmt[1] = PRWVF_ATTRB_USAGE_POS 
-                  | PRWVF_ATTRB_TYPE_FLOAT
-                  | PRWVF_ATTRB_SIZE(3)
-                  | PRWVF_ATTRB_NORMALIZED_FALSE;
-
-        vtxFmt[2] = PRWVF_ATTRB_USAGE_UV
-                  | PRWVF_ATTRB_TYPE_FLOAT
-                  | PRWVF_ATTRB_SIZE(2)
-                  | PRWVF_ATTRB_NORMALIZED_FALSE;
-
-        m_meshRenderer = prwmbGenBuilder(vtxFmt);
-    }
+    i_initMeshRenderer();
 
     if(m->m_glTexture)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m->m_glTexture);
     }
+
+    prwmPutMeshElements(m_meshRenderer, mesh);
+    prwmbDrawElements(m_meshRenderer, GL_TRIANGLES);
+    prwmbReset(m_meshRenderer);
+    return;
 
     prwmbReset(m_meshRenderer);
     uint32_t numIndicies = m->mesh.numIndicies;
@@ -96,6 +87,49 @@ void prwmMeshRenderv(PRWmesh* mesh)
 void prwmMeshRender(const char* meshName)
 {
     prwmMeshRenderv(prwmMeshGet(meshName));
+}
+
+void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
+{
+    if(!mesh) return;
+
+    i_initMeshRenderer();
+
+    uint32_t numIndicies = mesh->numIndicies;
+
+    if(!mesh->positions || !mesh->indicies)
+    {
+        return;
+    }
+
+    for(uint32_t i = 0; i < numIndicies; i++)
+    {
+        uint32_t index = mesh->indicies[i];
+
+        i_putVertex(meshBuilder, mesh, index);
+    }
+}
+
+void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
+{
+    if(!mesh) return;
+
+    i_initMeshRenderer();
+
+    prwvfVTXFMT* vtxFmt = prwmbGetVertexFormat(meshBuilder);
+    uint32_t numVerticies = mesh->numVerticies;
+
+    if(!mesh->positions || !mesh->indicies)
+    {
+        return;
+    }
+
+    prwmbIndexv(meshBuilder, mesh->numIndicies, mesh->indicies);
+
+    for(uint32_t i = 0; i < numVerticies; i++)
+    {
+        i_putVertex(meshBuilder, mesh, i);
+    }
 }
 
 void prwmRemovev(PRWmesh* mesh)
@@ -270,5 +304,90 @@ static void i_meshLoadAssimp(const char* filename)
         }
 
         i_lAdd(newMesh);
+    }
+}
+
+static void i_initMeshRenderer()
+{
+    if(!m_meshRenderer)
+    {
+        prwvfVTXFMT vtxFmt;
+        vtxFmt[0] = 2; // Number of attributes
+
+        vtxFmt[1] = PRWVF_ATTRB_USAGE_POS 
+                  | PRWVF_ATTRB_TYPE_FLOAT
+                  | PRWVF_ATTRB_SIZE(3)
+                  | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        vtxFmt[2] = PRWVF_ATTRB_USAGE_UV
+                  | PRWVF_ATTRB_TYPE_FLOAT
+                  | PRWVF_ATTRB_SIZE(2)
+                  | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        m_meshRenderer = prwmbGenBuilder(vtxFmt);
+    }
+}
+
+static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID)
+{
+    prwvfVTXATTRB* vtxFmt = *prwmbGetVertexFormat(meshBuilder);
+
+    bool hasUVs = mesh->uvs != NULL;
+    bool hasNormals = mesh->normals != NULL;
+    bool hasColors = mesh->colors != NULL;
+
+    float* defaultUV = meshBuilder->defualtUV;
+    float* defaultNorm = meshBuilder->defaultNormal;
+    float* defaultColor = meshBuilder->defaultColor;
+
+    for(int atrb = 1; atrb <= vtxFmt[0]; atrb++)
+    {
+        uint32_t attribUsage = vtxFmt[atrb] & PRWVF_ATTRB_USAGE_MASK;
+
+        float* meshData;
+
+        switch (attribUsage)
+        {
+        case PRWVF_ATTRB_USAGE_POS:
+            meshData = &mesh->positions[vertexID * 3];
+            prwmbPosition(meshBuilder, meshData[0], meshData[1], meshData[2]);
+            break;
+        case PRWVF_ATTRB_USAGE_UV:
+            if(hasUVs)
+            {
+                meshData = &mesh->uvs[vertexID * 2];
+                prwmbUV(meshBuilder, meshData[0], meshData[1]);
+            }
+            else
+            {
+                prwmbUV(meshBuilder, defaultUV[0], defaultUV[1]);
+            }
+            break;
+        case PRWVF_ATTRB_USAGE_NORMAL:
+            if(hasNormals)
+            {
+                meshData = &mesh->normals[vertexID * 3];
+                prwmbNormal(meshBuilder, meshData[0], meshData[1], meshData[2]);
+            }
+            else
+            {
+                prwmbNormal(meshBuilder, defaultNorm[0], defaultNorm[1], defaultNorm[2]);
+            }
+            break;
+        case PRWVF_ATTRB_USAGE_COLOR:
+            if(hasColors)
+            {
+                meshData = &mesh->colors[vertexID * 4];
+                prwmbColorRGBA(meshBuilder, meshData[0], meshData[1], meshData[2], meshData[3]);
+            }
+            else
+            {
+                prwmbColorRGBA(meshBuilder, defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3]);
+            }
+            break;
+        case PRWVF_ATTRB_USAGE_TEXID:
+            prwmbTexid(meshBuilder, 0);
+            break;
+        }
     }
 }
