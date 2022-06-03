@@ -229,7 +229,12 @@ void prwmbDrawArrays(PRWmeshBuilder* builder, int mode)
     glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
     if(b->m_vertexDataBufferCapacity <= b->m_glVertexBufferSize)
     {
+#ifdef EMSCRIPTEN
+        // Workaround. WebGL outputs a buffer overflow error when using glBufferSubData.
+        glBufferData(GL_ARRAY_BUFFER, b->m_glVertexBufferSize, b->m_vertexDataBuffer, GL_DYNAMIC_DRAW);
+#else
         glBufferSubData(GL_ARRAY_BUFFER, 0, b->m_vertexDataPos, b->m_vertexDataBuffer);
+#endif
     }
     else
     {
@@ -249,7 +254,12 @@ void prwmbDrawElements(PRWmeshBuilder* builder, int mode)
     glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
     if(b->m_vertexDataBufferCapacity <= b->m_glVertexBufferSize)
     {
+#ifdef EMSCRIPTEN
+        // Workaround. WebGL outputs a buffer overflow error when using glBufferSubData.
+        glBufferData(GL_ARRAY_BUFFER, b->m_glVertexBufferSize, b->m_vertexDataBuffer, GL_DYNAMIC_DRAW);
+#else
         glBufferSubData(GL_ARRAY_BUFFER, 0, b->m_vertexDataPos, b->m_vertexDataBuffer);
+#endif
     }
     else
     {
@@ -260,7 +270,12 @@ void prwmbDrawElements(PRWmeshBuilder* builder, int mode)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b->m_glEBO);
     if(b->m_indexDataBufferCapacity <= b->m_glElementBufferSize)
     {
+#ifdef EMSCRIPTEN
+        // Workaround. WebGL outputs a buffer overflow error when using glBufferSubData.
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, b->m_glElementBufferSize, b->m_indexDataBuffer, GL_DYNAMIC_DRAW);
+#else
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, b->m_indexDataPos, b->m_indexDataBuffer);
+#endif
     }
     else
     {
