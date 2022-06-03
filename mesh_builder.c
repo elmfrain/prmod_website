@@ -193,7 +193,7 @@ void prwmbDeleteBuilder(PRWmeshBuilder* builder)
     {
         glDeleteVertexArrays(1, &b->m_glVAO);
         glDeleteBuffers(1, &b->m_glVBO);
-        glDeleteBuffers(2, &b->m_glEBO);
+        glDeleteBuffers(1, &b->m_glEBO);
     }
 
     free(b);
