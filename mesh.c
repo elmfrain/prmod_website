@@ -151,7 +151,7 @@ void prwmMakeRenderable(PRWmesh* mesh, prwvfVTXFMT vtxFmt)
     const uint32_t* indexData = prwmbGetIndexBuffer(meshBuilder, &indexBufferSize);
 
     glGenVertexArrays(1, &m->m_glVAO);
-    glGenBuffers(1, &m->m_glVAO);
+    glGenBuffers(1, &m->m_glVBO);
     glGenBuffers(1, &m->m_glEBO);
 
     glBindVertexArray(m->m_glVAO);
