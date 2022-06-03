@@ -33,3 +33,5 @@ void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh);
 void prwmRemovev(PRWmesh* mesh);
 
 void prwmRemove(const char* meshName);
+
+void prwmMakeRenderable(PRWmesh* mesh, prwvfVTXFMT vtxFmt);

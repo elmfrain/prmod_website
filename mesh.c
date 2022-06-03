@@ -21,6 +21,11 @@ typedef struct Mesh
 {
     PRWmesh mesh;
     GLuint m_glTexture;
+
+    bool m_isRenderable;
+    GLuint m_glVAO;
+    GLuint m_glVBO;
+    GLuint m_glEBO;
 } Mesh;
 
 //Internal Mesh list
@@ -30,11 +35,7 @@ static Mesh** m_meshList = NULL;
 static Mesh* i_lAdd(Mesh mesh);
 static void i_lRemove(Mesh* mesh);
 
-//Mesh Renderer (Deprecated)
-PRWmeshBuilder* m_meshRenderer = NULL;
-
 static void i_meshLoadAssimp(const char* filename);
-static void i_initMeshRenderer();
 static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID);
 
 void prwmLoad(const char* filename)
@@ -55,33 +56,16 @@ void prwmMeshRenderv(PRWmesh* mesh)
     Mesh* m = (Mesh*) mesh;
     if(!mesh) return;
 
-    i_initMeshRenderer();
-
     if(m->m_glTexture)
     {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m->m_glTexture);
     }
 
-    prwmPutMeshElements(m_meshRenderer, mesh);
-    prwmbDrawElements(m_meshRenderer, GL_TRIANGLES);
-    prwmbReset(m_meshRenderer);
-    return;
-
-    prwmbReset(m_meshRenderer);
-    uint32_t numIndicies = m->mesh.numIndicies;
-    float defaultUV[] = { 0.0f, 0.0f };
-
-    for(uint32_t i = 0; i < numIndicies; i++)
+    glBindVertexArray(m->m_glVAO);
     {
-        uint32_t index = m->mesh.indicies[i];
-        float* pos = &m->mesh.positions[index * 3];
-        float* uv = m->mesh.uvs ?  &m->mesh.uvs[index * 2] : defaultUV;
-
-        prwmbVertex(m_meshRenderer, pos[0], pos[1], pos[2], uv[0], uv[1]);
+        glDrawElements(GL_TRIANGLES, m->mesh.numIndicies, GL_UNSIGNED_INT, NULL);
     }
-
-    prwmbDrawArrays(m_meshRenderer, GL_TRIANGLES);
 }
 
 void prwmMeshRender(const char* meshName)
@@ -92,8 +76,6 @@ void prwmMeshRender(const char* meshName)
 void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
 {
     if(!mesh) return;
-
-    i_initMeshRenderer();
 
     uint32_t numIndicies = mesh->numIndicies;
 
@@ -113,8 +95,6 @@ void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
 void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
 {
     if(!mesh) return;
-
-    i_initMeshRenderer();
 
     prwvfVTXFMT* vtxFmt = prwmbGetVertexFormat(meshBuilder);
     uint32_t numVerticies = mesh->numVerticies;
@@ -142,12 +122,51 @@ void prwmRemovev(PRWmesh* mesh)
     if(m->mesh.colors) free(m->mesh.colors);
     if(m->mesh.indicies) free(m->mesh.indicies);
 
+    if(m->m_isRenderable)
+    {
+        glDeleteVertexArrays(1, &m->m_glVAO);
+        glDeleteBuffers(1, &m->m_glVBO);
+        glDeleteBuffers(1, &m->m_glEBO);
+    }
+
     i_lRemove(m);
 }
 
 void prwmRemove(const char* meshName)
 {
     prwmRemovev(prwmMeshGet(meshName));
+}
+
+void prwmMakeRenderable(PRWmesh* mesh, prwvfVTXFMT vtxFmt)
+{
+    Mesh* m = (Mesh*) mesh;
+
+    PRWmeshBuilder* meshBuilder = prwmbGenBuilder(vtxFmt);
+
+    prwmPutMeshElements(meshBuilder, mesh);
+
+    size_t vertexBufferSize, indexBufferSize;
+
+    const uint8_t* vertexData = prwmbGetVertexBuffer(meshBuilder, &vertexBufferSize);
+    const uint32_t* indexData = prwmbGetIndexBuffer(meshBuilder, &indexBufferSize);
+
+    glGenVertexArrays(1, &m->m_glVAO);
+    glGenBuffers(1, &m->m_glVAO);
+    glGenBuffers(1, &m->m_glEBO);
+
+    glBindVertexArray(m->m_glVAO);
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, m->m_glVBO);
+        glBufferData(GL_ARRAY_BUFFER, vertexBufferSize, vertexData, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->m_glEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferSize, indexData, GL_STATIC_DRAW);
+
+        prwvfApply(vtxFmt);
+    }
+
+    m->m_isRenderable = true;
+
+    prwmbDeleteBuilder(meshBuilder);
 }
 
 static Mesh* i_lAdd(Mesh mesh)
@@ -304,27 +323,6 @@ static void i_meshLoadAssimp(const char* filename)
         }
 
         i_lAdd(newMesh);
-    }
-}
-
-static void i_initMeshRenderer()
-{
-    if(!m_meshRenderer)
-    {
-        prwvfVTXFMT vtxFmt;
-        vtxFmt[0] = 2; // Number of attributes
-
-        vtxFmt[1] = PRWVF_ATTRB_USAGE_POS 
-                  | PRWVF_ATTRB_TYPE_FLOAT
-                  | PRWVF_ATTRB_SIZE(3)
-                  | PRWVF_ATTRB_NORMALIZED_FALSE;
-
-        vtxFmt[2] = PRWVF_ATTRB_USAGE_UV
-                  | PRWVF_ATTRB_TYPE_FLOAT
-                  | PRWVF_ATTRB_SIZE(2)
-                  | PRWVF_ATTRB_NORMALIZED_FALSE;
-
-        m_meshRenderer = prwmbGenBuilder(vtxFmt);
     }
 }
 
