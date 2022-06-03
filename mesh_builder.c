@@ -535,6 +535,30 @@ vec4* prwmbGetModelView(PRWmeshBuilder* builder)
     return *b->m_currentModelView;
 }
 
+const uint8_t* prwmbGetVertexBuffer(PRWmeshBuilder* builder, size_t* getNumBytes)
+{
+    getMeshBuilder;
+
+    if(getNumBytes)
+    {
+        *getNumBytes = b->m_vertexDataPos;
+    }
+
+    return b->m_vertexDataBuffer;
+}
+
+const uint32_t* prwmbGetIndexBuffer(PRWmeshBuilder* builder, size_t* getNumBytes)
+{
+    getMeshBuilder;
+
+    if(getNumBytes)
+    {
+        *getNumBytes = b->m_indexDataPos;
+    }
+
+    return b->m_indexDataBuffer;
+}
+
 static void i_mbPushVertexData(MeshBuilder* b, size_t size, void* data)
 {
     if(b->m_vertexDataBufferCapacity < b->m_vertexDataPos + size)
