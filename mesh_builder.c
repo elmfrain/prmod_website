@@ -461,7 +461,7 @@ void prwmbIndexv(PRWmeshBuilder* builder, size_t numIndicies, const uint32_t* in
     b->m_numIndicies += numIndicies;
 }
 
-void prwmbTexid(PRWmeshBuilder* builder, uint8_t texid)
+void prwmbTexid(PRWmeshBuilder* builder, uint32_t texid)
 {
     getMeshBuilder;
 
