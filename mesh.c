@@ -10,6 +10,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <assimp/material.h>
+
 #include <stb_image.h>
 
 #include <string.h>
@@ -18,24 +19,9 @@
 
 typedef struct Mesh
 {
-    int nbIndicies;
-    int vertexFormat;
-    char name[1024];
-    GLuint glVAO;
-    GLuint glVBO;
-    GLuint glEBO;
-    GLuint glTexture;
+    PRWmesh mesh;
+    GLuint m_glTexture;
 } Mesh;
-
-struct pos_uvVertex
-{
-    struct aiVector3D pos;
-    struct aiVector2D uv;
-} pos_uvVertex;
-struct face
-{
-    int indicies[3];
-};
 
 //Internal Mesh list
 static int m_listSize = 0;
@@ -44,28 +30,22 @@ static Mesh** m_meshList = NULL;
 static Mesh* i_lAdd(Mesh mesh);
 static void i_lRemove(Mesh* mesh);
 
+//Mesh Renderer (Deprecated)
+PRWmeshBuilder* m_meshRenderer = NULL;
+
 static void i_meshLoadAssimp(const char* filename);
-static void i_meshLoadBIN(const char* filename);
+static void i_initMeshRenderer();
+static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID);
 
 void prwmLoad(const char* filename)
 {
-    char extension[24] = { 0 };
-    for(int i = strlen(filename) - 1; i >= 0; i--)
-        if(filename[i] == '.')
-        {
-            strcpy(extension, filename + i + 1);
-            break;
-        }
-
-    if(strcmp(extension, "bin") == 0) 
-        i_meshLoadBIN(filename);
-    else i_meshLoadAssimp(filename);
+    i_meshLoadAssimp(filename);
 }
 
 PRWmesh* prwmMeshGet(const char* meshName)
 {
     for(int i = 0; i < m_listSize; i++)
-        if(strcmp(m_meshList[i]->name, meshName) == 0) return (PRWmesh*) m_meshList[i];
+        if(strcmp(m_meshList[i]->mesh.name, meshName) == 0) return (PRWmesh*) m_meshList[i];
 
     return NULL;
 }
@@ -75,15 +55,33 @@ void prwmMeshRenderv(PRWmesh* mesh)
     Mesh* m = (Mesh*) mesh;
     if(!mesh) return;
 
-    if(m->glTexture)
+    i_initMeshRenderer();
+
+    if(m->m_glTexture)
     {
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m->glTexture);
+        glBindTexture(GL_TEXTURE_2D, m->m_glTexture);
     }
 
-    glBindVertexArray(m->glVAO);
-    glDrawElements(GL_TRIANGLES, m->nbIndicies, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    prwmPutMeshElements(m_meshRenderer, mesh);
+    prwmbDrawElements(m_meshRenderer, GL_TRIANGLES);
+    prwmbReset(m_meshRenderer);
+    return;
+
+    prwmbReset(m_meshRenderer);
+    uint32_t numIndicies = m->mesh.numIndicies;
+    float defaultUV[] = { 0.0f, 0.0f };
+
+    for(uint32_t i = 0; i < numIndicies; i++)
+    {
+        uint32_t index = m->mesh.indicies[i];
+        float* pos = &m->mesh.positions[index * 3];
+        float* uv = m->mesh.uvs ?  &m->mesh.uvs[index * 2] : defaultUV;
+
+        prwmbVertex(m_meshRenderer, pos[0], pos[1], pos[2], uv[0], uv[1]);
+    }
+
+    prwmbDrawArrays(m_meshRenderer, GL_TRIANGLES);
 }
 
 void prwmMeshRender(const char* meshName)
@@ -91,12 +89,58 @@ void prwmMeshRender(const char* meshName)
     prwmMeshRenderv(prwmMeshGet(meshName));
 }
 
+void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
+{
+    if(!mesh) return;
+
+    i_initMeshRenderer();
+
+    uint32_t numIndicies = mesh->numIndicies;
+
+    if(!mesh->positions || !mesh->indicies)
+    {
+        return;
+    }
+
+    for(uint32_t i = 0; i < numIndicies; i++)
+    {
+        uint32_t index = mesh->indicies[i];
+
+        i_putVertex(meshBuilder, mesh, index);
+    }
+}
+
+void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
+{
+    if(!mesh) return;
+
+    i_initMeshRenderer();
+
+    prwvfVTXFMT* vtxFmt = prwmbGetVertexFormat(meshBuilder);
+    uint32_t numVerticies = mesh->numVerticies;
+
+    if(!mesh->positions || !mesh->indicies)
+    {
+        return;
+    }
+
+    prwmbIndexv(meshBuilder, mesh->numIndicies, mesh->indicies);
+
+    for(uint32_t i = 0; i < numVerticies; i++)
+    {
+        i_putVertex(meshBuilder, mesh, i);
+    }
+}
+
 void prwmRemovev(PRWmesh* mesh)
 {
     Mesh* m = (Mesh*) mesh;
-    glDeleteVertexArrays(1, &m->glVAO);
-    glDeleteBuffers(2, &m->glVBO);
-    if(m->glTexture) glDeleteTextures(1, &m->glTexture);
+    if(m->m_glTexture) glDeleteTextures(1, &m->m_glTexture);
+    if(m->mesh.positions) free(m->mesh.positions);
+    if(m->mesh.uvs) free(m->mesh.uvs);
+    if(m->mesh.normals) free(m->mesh.normals);
+    if(m->mesh.colors) free(m->mesh.colors);
+    if(m->mesh.indicies) free(m->mesh.indicies);
 
     i_lRemove(m);
 }
@@ -176,26 +220,54 @@ static void i_meshLoadAssimp(const char* filename)
 
         printf("[Mesh][Info]: Loading mesh \"%s\"\n", mesh->mName.data);
 
-        strcpy(newMesh.name, mesh->mName.data);
+        strcpy(newMesh.mesh.name, mesh->mName.data);
 
-        //Collect vertex data
-        struct pos_uvVertex* vertexData = malloc(sizeof(struct pos_uvVertex) * mesh->mNumVertices);
-        for(int j = 0; j < mesh->mNumVertices; j++)
+        newMesh.mesh.numVerticies = mesh->mNumVertices;
+
+        //Get position data
+        newMesh.mesh.positions = malloc(sizeof(float) * mesh->mNumVertices * 3);
+        memcpy(newMesh.mesh.positions, mesh->mVertices, sizeof(float) * mesh->mNumVertices * 3);
+
+        //Get uv data
+        if(mesh->mTextureCoords[0])
         {
-            vertexData[j].pos = mesh->mVertices[j];
-            struct aiVector3D uv = mesh->mTextureCoords[0][j];
-            vertexData[j].uv.x = uv.x;
-            vertexData[j].uv.y = uv.y;
+            newMesh.mesh.uvs = malloc(sizeof(float) * mesh->mNumVertices * 2);
+            for(int j = 0; j < mesh->mNumVertices; j++)
+            {
+                struct aiVector3D uv = mesh->mTextureCoords[0][j];
+                newMesh.mesh.uvs[j * 2    ] = uv.x;
+                newMesh.mesh.uvs[j * 2 + 1] = uv.y;
+            }
+        }
+        else
+        {
+            newMesh.mesh.uvs = NULL;
         }
 
-        //Collect face data
-        newMesh.nbIndicies = mesh->mNumFaces * 3;
-        struct face* indexData = malloc(sizeof(struct face) * mesh->mNumFaces);
+        //Get normal data
+        newMesh.mesh.normals = malloc(sizeof(float) * mesh->mNumVertices * 3);
+        memcpy(newMesh.mesh.normals, mesh->mNormals, sizeof(float) * mesh->mNumVertices * 3);
+
+        //Get color data
+        if(mesh->mColors[0])
+        {
+            newMesh.mesh.colors = malloc(sizeof(float) * mesh->mNumVertices * 4);
+            memcpy(newMesh.mesh.colors, mesh->mColors[0], sizeof(float) * mesh->mNumVertices * 4);
+        }
+        else
+        {
+            newMesh.mesh.colors = NULL;
+        }
+
+        //Get index data
+        newMesh.mesh.numIndicies = mesh->mNumFaces * 3;
+        newMesh.mesh.indicies = malloc(sizeof(uint32_t) * newMesh.mesh.numIndicies);
         for(int j = 0; j < mesh->mNumFaces; j++)
         {
-            indexData[j].indicies[0] = mesh->mFaces[j].mIndices[0];
-            indexData[j].indicies[1] = mesh->mFaces[j].mIndices[1];
-            indexData[j].indicies[2] = mesh->mFaces[j].mIndices[2];
+            uint32_t* faceIndicies = mesh->mFaces[j].mIndices;
+            newMesh.mesh.indicies[j * 3    ] = faceIndicies[0];
+            newMesh.mesh.indicies[j * 3 + 1] = faceIndicies[1];
+            newMesh.mesh.indicies[j * 3 + 2] = faceIndicies[2];
         }
 
         //Get texture
@@ -218,28 +290,11 @@ static void i_meshLoadAssimp(const char* filename)
             }
         }
 
-        //Load to OpenGL
-        glGenVertexArrays(1, &newMesh.glVAO);
-        glGenBuffers(2, &newMesh.glVBO);
-        glBindVertexArray(newMesh.glVAO);
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, newMesh.glVBO);
-            glBufferData(GL_ARRAY_BUFFER, mesh->mNumVertices * sizeof(struct pos_uvVertex), vertexData, GL_STATIC_DRAW);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, newMesh.glEBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->mNumFaces * sizeof(struct face), indexData, GL_STATIC_DRAW);
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, 0);
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 20, (void*) 12);
-        }
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+        newMesh.m_glTexture = 0;
         if(image)
         {
-            glGenTextures(1, &newMesh.glTexture);
-            glBindTexture(GL_TEXTURE_2D, newMesh.glTexture);
+            glGenTextures(1, &newMesh.m_glTexture);
+            glBindTexture(GL_TEXTURE_2D, newMesh.m_glTexture);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -248,88 +303,91 @@ static void i_meshLoadAssimp(const char* filename)
             stbi_image_free(image);
         }
 
-        free(vertexData);
-        free(indexData);
         i_lAdd(newMesh);
     }
 }
 
-static void i_meshLoadBIN(const char* filename)
+static void i_initMeshRenderer()
 {
-    struct MeshHeader
+    if(!m_meshRenderer)
     {
-        int verticiesArrayPtr, verticiesArraySize;
-	    int indiciesArrayPtr, indiciesArraySize;
-	    int texturePtr, textureWidth, textureHeight;
-    } MeshHeader;
+        prwvfVTXFMT vtxFmt;
+        vtxFmt[0] = 2; // Number of attributes
 
-    FILE* file = fopen(filename, "rb");
+        vtxFmt[1] = PRWVF_ATTRB_USAGE_POS 
+                  | PRWVF_ATTRB_TYPE_FLOAT
+                  | PRWVF_ATTRB_SIZE(3)
+                  | PRWVF_ATTRB_NORMALIZED_FALSE;
 
-    if(file)
+        vtxFmt[2] = PRWVF_ATTRB_USAGE_UV
+                  | PRWVF_ATTRB_TYPE_FLOAT
+                  | PRWVF_ATTRB_SIZE(2)
+                  | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        m_meshRenderer = prwmbGenBuilder(vtxFmt);
+    }
+}
+
+static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID)
+{
+    prwvfVTXATTRB* vtxFmt = *prwmbGetVertexFormat(meshBuilder);
+
+    bool hasUVs = mesh->uvs != NULL;
+    bool hasNormals = mesh->normals != NULL;
+    bool hasColors = mesh->colors != NULL;
+
+    float* defaultUV = meshBuilder->defualtUV;
+    float* defaultNorm = meshBuilder->defaultNormal;
+    float* defaultColor = meshBuilder->defaultColor;
+
+    for(int atrb = 1; atrb <= vtxFmt[0]; atrb++)
     {
-        fseek(file, 0, SEEK_END);
-        size_t fileSize = ftell(file);
+        uint32_t attribUsage = vtxFmt[atrb] & PRWVF_ATTRB_USAGE_MASK;
 
-        char* bufferedInput = malloc(fileSize);
-        rewind(file);
-        size_t ret = fread((char*) bufferedInput, fileSize, 1, file);
-        fclose(file);
+        float* meshData;
 
-        char* bufferReadPtr = bufferedInput;
-    createMesh:
+        switch (attribUsage)
         {
-            if(!*bufferReadPtr)
+        case PRWVF_ATTRB_USAGE_POS:
+            meshData = &mesh->positions[vertexID * 3];
+            prwmbPosition(meshBuilder, meshData[0], meshData[1], meshData[2]);
+            break;
+        case PRWVF_ATTRB_USAGE_UV:
+            if(hasUVs)
             {
-                free(bufferedInput);
-                return;
+                meshData = &mesh->uvs[vertexID * 2];
+                prwmbUV(meshBuilder, meshData[0], meshData[1]);
             }
-
-            Mesh mesh;
-            struct MeshHeader header;
-            memset(mesh.name, 0, sizeof(mesh.name));
-            mesh.vertexFormat = PRWM_VERTF_POS_UV;
-
-            strncpy(mesh.name, bufferReadPtr, sizeof(mesh.name) - 1);
-            bufferReadPtr += strlen(bufferReadPtr) + 1;
-
-            memcpy(&header.verticiesArrayPtr, bufferReadPtr, sizeof(int32_t) * 7);
-            bufferReadPtr += sizeof(int32_t) * 7;
-
-            const char* vertexData = bufferedInput + header.verticiesArrayPtr;
-            const char* indexData = bufferedInput + header.indiciesArrayPtr;
-            const char* textureData = bufferedInput + header.texturePtr;
-            mesh.nbIndicies = header.indiciesArraySize;
-
-            glGenVertexArrays(1, &mesh.glVAO);
-            glGenBuffers(2, &mesh.glVBO);
-            glGenTextures(1, &mesh.glTexture);
-
-            glBindVertexArray(mesh.glVAO);
+            else
             {
-                glBindBuffer(GL_ARRAY_BUFFER, mesh.glVBO);
-                glBufferData(GL_ARRAY_BUFFER, header.verticiesArraySize * 20, vertexData, GL_STATIC_DRAW);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.glEBO);
-                glBufferData(GL_ELEMENT_ARRAY_BUFFER, header.indiciesArraySize * sizeof(uint32_t), indexData, GL_STATIC_DRAW);
-
-                glEnableVertexAttribArray(0);
-                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 20, 0);
-                glEnableVertexAttribArray(1);
-                glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 20, (void*) 12);
+                prwmbUV(meshBuilder, defaultUV[0], defaultUV[1]);
             }
-            glBindVertexArray(0);
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-            glBindTexture(GL_TEXTURE_2D, mesh.glTexture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, header.textureWidth, header.textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
-
-            i_lAdd(mesh);
-            goto createMesh;
+            break;
+        case PRWVF_ATTRB_USAGE_NORMAL:
+            if(hasNormals)
+            {
+                meshData = &mesh->normals[vertexID * 3];
+                prwmbNormal(meshBuilder, meshData[0], meshData[1], meshData[2]);
+            }
+            else
+            {
+                prwmbNormal(meshBuilder, defaultNorm[0], defaultNorm[1], defaultNorm[2]);
+            }
+            break;
+        case PRWVF_ATTRB_USAGE_COLOR:
+            if(hasColors)
+            {
+                meshData = &mesh->colors[vertexID * 4];
+                prwmbColorRGBA(meshBuilder, meshData[0], meshData[1], meshData[2], meshData[3]);
+            }
+            else
+            {
+                prwmbColorRGBA(meshBuilder, defaultColor[0], defaultColor[1], defaultColor[2], defaultColor[3]);
+            }
+            break;
+        case PRWVF_ATTRB_USAGE_TEXID:
+            prwmbTexid(meshBuilder, 0);
+            break;
         }
     }
-    else printf("[BIN Mesh Loader][Error]: Unable to load %s\n", filename);
 }

@@ -105,7 +105,9 @@ void prwmbVertex(PRWmeshBuilder* builder, ...);
 
 void prwmbIndex(PRWmeshBuilder* builder, size_t numIndicies, ...);
 
-void prwmbTexid(PRWmeshBuilder* builder, uint8_t texid);
+void prwmbIndexv(PRWmeshBuilder* builder, size_t numIndicies, const uint32_t* indicies);
+
+void prwmbTexid(PRWmeshBuilder* builder, uint32_t texid);
 
 prwvfVTXFMT* prwmbGetVertexFormat(PRWmeshBuilder* builder);
 

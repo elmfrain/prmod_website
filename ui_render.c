@@ -253,7 +253,7 @@ static void i_init()
                     | PRWVF_ATTRB_NORMALIZED_FALSE;
 
     vertexFormat[4] = PRWVF_ATTRB_USAGE_TEXID
-                    | PRWVF_ATTRB_TYPE_UBYTE
+                    | PRWVF_ATTRB_TYPE_UINT
                     | PRWVF_ATTRB_SIZE(1)
                     | PRWVF_ATTRB_NORMALIZED_FALSE;
     

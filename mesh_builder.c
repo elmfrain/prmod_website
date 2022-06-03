@@ -229,7 +229,12 @@ void prwmbDrawArrays(PRWmeshBuilder* builder, int mode)
     glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
     if(b->m_vertexDataBufferCapacity <= b->m_glVertexBufferSize)
     {
+#ifdef EMSCRIPTEN
+        // Workaround. WebGL outputs a buffer overflow error when using glBufferSubData.
+        glBufferData(GL_ARRAY_BUFFER, b->m_glVertexBufferSize, b->m_vertexDataBuffer, GL_DYNAMIC_DRAW);
+#else
         glBufferSubData(GL_ARRAY_BUFFER, 0, b->m_vertexDataPos, b->m_vertexDataBuffer);
+#endif
     }
     else
     {
@@ -249,7 +254,12 @@ void prwmbDrawElements(PRWmeshBuilder* builder, int mode)
     glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
     if(b->m_vertexDataBufferCapacity <= b->m_glVertexBufferSize)
     {
+#ifdef EMSCRIPTEN
+        // Workaround. WebGL outputs a buffer overflow error when using glBufferSubData.
+        glBufferData(GL_ARRAY_BUFFER, b->m_glVertexBufferSize, b->m_vertexDataBuffer, GL_DYNAMIC_DRAW);
+#else
         glBufferSubData(GL_ARRAY_BUFFER, 0, b->m_vertexDataPos, b->m_vertexDataBuffer);
+#endif
     }
     else
     {
@@ -260,7 +270,12 @@ void prwmbDrawElements(PRWmeshBuilder* builder, int mode)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b->m_glEBO);
     if(b->m_indexDataBufferCapacity <= b->m_glElementBufferSize)
     {
+#ifdef EMSCRIPTEN
+        // Workaround. WebGL outputs a buffer overflow error when using glBufferSubData.
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, b->m_glElementBufferSize, b->m_indexDataBuffer, GL_DYNAMIC_DRAW);
+#else
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, b->m_indexDataPos, b->m_indexDataBuffer);
+#endif
     }
     else
     {
@@ -435,7 +450,33 @@ void prwmbIndex(PRWmeshBuilder* builder, size_t numIndicies, ...)
     b->m_numIndicies += numIndicies;
 }
 
-void prwmbTexid(PRWmeshBuilder* builder, uint8_t texid)
+void prwmbIndexv(PRWmeshBuilder* builder, size_t numIndicies, const uint32_t* indicies)
+{
+    getMeshBuilder;
+
+    uint32_t bufferedIndicies[128];
+    size_t bufferedIndiciesPos = 0;
+
+    for(size_t i = 0; i < numIndicies; i++)
+    {
+        bufferedIndicies[bufferedIndiciesPos++] = indicies[i] + b->m_numVerticies;
+
+        if(128 <= bufferedIndiciesPos)
+        {
+            i_mbPushIndexData(b, bufferedIndiciesPos * sizeof(uint32_t), bufferedIndicies);
+            bufferedIndiciesPos = 0;
+        }
+    }
+
+    if(0 < bufferedIndiciesPos)
+    {
+        i_mbPushIndexData(b, bufferedIndiciesPos * sizeof(uint32_t), bufferedIndicies);
+    }
+
+    b->m_numIndicies += numIndicies;
+}
+
+void prwmbTexid(PRWmeshBuilder* builder, uint32_t texid)
 {
     getMeshBuilder;
 
@@ -446,7 +487,7 @@ prwvfVTXFMT* prwmbGetVertexFormat(PRWmeshBuilder* builder)
 {
     getMeshBuilder;
 
-    return &b->m_vertexFormat;
+    return &(b->m_vertexFormat);
 }
 
 void prwmbPushMatrix(PRWmeshBuilder* builder)
