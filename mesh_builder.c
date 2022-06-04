@@ -132,6 +132,7 @@ typedef struct MeshBuilder
     size_t m_glElementBufferSize;
 
     //Book Keeping
+    bool m_isRenderable;
     size_t m_numVerticies;
     size_t m_numIndicies;
     size_t m_vertexDataPos;
@@ -146,6 +147,7 @@ typedef struct MeshBuilder
 
 #define getMeshBuilder MeshBuilder* b = (MeshBuilder*) builder
 
+static void i_mbInitForRendering(MeshBuilder* b);
 static void i_mbPushVertexData(MeshBuilder* b, size_t size, void* data);
 static void i_mbPushIndexData(MeshBuilder* b, size_t size, void* data);
 static void i_mbMat4Get3x3(MeshBuilder* b);
@@ -175,26 +177,7 @@ PRWmeshBuilder* prwmbGenBuilder(prwvfVTXFMT vertexFormat)
 
     memcpy(builder->m_vertexFormat, vertexFormat, sizeof(prwvfVTXFMT));
 
-    glGenBuffers(1, &builder->m_glVBO);
-    glGenBuffers(1, &builder->m_glEBO);
-    glGenVertexArrays(1, &builder->m_glVAO);
-
-    builder->m_glVertexBufferSize = PRWMB_BUFFER_STARTING_SIZE;
-    builder->m_glElementBufferSize = PRWMB_BUFFER_STARTING_SIZE;
-
-    glBindVertexArray(builder->m_glVAO);
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, builder->m_glVBO);
-        glBufferData(GL_ARRAY_BUFFER, builder->m_glVertexBufferSize, NULL, GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, builder->m_glEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, builder->m_glElementBufferSize, NULL, GL_DYNAMIC_DRAW);
-
-        prwvfApply(builder->m_vertexFormat);
-
-    }
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    builder->m_isRenderable = false;
 
     return (PRWmeshBuilder*) builder;
 }
@@ -206,8 +189,12 @@ void prwmbDeleteBuilder(PRWmeshBuilder* builder)
     free(b->m_vertexDataBuffer);
     free(b->m_indexDataBuffer);
 
-    glDeleteVertexArrays(1, &b->m_glVAO);
-    glDeleteBuffers(2, &b->m_glVBO);
+    if(b->m_isRenderable)
+    {
+        glDeleteVertexArrays(1, &b->m_glVAO);
+        glDeleteBuffers(1, &b->m_glVBO);
+        glDeleteBuffers(1, &b->m_glEBO);
+    }
 
     free(b);
 }
@@ -225,6 +212,11 @@ void prwmbReset(PRWmeshBuilder* builder)
 void prwmbDrawArrays(PRWmeshBuilder* builder, int mode)
 {
     getMeshBuilder;
+
+    if(!b->m_isRenderable)
+    {
+        i_mbInitForRendering(b);
+    }
 
     glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
     if(b->m_vertexDataBufferCapacity <= b->m_glVertexBufferSize)
@@ -250,6 +242,11 @@ void prwmbDrawArrays(PRWmeshBuilder* builder, int mode)
 void prwmbDrawElements(PRWmeshBuilder* builder, int mode)
 {
     getMeshBuilder;
+
+    if(!b->m_isRenderable)
+    {
+        i_mbInitForRendering(b);
+    }
 
     glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
     if(b->m_vertexDataBufferCapacity <= b->m_glVertexBufferSize)
@@ -533,6 +530,52 @@ vec4* prwmbGetModelView(PRWmeshBuilder* builder)
     getMeshBuilder;
 
     return *b->m_currentModelView;
+}
+
+const uint8_t* prwmbGetVertexBuffer(PRWmeshBuilder* builder, size_t* getNumBytes)
+{
+    getMeshBuilder;
+
+    if(getNumBytes)
+    {
+        *getNumBytes = b->m_vertexDataPos;
+    }
+
+    return b->m_vertexDataBuffer;
+}
+
+const uint32_t* prwmbGetIndexBuffer(PRWmeshBuilder* builder, size_t* getNumBytes)
+{
+    getMeshBuilder;
+
+    if(getNumBytes)
+    {
+        *getNumBytes = b->m_indexDataPos;
+    }
+
+    return b->m_indexDataBuffer;
+}
+
+static void i_mbInitForRendering(MeshBuilder* b)
+{
+    glGenBuffers(1, &b->m_glVBO);
+    glGenBuffers(1, &b->m_glEBO);
+    glGenVertexArrays(1, &b->m_glVAO);
+
+    b->m_glVertexBufferSize = PRWMB_BUFFER_STARTING_SIZE;
+    b->m_glElementBufferSize = PRWMB_BUFFER_STARTING_SIZE;
+
+    glBindVertexArray(b->m_glVAO);
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, b->m_glVBO);
+        glBufferData(GL_ARRAY_BUFFER, b->m_glVertexBufferSize, NULL, GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b->m_glEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, b->m_glElementBufferSize, NULL, GL_DYNAMIC_DRAW);
+
+        prwvfApply(b->m_vertexFormat);
+    }
+
+    b->m_isRenderable = true;
 }
 
 static void i_mbPushVertexData(MeshBuilder* b, size_t size, void* data)

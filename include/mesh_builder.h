@@ -118,3 +118,7 @@ void prwmbPopMatrix(PRWmeshBuilder* builder);
 void prwmbResetMatrixStack(PRWmeshBuilder* builder);
 
 vec4* prwmbGetModelView(PRWmeshBuilder* builder);
+
+const uint8_t* prwmbGetVertexBuffer(PRWmeshBuilder* builder, size_t* getNumBytes);
+
+const uint32_t* prwmbGetIndexBuffer(PRWmeshBuilder* builder, size_t* getNumBytes);

@@ -85,6 +85,21 @@ void loadBackground()
 
     prwmLoad(PRW_ON_MOBILE ? "res/cube_map_512.obj" : "res/cube_map.obj");
     backgroundMesh = prwmMeshGet("cube_map");
+
+    prwvfVTXFMT bgVtxFmt;
+    bgVtxFmt[0] = 2;
+
+    bgVtxFmt[1] = PRWVF_ATTRB_USAGE_POS
+                | PRWVF_ATTRB_TYPE_FLOAT
+                | PRWVF_ATTRB_SIZE(3)
+                | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+    bgVtxFmt[2] = PRWVF_ATTRB_USAGE_UV
+                | PRWVF_ATTRB_TYPE_FLOAT
+                | PRWVF_ATTRB_SIZE(2)
+                | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+    prwmMakeRenderable(backgroundMesh, bgVtxFmt);
 }
 
 static void mainLoop()
