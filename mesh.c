@@ -36,7 +36,7 @@ static Mesh* i_lAdd(Mesh mesh);
 static void i_lRemove(Mesh* mesh);
 
 static void i_meshLoadAssimp(const char* filename);
-static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID);
+static void i_putVertex(PRWmeshBuilder* meshBuilder, prwvfVTXATTRB* vtxFmt, PRWmesh* mesh, uint32_t vertexID);
 
 void prwmLoad(const char* filename)
 {
@@ -54,7 +54,7 @@ PRWmesh* prwmMeshGet(const char* meshName)
 void prwmMeshRenderv(PRWmesh* mesh)
 {
     Mesh* m = (Mesh*) mesh;
-    if(!mesh) return;
+    if(!mesh || !m->m_isRenderable) return;
 
     if(m->m_glTexture)
     {
@@ -66,6 +66,7 @@ void prwmMeshRenderv(PRWmesh* mesh)
     {
         glDrawElements(GL_TRIANGLES, m->mesh.numIndicies, GL_UNSIGNED_INT, NULL);
     }
+    glBindVertexArray(0);
 }
 
 void prwmMeshRender(const char* meshName)
@@ -77,6 +78,7 @@ void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
 {
     if(!mesh) return;
 
+    prwvfVTXATTRB* vtxFmt = *prwmbGetVertexFormat(meshBuilder);
     uint32_t numIndicies = mesh->numIndicies;
 
     if(!mesh->positions || !mesh->indicies)
@@ -88,7 +90,7 @@ void prwmPutMeshArrays(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
     {
         uint32_t index = mesh->indicies[i];
 
-        i_putVertex(meshBuilder, mesh, index);
+        i_putVertex(meshBuilder, vtxFmt, mesh, index);
     }
 }
 
@@ -96,7 +98,7 @@ void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
 {
     if(!mesh) return;
 
-    prwvfVTXFMT* vtxFmt = prwmbGetVertexFormat(meshBuilder);
+    prwvfVTXATTRB* vtxFmt = *prwmbGetVertexFormat(meshBuilder);
     uint32_t numVerticies = mesh->numVerticies;
 
     if(!mesh->positions || !mesh->indicies)
@@ -108,7 +110,7 @@ void prwmPutMeshElements(PRWmeshBuilder* meshBuilder, PRWmesh* mesh)
 
     for(uint32_t i = 0; i < numVerticies; i++)
     {
-        i_putVertex(meshBuilder, mesh, i);
+        i_putVertex(meshBuilder, vtxFmt, mesh, i);
     }
 }
 
@@ -163,6 +165,7 @@ void prwmMakeRenderable(PRWmesh* mesh, prwvfVTXFMT vtxFmt)
 
         prwvfApply(vtxFmt);
     }
+    glBindVertexArray(0);
 
     m->m_isRenderable = true;
 
@@ -326,10 +329,8 @@ static void i_meshLoadAssimp(const char* filename)
     }
 }
 
-static void i_putVertex(PRWmeshBuilder* meshBuilder, PRWmesh* mesh, uint32_t vertexID)
+static void i_putVertex(PRWmeshBuilder* meshBuilder, prwvfVTXATTRB* vtxFmt, PRWmesh* mesh, uint32_t vertexID)
 {
-    prwvfVTXATTRB* vtxFmt = *prwmbGetVertexFormat(meshBuilder);
-
     bool hasUVs = mesh->uvs != NULL;
     bool hasNormals = mesh->normals != NULL;
     bool hasColors = mesh->colors != NULL;
