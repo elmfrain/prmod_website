@@ -166,6 +166,23 @@ void prwDrawTitleView()
         prwmLoad("res/3d_logo_baked.obj");
         m_modLogoMesh = prwmMeshGet("pr_logo");
         m_modLogoShadowMesh = prwmMeshGet("shadow_plane");
+
+        prwvfVTXFMT meshVtxFmt;
+        meshVtxFmt[0] = 2;
+
+        meshVtxFmt[1] = PRWVF_ATTRB_USAGE_POS
+                      | PRWVF_ATTRB_TYPE_FLOAT
+                      | PRWVF_ATTRB_SIZE(3)
+                      | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        meshVtxFmt[2] = PRWVF_ATTRB_USAGE_UV
+                      | PRWVF_ATTRB_TYPE_FLOAT
+                      | PRWVF_ATTRB_SIZE(2)
+                      | PRWVF_ATTRB_NORMALIZED_FALSE;
+
+        prwmMakeRenderable(m_modLogoMesh, meshVtxFmt);
+        prwmMakeRenderable(m_modLogoShadowMesh, meshVtxFmt);
+
         prwaInitSmoother(&m_logoFov);
         prwaInitSmoother(&m_logoAngleSpd);
         prwaSmootherSetAndGrab(&m_logoAngleSpd, 1.8);
