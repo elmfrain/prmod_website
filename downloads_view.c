@@ -1,4 +1,4 @@
-#include "download_view.h"
+#include "downloads_view.h"
 
 #include "markdown_viewer.h"
 #include "ui_render.h"

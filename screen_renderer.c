@@ -11,7 +11,7 @@
 //screen views
 #include "title_view.h"
 #include "about_view.h"
-#include "download_view.h"
+#include "downloads_view.h"
 
 #include <stdio.h>
 #include <string.h>
