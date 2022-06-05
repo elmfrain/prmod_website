@@ -49,40 +49,12 @@ void handleCursorMovement(GLFWwindow* window);
 
 static GLFWwindow* window;
 static double lastTime = 0.0;
+static size_t numFramesPassed = 0;
 
 char PRW_ON_MOBILE = 0;
 
 void loadBackground()
 {   
-    float wX = prwuiGetWindowWidth(), wY = prwuiGetWindowHeight();
-    glViewport(0, 0, wX, wY);
-
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-    float uiWidth = prwuiGetUIwidth();
-    float uiHeight = prwuiGetUIheight();
-
-    //Make sure ui shader is absolutely ready
-    prws_POS_UV_COLOR_TEXID_shader();
-    glFinish();
-
-    //Display loading screen
-    prwuiSetupUIrendering();
-    prwuiGenGradientQuad(PRWUI_TO_BOTTOM, 0, 0, uiWidth, uiHeight, -11776948, 0, 0);
-    prwuiPushStack();
-    {
-        prwuiTranslate(uiWidth / 2, uiHeight / 2);
-        prwuiScale(3, 3);
-        prwuiGenString(PRWUI_CENTER, "Loading Assets...", 0, 0, -9276814);
-        prwuiGenString(PRWUI_CENTER, "Loading Assets...", 0, -1, -1);
-    }
-    prwuiPopStack();
-    prwuiRenderBatch();
-
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-
     prwmLoad(PRW_ON_MOBILE ? "res/cube_map_512.obj" : "res/cube_map.obj");
     backgroundMesh = prwmMeshGet("cube_map");
 
@@ -102,6 +74,29 @@ void loadBackground()
     prwmMakeRenderable(backgroundMesh, bgVtxFmt);
 }
 
+static void drawLoadingScreen()
+{
+    float uiWidth = prwuiGetUIwidth();
+    float uiHeight = prwuiGetUIheight();
+
+    //Make sure ui shader is absolutely ready
+    prws_POS_UV_COLOR_TEXID_shader();
+    glFinish();
+
+    //Display loading screen
+    prwuiSetupUIrendering();
+    prwuiGenGradientQuad(PRWUI_TO_BOTTOM, 0, 0, uiWidth, uiHeight, -11776948, 0, 0);
+    prwuiPushStack();
+    {
+        prwuiTranslate(uiWidth / 2, uiHeight / 2);
+        prwuiScale(3, 3);
+        prwuiGenString(PRWUI_CENTER, "Loading Assets...", 0, 0, -9276814);
+        prwuiGenString(PRWUI_CENTER, "Loading Assets...", 0, -1, -1);
+    }
+    prwuiPopStack();
+    prwuiRenderBatch();
+}
+
 static void mainLoop()
 {
     handleKeyEvents(window);
@@ -113,6 +108,22 @@ static void mainLoop()
 
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    if(numFramesPassed < 3)
+    {
+        if(numFramesPassed == 1)
+        {
+            loadBackground();
+        }
+
+        drawLoadingScreen();
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+
+        numFramesPassed++;
+        return;
+    }
 
     double time = glfwGetTime();
     camLook[0] = prwaSmootherValue(&smoother);
@@ -141,6 +152,8 @@ static void mainLoop()
     clearGLErrors();
     glfwSwapBuffers(window);
     glfwPollEvents();
+
+    numFramesPassed++;
 }
 
 int main(int argc, char** argv)
