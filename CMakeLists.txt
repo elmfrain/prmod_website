@@ -60,7 +60,7 @@ add_executable(${PROJECT_NAME}
     title_view.c
     about_view.c
     markdown_viewer.c
-    download_view.c
+    downloads_view.c
     mesh_builder.c
 )
 

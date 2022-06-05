@@ -158,12 +158,12 @@ void prwRenderMenuScreen()
     {
         prwTickTitleView();
         prwTickAboutView();
-        prwTickDownloadView();
+        prwTickDownloadsView();
     }
 
     if(m_pageSelected == 0) prwDrawTitleView();
     else if(m_pageSelected == 1) prwDrawAboutView();
-    else if(m_pageSelected == 2) prwDrawDownloadView();
+    else if(m_pageSelected == 2) prwDrawDownloadsView();
 
     prwuiSetupUIrendering();
 

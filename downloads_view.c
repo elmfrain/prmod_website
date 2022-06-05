@@ -9,7 +9,7 @@
 
 #define NAV_BAR_HEIGHT 15
 
-void prwTickDownloadView()
+void prwTickDownloadsView()
 {
 
 }
@@ -17,7 +17,7 @@ void prwTickDownloadView()
 static PRWwidget* m_body = NULL;
 static PRWmarkdownViewer* m_pageViewer = NULL;
 
-void prwDrawDownloadView()
+void prwDrawDownloadsView()
 {
     if(!m_body)
     {
