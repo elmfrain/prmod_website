@@ -188,7 +188,6 @@ int main(int argc, char** argv)
 
     glfwSwapInterval(1);
 
-    loadBackground();
     prwInitMenuScreen();
     prwaInitSmoother(&smoother);
     smoother.speed = 5;
