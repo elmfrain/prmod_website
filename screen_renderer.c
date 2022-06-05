@@ -117,7 +117,7 @@ void prwInitMenuScreen()
 
     prwwWidgetSetText(titleTab, "Parkour Recorder");
     prwwWidgetSetText(otherTab, "About");
-    prwwWidgetSetText(downloadTab, "Download");
+    prwwWidgetSetText(downloadTab, "Downloads");
     titleTab->width = prwuiGetStringWidth(prwwWidgetText(titleTab)) + 10;
     otherTab->width = prwuiGetStringWidth(prwwWidgetText(otherTab)) + 10;
     downloadTab->width = prwuiGetStringWidth(prwwWidgetText(downloadTab)) + 10;
