@@ -50,7 +50,7 @@ static const char* POS_UV_SHADER_fcode =
 "   o_fragColor = u_color * texture(u_textures[0], b_uv);\n"
 "}\n"
 ;
-//TODO make is gles3 compatible
+
 static const char* POS_COLOR_SHADER_vcode =
 "#version 300 es\n"
 "in mediump vec3 i_pos;\n"
@@ -65,7 +65,7 @@ static const char* POS_COLOR_SHADER_vcode =
 "   b_color = i_color;\n"
 "}\n"
 ;
-//TODO make is gles3 compatible
+
 static const char* POS_COLOR_SHADER_fcode =
 "#version 300 es\n"
 "in mediump vec4 b_color;\n"
