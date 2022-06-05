@@ -1,20 +1,20 @@
-//TODO make is gles3 compatible
+
 static const char* POS_SHADER_vcode =
-"#version 150 core\n"
-"in vec3 i_pos;\n"
-"uniform mat4 u_projectionMatrix;\n"
-"uniform mat4 u_modelViewMatrix;\n"
+"#version 300 es\n"
+"in mediump vec3 i_pos;\n"
+"uniform mediump mat4 u_projectionMatrix;\n"
+"uniform mediump mat4 u_modelViewMatrix;\n"
 "\n"
 "void main()\n"
 "{\n"
 "   gl_Position = u_projectionMatrix * u_modelViewMatrix * vec4(i_pos, 1.0);\n"
 "}\n"
 ;
-//TODO make is gles3 compatible
+
 static const char* POS_SHADER_fcode =
-"#version 150 core\n"
-"out vec4 o_fragColor;\n"
-"uniform vec4 u_color;\n"
+"#version 300 es\n"
+"out mediump vec4 o_fragColor;\n"
+"uniform mediump vec4 u_color;\n"
 "uniform sampler2D u_textures[16];\n"
 "\n"
 "void main()\n"
@@ -52,12 +52,12 @@ static const char* POS_UV_SHADER_fcode =
 ;
 //TODO make is gles3 compatible
 static const char* POS_COLOR_SHADER_vcode =
-"#version 150 core\n"
-"in vec3 i_pos;\n"
-"in vec4 i_color;\n"
-"out vec4 b_color;\n"
-"uniform mat4 u_projectionMatrix;\n"
-"uniform mat4 u_modelViewMatrix;\n"
+"#version 300 es\n"
+"in mediump vec3 i_pos;\n"
+"in mediump vec4 i_color;\n"
+"out mediump vec4 b_color;\n"
+"uniform mediump mat4 u_projectionMatrix;\n"
+"uniform mediump mat4 u_modelViewMatrix;\n"
 "\n"
 "void main()\n"
 "{\n"
@@ -67,10 +67,10 @@ static const char* POS_COLOR_SHADER_vcode =
 ;
 //TODO make is gles3 compatible
 static const char* POS_COLOR_SHADER_fcode =
-"#version 150 core\n"
-"in vec4 b_color;\n"
-"out vec4 o_fragColor;\n"
-"uniform vec4 u_color;\n"
+"#version 300 es\n"
+"in mediump vec4 b_color;\n"
+"out mediump vec4 o_fragColor;\n"
+"uniform mediump vec4 u_color;\n"
 "uniform sampler2D u_textures[16];\n"
 "\n"
 "void main()\n"
@@ -78,7 +78,7 @@ static const char* POS_COLOR_SHADER_fcode =
 "   o_fragColor = u_color * b_color;\n"
 "}\n"
 ;
-//TODO make is gles3 compatible
+
 static const char* POS_UV_COLOR_TEXID_SHADER_vcode =
 "#version 300 es\n"
 "in mediump vec3 i_pos;\n"
@@ -99,7 +99,7 @@ static const char* POS_UV_COLOR_TEXID_SHADER_vcode =
 "   b_texID = i_texID;\n"
 "}\n"
 ;
-//TODO make it gles3 compatible
+
 static const char* POS_UV_COLOR_TEXID_SHADER_fcode =
 "#version 300 es\n"
 "in mediump vec2 b_uv;\n"
