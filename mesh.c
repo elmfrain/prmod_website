@@ -35,7 +35,7 @@ static Mesh** m_meshList = NULL;
 static Mesh* i_lAdd(Mesh mesh);
 static void i_lRemove(Mesh* mesh);
 
-static void i_meshLoadAssimp(const char* filename);
+static void i_meshLoadAssimp(const char* filePath);
 static void i_putVertex(PRWmeshBuilder* meshBuilder, prwvfVTXATTRB* vtxFmt, PRWmesh* mesh, uint32_t vertexID);
 
 void prwmLoad(const char* filename)
@@ -216,21 +216,46 @@ static void i_lRemove(Mesh* mesh)
     }
 }
 
-static void i_meshLoadAssimp(const char* filename)
+static inline void i_getFileName(const char* filePath, char* fileName)
 {
-    char dir[1024] = {0};
-    for(int i = strlen(filename); 0 <= i; i--)
-        if(filename[i] == '/' || filename[i] == '\\')
+    for(int i = strlen(filePath); 0 <= i; i--)
+        if(filePath[i] == '/' || filePath[i] == '\\')
         {
-            strncpy(dir, filename, i + 1);
+            filePath += i + 1;
             break;
         }
 
-    const struct aiScene* scene = aiImportFile(filename, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices);
+    int l = strlen(filePath);
+    for(int i = 0; i < l; i++)
+    {
+        char c = filePath[i];
+        if(c == '.')
+        {
+            break;
+        }
+
+        fileName[i] = c;
+    }
+}
+
+static void i_meshLoadAssimp(const char* filePath)
+{
+    char dir[1024] = {0};
+    char fileName[1024] = {0};
+    for(int i = strlen(filePath); 0 <= i; i--)
+        if(filePath[i] == '/' || filePath[i] == '\\')
+        {
+            strncpy(dir, filePath, i + 1);
+            break;
+        }
+
+    i_getFileName(filePath, fileName);
+
+    const struct aiScene* scene = aiImportFile(filePath, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices);
 
     if(!scene)
     {
-        printf("[Mesh][Error]: Failed loading: \"%s\"\n", filename);
+        printf("[Mesh][Error]: Failed loading: \"%s\"\n", filePath);
         return;
     }
 
@@ -240,9 +265,16 @@ static void i_meshLoadAssimp(const char* filename)
         const struct aiMesh* mesh = scene->mMeshes[i];
         memset(&newMesh, 0, sizeof(Mesh));
 
-        printf("[Mesh][Info]: Loading mesh \"%s\"\n", mesh->mName.data);
+        if(mesh->mName.data[0] == 0)
+        {
+            strcpy(newMesh.mesh.name, fileName);
+        }
+        else
+        {
+            strcpy(newMesh.mesh.name, mesh->mName.data);
+        }
 
-        strcpy(newMesh.mesh.name, mesh->mName.data);
+        printf("[Mesh][Info]: Loading mesh \"%s\"\n", newMesh.mesh.name);
 
         newMesh.mesh.numVerticies = mesh->mNumVertices;
 
