@@ -109,7 +109,7 @@ bool prwvfaIsNormalized(prwvfVTXATTRB attrib)
 #endif
 
 #ifndef PRWMB_BUFFER_STARTING_SIZE
-#define PRWMB_BUFFER_STARTING_SIZE 512
+#define PRWMB_BUFFER_STARTING_SIZE 4098
 #endif
 
 typedef struct MeshBuilder
@@ -241,7 +241,7 @@ void prwmbDrawArrays(PRWmeshBuilder* builder, int mode)
 
 void prwmbDrawElements(PRWmeshBuilder* builder, int mode)
 {
-    getMeshBuilder;
+     getMeshBuilder;
 
     if(!b->m_isRenderable)
     {
