@@ -1,1 +1,1 @@
-* **Note:** This website is supported by adfly links. To prevent downloadling additional software, only click on the `Skip Ad` button after 5 seconds the ad page loads. 
+* **Note:** This website is supported by adfly links. To prevent downloading additional software, only click on the `Skip Ad` button after 5 seconds the ad page loads. 
