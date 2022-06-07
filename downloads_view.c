@@ -20,6 +20,7 @@ static PRWmesh* m_arrowMesh;
 static int m_arrowTicks;
 
 static PRWmarkdownViewer* m_titleMD;
+static PRWmarkdownViewer* m_noteMD;
 
 static void i_initView();
 static void i_drawArrow(float left, float top, float right, float bottom);
@@ -63,18 +64,24 @@ void prwDrawDownloadsView()
     m_body->x += NAV_BAR_HEIGHT * 2;
     m_body->width -= NAV_BAR_HEIGHT * 4;
 
-    prwwViewportStart(m_body, 1);
+    prwwViewportStart(m_body, 0);
     {
-        prwuiTranslate(0, NAV_BAR_HEIGHT);
-
-        prwuiGenQuad(0, 0, 2.0f * m_body->width / 3.0f, 100, 0x88000000, 0);
-
-        m_titleMD->widget->width = 2.0f * m_body->width / 3.0f;
-        m_titleMD->widget->height = 100.0f;
+        m_titleMD->widget->width = m_body->width - 50;
+        m_titleMD->widget->height = 120.0f;
         prwmdDrawMarkdown(m_titleMD);
-        prwuiRenderBatch();
 
-        i_drawArrow(2.0f * m_body->width / 3.0f, 0, m_body->width, 100);
+        prwuiGenHorizontalLine(105.0f, 0, m_body->width, 0xFF444444);
+
+        m_noteMD->widget->y = 105;
+        m_noteMD->widget->width = m_body->width;
+        m_noteMD->widget->height = 60;
+        prwmdDrawMarkdown(m_noteMD);
+    }
+    prwwViewportEnd(m_body);
+
+    prwwViewportStart(m_body, 0);
+    {
+        i_drawArrow(m_body->width - 50, 0, m_body->width, 100);
     }
     prwwViewportEnd(m_body);
 }
@@ -103,6 +110,7 @@ static void i_initView()
     prwmMakeRenderable(m_arrowMesh, arrVtxFmt);
 
     m_titleMD = prwmdGenMarkdownFile("res/download.md");
+    m_noteMD = prwmdGenMarkdownFile("res/download_note.md");
 
     m_hasInit = true;
 }
@@ -116,14 +124,14 @@ static void i_drawArrow(float left, float top, float right, float bottom)
     float arrowTicks = m_arrowTicks + prwScreenPartialTicks();
     float arrowAngle = (60.0f * logf(2.0f * arrowTicks + 1.0f) + arrowTicks) * 2.0f;
     float arrowScale = powf(glm_min(arrowTicks, 60.0f) - 60.0f, 4) / 1.296e7f + 0.5f;
-    float arrowY = sinf(arrowTicks * GLM_PIf / 20.0f) * 0.2f + 0.15f;
+    float arrowY = sinf(arrowTicks * GLM_PIf / 20.0f) * 0.15f + 0.05f;
     float arrowOpacity = glm_min(arrowTicks / 25.0f, 1.0f);
     arrowOpacity *= arrowOpacity;
 
     mat4 projectionMatrix;
     mat4 modelviewMatrix;
 
-    i_genPIPPerspectiveMatrix(left, top, right, bottom, glm_rad(4.2f), 0.1f, 100.0f, projectionMatrix);
+    i_genPIPPerspectiveMatrix(left, top, right, bottom, glm_rad(5.0f), 0.1f, 100.0f, projectionMatrix);
 
     glm_mat4_identity(modelviewMatrix);
     vec3 v1 = {0.0f, arrowY, -10.0f}; glm_translate(modelviewMatrix, v1);
