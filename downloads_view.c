@@ -66,9 +66,15 @@ void prwDrawDownloadsView()
     prwwViewportStart(m_body, 1);
     {
         prwuiTranslate(0, NAV_BAR_HEIGHT);
-        prwuiGenQuad(0, 0, m_body->width, 100, 0x88000000, 0);
+
+        prwuiGenQuad(0, 0, 2.0f * m_body->width / 3.0f, 100, 0x88000000, 0);
+
+        m_titleMD->widget->width = 2.0f * m_body->width / 3.0f;
+        m_titleMD->widget->height = 100.0f;
+        prwmdDrawMarkdown(m_titleMD);
         prwuiRenderBatch();
-        i_drawArrow(0, 0, m_body->width, 100);
+
+        i_drawArrow(2.0f * m_body->width / 3.0f, 0, m_body->width, 100);
     }
     prwwViewportEnd(m_body);
 }
@@ -96,6 +102,8 @@ static void i_initView()
     m_arrowMesh = prwmMeshGet("arrow");
     prwmMakeRenderable(m_arrowMesh, arrVtxFmt);
 
+    m_titleMD = prwmdGenMarkdownFile("res/download.md");
+
     m_hasInit = true;
 }
 
@@ -114,9 +122,8 @@ static void i_drawArrow(float left, float top, float right, float bottom)
 
     mat4 projectionMatrix;
     mat4 modelviewMatrix;
-    vec4* ortho = prwsGetProjectionMatrix();
 
-    i_genPIPPerspectiveMatrix(left, top, right, bottom, glm_rad(5.2f), 0.1f, 100.0f, projectionMatrix);
+    i_genPIPPerspectiveMatrix(left, top, right, bottom, glm_rad(4.2f), 0.1f, 100.0f, projectionMatrix);
 
     glm_mat4_identity(modelviewMatrix);
     vec3 v1 = {0.0f, arrowY, -10.0f}; glm_translate(modelviewMatrix, v1);
