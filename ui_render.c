@@ -2,6 +2,7 @@
 
 #include "shaders.h"
 #include "mesh_builder.h"
+#include "mesh.h"
 
 #include <cglm/cam.h>
 #include <cglm/affine.h>
@@ -122,6 +123,19 @@ void prwuiGenString(int anchor, const char* str, float x, float y, uint32_t colo
     i_frAnchor(anchor, str, x, y, newpos);
 
     i_frGenString(str, newpos[0], newpos[1], color);
+}
+
+void prwuiGenIcon(const char* iconName, float x, float y, float scale)
+{
+    prwuiPushStack();
+    {
+        prwuiTranslate(x, y);
+        prwuiScale(scale, -scale);
+
+        PRWmesh* iconMesh = prwmMeshGet(iconName);
+        prwmPutMeshElements(m_meshBuilder, iconMesh);
+    }
+    prwuiPopStack();
 }
 
 void prwuiRenderBatch()

@@ -37,6 +37,8 @@ void prwuiGenHorizontalLine(float y, float startX, float startY, uint32_t color)
 
 void prwuiGenString(int anchor, const char* str, float x, float y, uint32_t color);
 
+void prwuiGenIcon(const char* iconName, float x, float y, float scale);
+
 void prwuiRenderBatch();
 
 float prwuiGetStringHeight();
