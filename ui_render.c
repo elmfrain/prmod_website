@@ -367,7 +367,7 @@ static const int m_ASCII_INDECIES[] =
     0x00B0, 0x2219, 0x00B7, 0x221A, 0x207F, 0x00B2, 0x25A0, 0x0000, 
 };
 
-static const char* m_FORMATTING_KEYS = "0123456789abcdefklmnors";
+static const char* m_FORMATTING_KEYS = "0123456789abcdefklmnorst";
 
 static const uint32_t m_COLOR_CODES[] = 
 {
@@ -382,6 +382,7 @@ static bool m_strikethroughStyle = false;
 static bool m_underlineStyle = false;
 static bool m_italicStyle = false;
 static bool m_hiddenStyle = false;
+static bool m_iconStyle = false;
 
 static int m_maxTexUnits = 0;
 static GLuint m_asciiAtlasTex = 0;
@@ -594,6 +595,11 @@ int prwfrSplitToFitr(char* dst, const char* src, float maxWidth, const char* reg
             }
             else if(formatKey == 17) m_boldStyle = true;
             else if(formatKey == 22) m_hiddenStyle = true;
+            else if(formatKey == 23)
+            {
+                m_hiddenStyle = true;
+                cursor += prwuiGetStringHeight() + 1;
+            }
 
             i++;
         }
@@ -643,7 +649,7 @@ void prwfrGetFormats(char* dst, const char* src)
             char key[] = { tolower(src[i + bytesRead]), 0 };
             int formatKey = strstr(m_FORMATTING_KEYS, key) - m_FORMATTING_KEYS;
 
-            if(0 <= formatKey && formatKey <= 22) //only copy known formats
+            if(0 <= formatKey && formatKey <= 23) //only copy known formats
             {
                 strncat(dst, src + i, 3);
                 formatLen += 3;
@@ -686,6 +692,11 @@ static inline float i_frGetStringWidth(const char* str)
             }
             else if(formatKey == 17) m_boldStyle = true;
             else if(formatKey == 22) m_hiddenStyle = true;
+            else if(formatKey == 23)
+            {
+                m_hiddenStyle = true;
+                cursor += prwuiGetStringHeight() + 1;
+            }
 
             i++;
         }
@@ -712,7 +723,11 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
     m_underlineStyle = false;
     m_italicStyle = false;
     m_hiddenStyle = false;
+    m_iconStyle = false;
     m_fontColor = color;
+
+    char iconName[128] = {0};
+    int iconNamePos = 0;
 
     uint32_t charColor = m_fontColor;
     int strLen = strlen(str);
@@ -736,6 +751,15 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                 m_underlineStyle = false;
                 m_italicStyle = false;
                 m_hiddenStyle = false;
+                m_iconStyle = false;
+
+                if(0 < iconNamePos)
+                {
+                    float strHeight = prwuiGetStringHeight();
+                    prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, strHeight / 2, strHeight);
+                    memset(iconName, 0, sizeof(iconName));
+                    iconNamePos = 0;
+                }
 
                 if(formatKey < 0) formatKey = 15;
 
@@ -767,10 +791,25 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                     m_underlineStyle = false;
                     m_italicStyle = false;
                     m_hiddenStyle = false;
+                    m_iconStyle = false;
+
+                    if(0 < iconNamePos)
+                    {
+                        float strHeight = prwuiGetStringHeight();
+                        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2);
+                        memset(iconName, 0, sizeof(iconName));
+                        iconNamePos = 0;
+                    }
+
                     charColor = m_fontColor;
                     break;
                 case 22:
                     m_hiddenStyle = true;
+                    break;
+                case 23:
+                    m_hiddenStyle = true;
+                    m_iconStyle = true;
+                    cursor += prwuiGetStringHeight() + 1;
                 }
             }
             i++;
@@ -792,7 +831,18 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
     
             cursor += advance;
         }
+        else if(m_iconStyle)
+        {
+            iconName[iconNamePos++] = unicode;
+        }
+
         i += bytesRead;
+    }
+
+    if(0 < iconNamePos)
+    {
+        float strHeight = prwuiGetStringHeight();
+        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, strHeight / 2, strHeight);
     }
 }
 
