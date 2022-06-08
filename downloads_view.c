@@ -25,6 +25,7 @@ static PRWmarkdownViewer* m_noteMD;
 static void i_initView();
 static void i_drawArrow(float left, float top, float right, float bottom);
 static void i_genPIPPerspectiveMatrix(float left, float top, float right, float bottom, float fovy, float nearZ, float farZ, vec4* dest);
+static void i_drawTable(float left, float top, float right, float bottom);
 
 void prwTickDownloadsView()
 {
@@ -70,18 +71,16 @@ void prwDrawDownloadsView()
         m_titleMD->widget->height = 120.0f;
         prwmdDrawMarkdown(m_titleMD);
 
+        i_drawArrow(m_body->width - 50, 0, m_body->width, 100);
+
         prwuiGenHorizontalLine(105.0f, 0, m_body->width, 0xFF444444);
 
         m_noteMD->widget->y = 105;
         m_noteMD->widget->width = m_body->width;
         m_noteMD->widget->height = 60;
         prwmdDrawMarkdown(m_noteMD);
-    }
-    prwwViewportEnd(m_body);
 
-    prwwViewportStart(m_body, 0);
-    {
-        i_drawArrow(m_body->width - 50, 0, m_body->width, 100);
+        i_drawTable(0, 155, m_body->width, m_body->height);
     }
     prwwViewportEnd(m_body);
 }
@@ -124,12 +123,17 @@ static void i_drawArrow(float left, float top, float right, float bottom)
     float arrowTicks = m_arrowTicks + prwScreenPartialTicks();
     float arrowAngle = (60.0f * logf(2.0f * arrowTicks + 1.0f) + arrowTicks) * 2.0f;
     float arrowScale = powf(glm_min(arrowTicks, 60.0f) - 60.0f, 4) / 1.296e7f + 0.5f;
-    float arrowY = sinf(arrowTicks * GLM_PIf / 20.0f) * 0.15f + 0.05f;
+    float arrowY = sinf(arrowTicks * GLM_PIf / 20.0f) * 0.135f + 0.05f;
     float arrowOpacity = glm_min(arrowTicks / 25.0f, 1.0f);
     arrowOpacity *= arrowOpacity;
 
+    mat4 prevProjectionMatrix;
+    mat4 prevModelviewMatrix;
     mat4 projectionMatrix;
     mat4 modelviewMatrix;
+
+    glm_mat4_copy(prwsGetProjectionMatrix(), prevProjectionMatrix);
+    glm_mat4_copy(prwsGetModelViewMatrix(), prevModelviewMatrix);
 
     i_genPIPPerspectiveMatrix(left, top, right, bottom, glm_rad(5.0f), 0.1f, 100.0f, projectionMatrix);
 
@@ -146,7 +150,11 @@ static void i_drawArrow(float left, float top, float right, float bottom)
 
     prwmMeshRenderv(m_arrowMesh);
 
+    prwsSetProjectionMatrix(prevProjectionMatrix);
+    prwsSetModelViewMatrix(prevModelviewMatrix);
     prwsSetColor(1, 1, 1, 1);
+
+    glDisable(GL_DEPTH_TEST);
 }
 
 static void i_genPIPPerspectiveMatrix(float left, float top, float right, float bottom, float fovy, float nearZ, float farZ, vec4* dest)
@@ -164,4 +172,34 @@ static void i_genPIPPerspectiveMatrix(float left, float top, float right, float 
     vec3 v1 = {width / 4.0f, -height / 4.0f, 1.0f}; glm_scale(dest, v1);
     mat4 perspective; glm_perspective(fovy, width / height, nearZ, farZ, perspective);
     glm_mat4_mul(dest, perspective, dest);
+}
+
+static void i_drawTable(float left, float top, float right, float bottom)
+{
+    float width = right - left;
+    float columnWidths[] = { 0.08f, 0.32f, 0.40f, 0.20f};
+    char* columnNames[] = {"File", "Version", "Information", "Download"};
+
+    prwuiGenGradientQuad(PRWUI_TO_BOTTOM, left, top, right, bottom, 0xDD5A5A5A, 0xDD333333, 0);
+    prwuiGenHorizontalLine(top - 1, left -1 , right, 0xFF888888);
+    prwuiGenVerticalLine(left - 1, top - 1, bottom, 0xFF888888);
+    prwuiGenVerticalLine(right, top - 1, bottom, 0xFF808080);
+
+    float x = left;
+
+    for(int i = 0; i < 4; i++)
+    {
+        float columnWidth = columnWidths[i] * width;
+        uint32_t color = i % 2 == 0 ? 0x7D000000 : 0x9D000000;
+        prwuiGenQuad(x, top, x + columnWidth, top + 12, color, 0);
+        prwuiGenString(PRWUI_MID_LEFT, columnNames[i], x + 4, top + 6, 0xFFFFFFFF);
+        x += columnWidth;
+
+        if(i != 3)
+        {
+            prwuiGenVerticalLine(x - 1, top + 12, bottom, 0xFF686868);
+            prwuiGenVerticalLine(x, top + 12, bottom, 0xFF393939);
+            prwuiGenVerticalLine(x + 1, top + 12, bottom, 0xFF686868);
+        }
+    }
 }
