@@ -125,7 +125,7 @@ void prwuiGenString(int anchor, const char* str, float x, float y, uint32_t colo
     i_frGenString(str, newpos[0], newpos[1], color);
 }
 
-void prwuiGenIcon(const char* iconName, float x, float y, float scale)
+void prwuiGenIcon(const char* iconName, float x, float y, float scale, uint32_t color)
 {
     prwuiPushStack();
     {
@@ -756,7 +756,8 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                 if(0 < iconNamePos)
                 {
                     float strHeight = prwuiGetStringHeight();
-                    prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2);
+                    uint32_t mixedColor = i_frMixColors(charColor);
+                    prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2, mixedColor);
                     memset(iconName, 0, sizeof(iconName));
                     iconNamePos = 0;
                 }
@@ -796,7 +797,8 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                     if(0 < iconNamePos)
                     {
                         float strHeight = prwuiGetStringHeight();
-                        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2);
+                        uint32_t mixedColor = i_frMixColors(charColor);
+                        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2, mixedColor);
                         memset(iconName, 0, sizeof(iconName));
                         iconNamePos = 0;
                     }
@@ -842,7 +844,8 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
     if(0 < iconNamePos)
     {
         float strHeight = prwuiGetStringHeight();
-        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2);
+        uint32_t mixedColor = i_frMixColors(charColor);
+        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2, mixedColor);
     }
 }
 
