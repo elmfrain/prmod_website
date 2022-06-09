@@ -73,6 +73,7 @@ typedef struct PRWmeshBuilder
     float defaultNormal[3];
     float defualtUV[2];
     float defaultColor[4];
+    float colorFactor[4];
 } PRWmeshBuilder;
 
 PRWmeshBuilder* prwmbGenBuilder(prwvfVTXFMT vertexFormat);

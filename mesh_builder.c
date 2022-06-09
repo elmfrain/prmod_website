@@ -162,6 +162,7 @@ PRWmeshBuilder* prwmbGenBuilder(prwvfVTXFMT vertexFormat)
     memcpy(builder->builder.defaultNormal, defaultNormal, sizeof(defaultNormal));
     memcpy(builder->builder.defualtUV, defaultUV, sizeof(defaultUV));
     memcpy(builder->builder.defaultColor, defaultColor, sizeof(defaultColor));
+    memcpy(builder->builder.colorFactor, defaultColor, sizeof(defaultColor));
 
     prwmbResetMatrixStack((PRWmeshBuilder*) builder);
 
@@ -337,7 +338,8 @@ void prwmbColorRGBA(PRWmeshBuilder* builder, float r, float g, float blue, float
 {
     getMeshBuilder;
 
-    vec4 rgba = { r, g, blue, a };
+    float* colorFactor = b->builder.colorFactor;
+    vec4 rgba = { r * colorFactor[0], g * colorFactor[1], blue * colorFactor[2], a * colorFactor[3]};
 
     i_mbPushVertexData(b, sizeof(rgba), rgba);
 }
@@ -513,6 +515,16 @@ void prwmbPopMatrix(PRWmeshBuilder* builder)
 
     b->m_stackIndex--;
     b->m_currentModelView--;
+}
+
+void prwmbMultColorRGB(PRWmeshBuilder* builder, float r, float g, float b)
+{
+
+}
+
+void prwmbMultColorRGBA(PRWmeshBuilder* builder, float r, float g, float b, float a)
+{
+
 }
 
 void prwmbResetMatrixStack(PRWmeshBuilder* builder)
