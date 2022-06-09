@@ -756,7 +756,7 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
                 if(0 < iconNamePos)
                 {
                     float strHeight = prwuiGetStringHeight();
-                    prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, strHeight / 2, strHeight);
+                    prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2);
                     memset(iconName, 0, sizeof(iconName));
                     iconNamePos = 0;
                 }
@@ -842,7 +842,7 @@ static inline void i_frGenString(const char* str, float x, float y, uint32_t col
     if(0 < iconNamePos)
     {
         float strHeight = prwuiGetStringHeight();
-        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, strHeight / 2, strHeight);
+        prwuiGenIcon(iconName, cursor - 1 - strHeight / 2, y + strHeight / 2, strHeight + 2);
     }
 }
 
