@@ -132,8 +132,16 @@ void prwuiGenIcon(const char* iconName, float x, float y, float scale, uint32_t 
         prwuiTranslate(x, y);
         prwuiScale(scale, -scale);
 
+        float prevColorFactor[4];
+        memcpy(prevColorFactor, m_meshBuilder->colorFactor, sizeof(prevColorFactor));
+        m_meshBuilder->colorFactor[0] = ((color >> 16) & 255) / 255.0f;
+        m_meshBuilder->colorFactor[1] = ((color >>  8) & 255) / 255.0f;
+        m_meshBuilder->colorFactor[2] = ( color        & 255) / 255.0f;
+        m_meshBuilder->colorFactor[3] = ((color >> 24) & 255) / 255.0f;
+
         PRWmesh* iconMesh = prwmMeshGet(iconName);
         prwmPutMeshElements(m_meshBuilder, iconMesh);
+        memcpy(m_meshBuilder->colorFactor, prevColorFactor, sizeof(prevColorFactor));
     }
     prwuiPopStack();
 }
