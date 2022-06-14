@@ -129,12 +129,14 @@ if(NOT EMSCRIPTEN)
         dep/glad/include
         dep/cglm/include
         ${OPENSSL_INCLUDE_DIR}
+        dep/json-c
     )
 else()
     target_include_directories(${PROJECT_NAME} PRIVATE
         include
         dep/cglm/include
         dep/openssl/include
+        dep/json-c
     )
 endif()
 
