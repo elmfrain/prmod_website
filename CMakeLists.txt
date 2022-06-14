@@ -17,6 +17,12 @@ if(EMSCRIPTEN)
     file(COPY emscripten/favicon.ico DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
+#Add json-c
+set(BUILD_SHARED_LIBS         OFF CACHE BOOL " " FORCE)
+set(DISABLE_EXTRA_LIBS        OFF CACHE BOOL " " FORCE)
+set(ENABLE_THREADING          OFF CACHE BOOL " " FORCE)
+add_subdirectory("dep/json-c")
+
 #Add glm
 option(CGLM_SHARED "Shared build" OFF)
 option(CGLM_STATIC "Static build" ON)
@@ -77,6 +83,7 @@ if(UNIX AND NOT EMSCRIPTEN)
         ${OPENSSL_LIBRARIES}
         pthread
         assimp
+        json-c
         m
     )
 elseif(WIN32)
@@ -89,6 +96,7 @@ elseif(WIN32)
             ${OPENSSL_LIBRARIES}
             pthread
             assimp
+            json-c
             m
             ws2_32
         )
@@ -100,6 +108,7 @@ elseif(WIN32)
             ${OPENSSL_SSL_LIBRARY}
             ${OPENSSL_LIBRARIES}
             assimp
+            json-c
             ws2_32
         )
     endif()
@@ -108,6 +117,7 @@ else()
         cglm
         glfw
         assimp
+        json-c
         m
     )
 endif()
