@@ -19,7 +19,7 @@ endif()
 
 #Add json-c
 set(BUILD_SHARED_LIBS         OFF CACHE BOOL " " FORCE)
-set(DISABLE_EXTRA_LIBS        OFF CACHE BOOL " " FORCE)
+set(DISABLE_EXTRA_LIBS        ON  CACHE BOOL " " FORCE)
 set(ENABLE_THREADING          OFF CACHE BOOL " " FORCE)
 add_subdirectory("dep/json-c")
 
