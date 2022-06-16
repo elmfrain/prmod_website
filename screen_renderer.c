@@ -86,6 +86,15 @@ void i_drawNavigationBar()
     prwuiGenQuad(0, NAV_BAR_HEIGHT, uiWidth, NAV_BAR_HEIGHT + MARGIN, -16749608, 0);
     prwuiGenGradientQuad(PRWUI_TO_BOTTOM, 0, NAV_BAR_HEIGHT + MARGIN, uiWidth, NAV_BAR_HEIGHT * 2 + MARGIN, 1275068416, 0, 0);
 
+    if(prwiCursorY() / prwuiGetUIScaleFactor() < NAV_BAR_HEIGHT + MARGIN)
+    {
+        prwwSetZLevel(1);
+    }
+    else
+    {
+        prwwSetZLevel(0);
+    }
+
     i_drawTabs();
 }
 
@@ -115,6 +124,9 @@ void prwInitMenuScreen()
     titleTab = prwwGenWidget(PRWW_TYPE_WIDGET);
     otherTab = prwwGenWidget(PRWW_TYPE_WIDGET);
     downloadTab = prwwGenWidget(PRWW_TYPE_WIDGET);
+    prwwWidgetSetZLevel(titleTab, 1);
+    prwwWidgetSetZLevel(otherTab, 1);
+    prwwWidgetSetZLevel(downloadTab, 1);
 
     prwwWidgetSetText(titleTab, "Parkour Recorder");
     prwwWidgetSetText(otherTab, "About");
