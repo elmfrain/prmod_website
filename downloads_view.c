@@ -5,16 +5,45 @@
 #include "screen_renderer.h"
 #include "mesh.h"
 #include "shaders.h"
+#include "animation.h"
+#include "input.h"
 
 #include <stdlib.h>
 #include <math.h>
 #include <cglm/cglm.h>
+#include <string.h>
+#include <json_object.h>
+#include <json_tokener.h>
+#include <time.h>
+#include <locale.h>
 
 #define NAV_BAR_HEIGHT 15
+#define FILE_QUERY_LIST_MAX_SIZE 256
+#define FILE_QUERY_HEIGHT 36
+
+typedef struct FileQuery
+{
+    PRWwidget* m_viewport;
+    PRWsmoother m_iconSmoother;
+    PRWsmoother m_transition;
+    PRWwidget* m_linkButton;
+    PRWwidget* m_directButton;
+
+    bool m_isLoading;
+
+    // Metadata
+    uint64_t m_fileID;
+    char m_downloads[128];
+    char m_fileSize[128];
+    char m_dateReleased[128];
+    char m_modVersion[128];
+    char m_mcVersion[128];
+} FileQuery;
 
 static bool m_hasInit = false;
 
 static PRWwidget* m_body;
+static PRWsmoother m_scroll;
 
 static PRWmesh* m_arrowMesh;
 static int m_arrowTicks;
@@ -22,19 +51,37 @@ static int m_arrowTicks;
 static PRWmarkdownViewer* m_titleMD;
 static PRWmarkdownViewer* m_noteMD;
 
+static size_t fileQueryListSize = 0;
+static FileQuery* fileQueryList[FILE_QUERY_LIST_MAX_SIZE];
+
 static void i_initView();
 static void i_drawArrow(float left, float top, float right, float bottom);
 static void i_genPIPPerspectiveMatrix(float left, float top, float right, float bottom, float fovy, float nearZ, float farZ, vec4* dest);
 static void i_drawTable(float left, float top, float right, float bottom);
+static void i_drawText(const char* str, float x, float y, float lineMargin, uint32_t color);
+static void i_getFileQueries();
+static void i_clearFileQueries();
+static FileQuery* i_genFileQuery(json_object* jsonQuery, float transitionDelay);
+static void i_drawFileQuery(FileQuery* FileQuery, float width, float* columnWidths, bool altColor);
+static void i_deleteFileQuery(FileQuery* fileQuery);
+static void i_drawLoadBar(float x, float y);
 
 void prwTickDownloadsView()
 {
     if(prwScreenPage() == 2)
     {
+        if(!fileQueryListSize)
+        {
+            i_getFileQueries();
+        }
         m_arrowTicks++;
     }
     else
     {
+        if(fileQueryListSize)
+        {
+            i_clearFileQueries();
+        }
         m_arrowTicks = 0;
     }
 }
@@ -46,11 +93,12 @@ void prwDrawDownloadsView()
         i_initView();
     }
 
+    float hj = 0;
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();
 
     m_body->width = uiWidth * 2 / 3;
-    if(m_body->width < 250) m_body->width = 250;
+    if(m_body->width < 380) m_body->width = 380;
     m_body->height = uiHeight - NAV_BAR_HEIGHT;
     m_body->x = uiWidth / 2 - m_body->width / 2;
 
@@ -65,7 +113,7 @@ void prwDrawDownloadsView()
     m_body->x += NAV_BAR_HEIGHT * 2;
     m_body->width -= NAV_BAR_HEIGHT * 4;
 
-    prwwViewportStart(m_body, 0);
+    prwwViewportStart(m_body, 1);
     {
         m_titleMD->widget->width = m_body->width - 50;
         m_titleMD->widget->height = 120.0f;
@@ -80,7 +128,8 @@ void prwDrawDownloadsView()
         m_noteMD->widget->height = 60;
         prwmdDrawMarkdown(m_noteMD);
 
-        i_drawTable(0, 155, m_body->width, m_body->height);
+        float tableHeight = glm_max(12 + FILE_QUERY_HEIGHT, 12 + fileQueryListSize * FILE_QUERY_HEIGHT);
+        i_drawTable(0, 155, m_body->width, 155 + tableHeight);
     }
     prwwViewportEnd(m_body);
 }
@@ -104,9 +153,19 @@ static void i_initView()
                  | PRWVF_ATTRB_SIZE(4)
                  | PRWVF_ATTRB_NORMALIZED_FALSE;
 
+    // Icons
+    prwmLoad("res/icons/jar.ply");
+    prwmLoad("res/icons/pr_icon.ply");
+    prwmLoad("res/icons/mc_icon.ply");
+    prwmLoad("res/icons/download.ply");
+    prwmLoad("res/icons/curseforge.ply");
+
+    // Load Arrow
     prwmLoad("res/arrow.ply");
     m_arrowMesh = prwmMeshGet("arrow");
     prwmMakeRenderable(m_arrowMesh, arrVtxFmt);
+
+    prwaInitSmoother(&m_scroll);
 
     m_titleMD = prwmdGenMarkdownFile("res/download.md");
     m_noteMD = prwmdGenMarkdownFile("res/download_note.md");
@@ -177,13 +236,14 @@ static void i_genPIPPerspectiveMatrix(float left, float top, float right, float 
 static void i_drawTable(float left, float top, float right, float bottom)
 {
     float width = right - left;
-    float columnWidths[] = { 0.08f, 0.32f, 0.40f, 0.20f};
+    float columnWidths[] = { 0.08f, 0.24f, 0.44f, 0.24f};
     char* columnNames[] = {"File", "Version", "Information", "Download"};
 
     prwuiGenGradientQuad(PRWUI_TO_BOTTOM, left, top, right, bottom, 0xDD5A5A5A, 0xDD333333, 0);
     prwuiGenHorizontalLine(top - 1, left -1 , right, 0xFF888888);
     prwuiGenVerticalLine(left - 1, top - 1, bottom, 0xFF888888);
     prwuiGenVerticalLine(right, top - 1, bottom, 0xFF808080);
+    prwuiGenHorizontalLine(bottom, left - 1, right + 1, 0xFF808080);
 
     float x = left;
 
@@ -201,5 +261,247 @@ static void i_drawTable(float left, float top, float right, float bottom)
             prwuiGenVerticalLine(x, top + 12, bottom, 0xFF393939);
             prwuiGenVerticalLine(x + 1, top + 12, bottom, 0xFF686868);
         }
+    }
+
+    prwuiPushStack();
+    prwuiTranslate(0, top + 12);
+    prwuiRenderBatch();
+
+    for(int i = 0; i < fileQueryListSize; i++)
+    {
+        i_drawFileQuery(fileQueryList[i], m_body->width, columnWidths, i % 2 == 0);
+        prwuiTranslate(0, FILE_QUERY_HEIGHT);
+    }
+
+    prwuiPopStack();
+}
+
+static void i_drawText(const char* str, float x, float y, float lineMargin, uint32_t color)
+{
+    const char* text = str;
+
+    char line[1024] = {0};
+    char* lineEnd;
+    int strLen = strlen(str);
+
+    float height = 0.0f;
+
+    while ((lineEnd = strstr(str, "\n")) != NULL)
+    {
+        height += prwuiGetStringHeight() + lineMargin;
+
+        str = lineEnd + 1;
+    }
+    height -= lineMargin;
+
+    prwuiPushStack();
+    prwuiTranslate(0, -height / 2);
+
+    float cursorY = y;
+    str = text;
+    while ((lineEnd = strstr(str, "\n")) != NULL)
+    {
+        memcpy(line, str, lineEnd - str);
+
+        prwuiGenString(PRWUI_TOP_LEFT, line, x, cursorY, color);
+        cursorY += prwuiGetStringHeight() + lineMargin;
+
+        memset(line, 0, sizeof(line));
+        str = lineEnd + 1;
+    }
+    
+    prwuiPopStack();
+}
+
+static void i_getFileQueries()
+{
+    FILE* file = fopen("res/test.json", "r");
+    fseek(file, 0, SEEK_END);
+    size_t fileS = ftell(file);
+    rewind(file);
+    char* jsonData = malloc(fileS);
+    fread(jsonData, 1, fileS, file);
+    fclose(file);
+
+    json_object* jsonObj = json_tokener_parse(jsonData);
+    int listSize = json_object_array_length(jsonObj);
+    listSize = listSize < FILE_QUERY_LIST_MAX_SIZE ? listSize : FILE_QUERY_LIST_MAX_SIZE;
+
+    for(int i = 0; i < listSize; i++)
+    {
+        json_object* fileQuery = json_object_array_get_idx(jsonObj, i);
+        fileQueryList[i] = i_genFileQuery(fileQuery, i);
+    }
+    fileQueryListSize = listSize;
+
+    json_object_put(jsonObj);
+    free(jsonData);
+}
+
+static void i_clearFileQueries()
+{
+    for(int i = 0; i < fileQueryListSize; i++)
+    {
+        i_deleteFileQuery(fileQueryList[i]);
+    }
+
+    fileQueryListSize = 0;
+}
+
+static FileQuery* i_genFileQuery(json_object* jsonQuery, float transitionDelay)
+{
+    FileQuery* newQuery = malloc(sizeof(FileQuery));
+
+    // Setup Widgets
+    newQuery->m_viewport = prwwGenWidget(PRWW_TYPE_VIEWPORT);
+    newQuery->m_linkButton = prwwGenWidget(PRWW_TYPE_BUTTON);
+    prwwWidgetSetText(newQuery->m_linkButton, "§tdownload§f Link");
+    newQuery->m_directButton = prwwGenWidget(PRWW_TYPE_BUTTON);
+    prwwWidgetSetText(newQuery->m_directButton, "§tjar§f Direct");
+    newQuery->m_linkButton->height = newQuery->m_directButton->height = 14;
+
+    // Setup animation
+    prwaInitSmoother(&newQuery->m_iconSmoother);
+    prwaSmootherSetAndGrab(&newQuery->m_iconSmoother, 20);
+    
+    prwaInitSmoother(&newQuery->m_transition);
+    prwaSmootherSetValue(&newQuery->m_transition, 0 - powf(2, transitionDelay));
+    prwaSmootherGrabTo(&newQuery->m_transition, 1);
+    newQuery->m_transition.speed = 5;
+
+    newQuery->m_isLoading = false;
+
+    // Get file metadata from json
+    json_object* fileID = json_object_object_get(jsonQuery, "fileID");
+    json_object* downloads = json_object_object_get(jsonQuery, "downloads");
+    json_object* fileSize = json_object_object_get(jsonQuery, "fileSize");
+    json_object* dateReleased = json_object_object_get(jsonQuery, "dateReleased");
+    json_object* modVersion = json_object_object_get(jsonQuery, "modVersion");
+    json_object* mcVersion = json_object_object_get(jsonQuery, "mcVersion");
+
+    // Set file metadata
+    newQuery->m_fileID = json_object_get_uint64(fileID);
+
+    setlocale(LC_NUMERIC, "");
+    sprintf(newQuery->m_downloads, "%'lu", json_object_get_uint64(downloads));
+
+    uint64_t fqFileSize = json_object_get_uint64(fileSize);
+    if(fqFileSize < 1000)
+    {
+        sprintf(newQuery->m_fileSize, "%luB", fqFileSize);
+    }
+    else if(fqFileSize < 1000000)
+    {
+        sprintf(newQuery->m_fileSize, "%.1fKB", fqFileSize / 1000.0);
+    }
+    else
+    {
+        sprintf(newQuery->m_fileSize, "%.2fMB", fqFileSize / 1000000.0);
+    }
+
+    time_t t = (time_t) json_object_get_uint64(dateReleased);
+    struct tm* ptm = localtime(&t);
+    strftime(newQuery->m_dateReleased, 127, "%d %b %G", ptm);
+
+    strcpy(newQuery->m_modVersion, json_object_get_string(modVersion));
+    strcpy(newQuery->m_mcVersion, json_object_get_string(mcVersion));
+
+    return newQuery;
+}
+
+static void i_drawFileQuery(FileQuery* fileQuery, float width, float* columnWidths, bool altColor)
+{
+    fileQuery->m_viewport->width = m_body->width;
+    fileQuery->m_viewport->height = FILE_QUERY_HEIGHT;
+
+    float transiton = glm_max(0, prwaSmootherValue(&fileQuery->m_transition));
+
+    prwwViewportStart(fileQuery->m_viewport, 0);
+    {
+        prwuiPushStack();
+        prwuiTranslate(-5 + transiton * 5, 0);
+
+        float cursorX = 0.0f;
+        float fileColW = columnWidths[0] * width;
+        float versionColW = columnWidths[1] * width;
+        float infoColW = columnWidths[2] * width;
+        float downldColW = columnWidths[3] * width;
+        uint32_t textColor = 0xFFFFFFFF;
+        uint32_t color = altColor ? 0x2A000000 : 0x4A000000;
+
+        prwuiGenQuad(0, 0, fileQuery->m_viewport->width, fileQuery->m_viewport->height, color, 0);
+        prwaSmootherGrabTo(&fileQuery->m_iconSmoother, 20);
+        if(prwwWidgetHovered(fileQuery->m_viewport))
+        {
+            prwuiGenGradientQuad(PRWUI_TO_RIGHT, 0, 0, fileQuery->m_viewport->width, fileQuery->m_viewport->height, 0x25FFFFFF, 0x00FFFFFF, 0);
+            prwaSmootherGrabTo(&fileQuery->m_iconSmoother, 23);
+        }
+
+        prwuiGenIcon("jar", fileColW / 2, fileQuery->m_viewport->height / 2, prwaSmootherValue(&fileQuery->m_iconSmoother), textColor);
+        cursorX +=  fileColW;
+
+        char text[1024];
+        sprintf(text, "§tpr_icon§7 v%s\n§tmc_icon§7 v%s\n", fileQuery->m_modVersion, fileQuery->m_mcVersion);
+        i_drawText(text, cursorX + 6, fileQuery->m_viewport->height / 2, 8, textColor);
+        cursorX += versionColW;
+
+        sprintf(text, "§9Released: §7%s\n§9Size: §7%s\n§9Downloads: §7%s\n", fileQuery->m_dateReleased, fileQuery->m_fileSize, fileQuery->m_downloads);
+        i_drawText(text, cursorX + 6, fileQuery->m_viewport->height / 2, 2, textColor);
+        cursorX += infoColW;
+
+        fileQuery->m_linkButton->width = fileQuery->m_directButton->width = downldColW * 0.9f;
+        fileQuery->m_linkButton->x = fileQuery->m_directButton->x = cursorX + downldColW * 0.05f;
+        fileQuery->m_linkButton->y = 3;
+        fileQuery->m_directButton->y = 19;
+
+        prwwWidgetDraw(fileQuery->m_linkButton);
+        prwwWidgetDraw(fileQuery->m_directButton);
+
+        prwuiPopStack();
+
+        if(fileQuery->m_isLoading)
+        {
+            i_drawLoadBar(width / 2, FILE_QUERY_HEIGHT / 2);
+        }
+
+        prwsSetColor(1.0f, 1.0f, 1.0f, transiton);
+        prwuiRenderBatch();
+        prwsSetColor(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+    prwwViewportEnd(fileQuery->m_viewport);
+
+    if(prwwWidgetJustPressed(fileQuery->m_directButton))
+    {
+        prwaSmootherGrabTo(&fileQuery->m_transition, 1.0);
+        fileQuery->m_isLoading = false;
+    }
+    else if(prwwWidgetJustPressed(fileQuery->m_viewport))
+    {
+        prwaSmootherGrabTo(&fileQuery->m_transition, 0.5);
+        fileQuery->m_isLoading = true;
+    }
+}
+
+static void i_deleteFileQuery(FileQuery* fileQuery)
+{
+    prwwDeleteWidget(fileQuery->m_viewport);
+    prwwDeleteWidget(fileQuery->m_linkButton);
+    prwwDeleteWidget(fileQuery->m_directButton);
+
+    free(fileQuery);
+}
+
+static void i_drawLoadBar(float x, float y)
+{
+    float ticks = (prwScreenTicksElapsed() + prwScreenPartialTicks()) / 4.0f;
+
+    float loadBarSize = 8;
+    float cursorX = x - (loadBarSize * 5) / 2;
+    float loadBarY = y - loadBarSize / 2;
+    for(int i = 0; i < 3; i++, cursorX += loadBarSize * 2)
+    {
+        uint32_t opacity = (uint32_t) ((sinf(ticks - i * 2) * 0.3f + 0.7f) * 255) << 24;
+        prwuiGenQuad(cursorX, loadBarY, cursorX + loadBarSize, loadBarY + loadBarSize, 
+                0x00FFFFFF | opacity, 0);
     }
 }
