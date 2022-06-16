@@ -147,7 +147,6 @@ static void mainLoop()
     prwRenderMenuScreen();
     prwuiRenderBatch();
 
-    prwwTickWidgets();
     prwiPollInputs();
     clearGLErrors();
     glfwSwapBuffers(window);
