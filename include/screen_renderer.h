@@ -5,6 +5,8 @@
 
 int prwScreenPage();
 
+int prwScreenTicksElapsed();
+
 float prwScreenPartialTicks();
 
 float prwScreenTickLerp(float start, float end);

@@ -34,6 +34,7 @@ static PRWsmoother m_tabSelectorX1;
 static PRWsmoother m_tabSelectorX2;
 
 static PRWtimer m_timer;
+static int m_ticksElapsed = 0;
 static float m_tabsWidth = 250;
 
 void i_drawTabs()
@@ -140,6 +141,11 @@ int prwScreenPage()
     return m_pageSelected;
 }
 
+int prwScreenTicksElapsed()
+{
+
+}
+
 float prwScreenPartialTicks()
 {
     return prwaTimerPartialTicks(&m_timer);
@@ -159,6 +165,7 @@ void prwRenderMenuScreen()
         prwTickTitleView();
         prwTickAboutView();
         prwTickDownloadsView();
+        m_ticksElapsed++;
     }
 
     if(m_pageSelected == 0) prwDrawTitleView();
