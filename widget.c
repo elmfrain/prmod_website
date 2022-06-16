@@ -30,20 +30,6 @@ static struct Widget
     PRWwidgetClickedCallback callback;
 } Widget;
 
-//Internal Widget list
-static struct l_Element
-{
-    char shouldRemove;
-    struct Widget* ptr;
-} l_Element;
-static int m_listSize = 0;
-static int m_listCapacity = 32;
-static struct l_Element* m_widgetList = NULL;
-static inline void i_lUpdate();
-static struct Widget* i_lAdd(struct Widget);
-static inline void i_lClear();
-static inline void i_lRemove(struct Widget*);
-
 //Viewport clipping
 static float m_leftClip = 0;
 static float m_topClip = 0;
@@ -56,40 +42,40 @@ static inline void i_updateHoverState(struct Widget*);
 
 PRWwidget* prwwGenWidget(int widgetType)
 {
-    struct Widget widget;
+    struct Widget* widget = malloc(sizeof(struct Widget));
 
-    widget.x = widget.y = 0;
-    widget.width = DEFAULT_WIDTH;
-    widget.height = DEFAULT_HEIGHT;
-    widget.visible = widget.enabled = 1;
-    glm_vec2_zero(widget.localCursor);
-    widget.hovered = 0;
-    widget.zLevel = 0;
+    widget->x = widget->y = 0;
+    widget->width = DEFAULT_WIDTH;
+    widget->height = DEFAULT_HEIGHT;
+    widget->visible = widget->enabled = 1;
+    glm_vec2_zero(widget->localCursor);
+    widget->hovered = 0;
+    widget->zLevel = 0;
     switch(widgetType)
     {
     case PRWW_TYPE_BUTTON:
-        widget.type = PRWW_TYPE_BUTTON;
+        widget->type = PRWW_TYPE_BUTTON;
         break;
     case PRWW_TYPE_VIEWPORT:
-        widget.type = PRWW_TYPE_VIEWPORT;
+        widget->type = PRWW_TYPE_VIEWPORT;
         break;
     default:
-        widget.type = PRWW_TYPE_WIDGET;
+        widget->type = PRWW_TYPE_WIDGET;
     }
 
-    widget.justPressed = widget.pressed = widget.released = 0;
-    widget.clipping = 0;
-    memset(widget.text, 0, sizeof(widget.text));
-    widget.callback = NULL;
+    widget->justPressed = widget->pressed = widget->released = 0;
+    widget->clipping = 0;
+    memset(widget->text, 0, sizeof(widget->text));
+    widget->callback = NULL;
 
-    return (PRWwidget*) i_lAdd(widget);
+    return (PRWwidget*) widget;
 }
 
 //Object methods
 
 void prwwDeleteWidget(PRWwidget* widget)
 {
-    i_lRemove((struct Widget*) widget);
+    free(widget);
 }
 
 int prwwWidgetHovered(PRWwidget* widget)
@@ -291,25 +277,6 @@ int prwwWidgetType(PRWwidget* widget)
     return w->type;
 }
 
-//Static Functions
-
-void prwwTickWidgets()
-{
-    i_lUpdate();
-
-    for(int i = 0; i < m_listSize; i++)
-    {
-        struct Widget* widget = m_widgetList[i].ptr;
-
-        prwwWidgetTick((PRWwidget*) widget);
-    }
-}
-
-void prwwClearWidgets()
-{
-    i_lClear();
-}
-
 int prwwZLevel()
 {
     return m_currentZLevel;
@@ -344,73 +311,4 @@ static inline void i_updateHoverState(struct Widget* w)
     char hovered = uiCursorWidget[0] >= w->x && uiCursorWidget[1] >= w->y && uiCursorWidget[0] < w->x + w->width && uiCursorWidget[1] < w->y + w->height;
 
     w->hovered = (w->zLevel == m_currentZLevel) && hovered && cursorInBounds;
-}
-
-static inline void i_lUpdate()
-{
-    for(int i = 0; i < m_listSize; i++)
-    {
-        if(m_widgetList[i].shouldRemove)
-        {
-            free(m_widgetList[i].ptr);
-            if(i + 1 < m_listSize) memcpy(&m_widgetList[i], &m_widgetList[i + 1], (m_listSize - (i + 1)) * sizeof(struct l_Element));
-            m_listSize--;
-        }
-    }
-}
-
-static struct Widget* i_lAdd(struct Widget widget)
-{
-    struct Widget* ptr = malloc(sizeof(struct Widget));
-
-    if(ptr)
-    {
-        struct l_Element* newListBlock = m_widgetList;
-        if(!m_widgetList) newListBlock = malloc(sizeof(struct l_Element) * m_listCapacity);
-        else if((m_listSize + 1) > m_listCapacity)
-        {
-            newListBlock = realloc(m_widgetList, m_listCapacity * 2);
-            if(newListBlock) m_listCapacity *= 2;
-        }
-
-        if(!newListBlock) 
-        {
-            free(ptr);
-            return NULL;
-        }
-
-        m_widgetList = newListBlock;
-        struct l_Element newElement;
-
-        newElement.ptr = ptr;
-        newElement.shouldRemove = 0;
-        *ptr = widget;
-
-        m_widgetList[m_listSize] = newElement;
-        m_listSize++;
-    }
-
-    return ptr;
-}
-
-static inline void i_lClear()
-{
-    for(int i = 0; i < m_listSize; i++)
-    {
-        free(m_widgetList[i].ptr);
-    }
-
-    m_listSize = 0;
-}
-
-static inline void i_lRemove(struct Widget* widget)
-{
-    for(int i = 0; i < m_listSize; i++)
-    {
-        if(m_widgetList[i].ptr == widget)
-        {
-            m_widgetList[i].shouldRemove = 1;
-            return;
-        }
-    }
 }

@@ -63,10 +63,6 @@ int prwwWidgetType(PRWwidget* widget);
 
 //Static
 
-void prwwTickWidgets();
-
-void prwwClearWidgets();
-
 int prwwZLevel();
 
 int prwwSetZLevel(int zLevel);
