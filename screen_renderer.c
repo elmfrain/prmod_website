@@ -143,7 +143,7 @@ int prwScreenPage()
 
 int prwScreenTicksElapsed()
 {
-
+    return m_ticksElapsed;
 }
 
 float prwScreenPartialTicks()
