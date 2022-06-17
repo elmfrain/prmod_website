@@ -96,6 +96,7 @@ void prwDrawDownloadsView()
     float hj = 0;
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();
+    float scroll = prwaSmootherValue(&m_scroll);
 
     m_body->width = uiWidth * 2 / 3;
     if(m_body->width < 380) m_body->width = 380;
@@ -110,11 +111,19 @@ void prwDrawDownloadsView()
     }
     prwwViewportEnd(m_body);
 
+    if(prwwWidgetHovered(m_body) && prwiJustScrolled())
+    {
+        prwaSmootherGrabTo(&m_scroll, m_scroll.grabbingTo + prwiScrollDeltaY() * 35);
+    }
+
     m_body->x += NAV_BAR_HEIGHT * 2;
     m_body->width -= NAV_BAR_HEIGHT * 4;
+    float tableHeight = glm_max(12 + FILE_QUERY_HEIGHT, 12 + fileQueryListSize * FILE_QUERY_HEIGHT);
 
-    prwwViewportStart(m_body, 1);
+    prwwViewportStart(m_body, 0);
     {
+        prwuiTranslate(0, -scroll);
+
         m_titleMD->widget->width = m_body->width - 50;
         m_titleMD->widget->height = 120.0f;
         prwmdDrawMarkdown(m_titleMD);
@@ -128,10 +137,14 @@ void prwDrawDownloadsView()
         m_noteMD->widget->height = 60;
         prwmdDrawMarkdown(m_noteMD);
 
-        float tableHeight = glm_max(12 + FILE_QUERY_HEIGHT, 12 + fileQueryListSize * FILE_QUERY_HEIGHT);
         i_drawTable(0, 155, m_body->width, 155 + tableHeight);
     }
     prwwViewportEnd(m_body);
+
+    float MAX_SCROLL = m_body->height - 80;
+    if(MAX_SCROLL < 0) MAX_SCROLL = 0;
+    if(scroll < 0) prwaSmootherGrabTo(&m_scroll, 0.5);
+    else if(scroll > MAX_SCROLL) prwaSmootherGrabTo(&m_scroll, MAX_SCROLL - 0.5);
 }
 
 static void i_initView()
@@ -236,6 +249,7 @@ static void i_genPIPPerspectiveMatrix(float left, float top, float right, float 
 static void i_drawTable(float left, float top, float right, float bottom)
 {
     float width = right - left;
+    float height = bottom - top;
     float columnWidths[] = { 0.08f, 0.24f, 0.44f, 0.24f};
     char* columnNames[] = {"File", "Version", "Information", "Download"};
 
@@ -266,6 +280,11 @@ static void i_drawTable(float left, float top, float right, float bottom)
     prwuiPushStack();
     prwuiTranslate(0, top + 12);
     prwuiRenderBatch();
+
+    if(fileQueryListSize == 0)
+    {
+        i_drawLoadBar(left + width / 2, (height - 12) / 2);
+    }
 
     for(int i = 0; i < fileQueryListSize; i++)
     {
