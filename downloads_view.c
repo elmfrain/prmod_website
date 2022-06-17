@@ -93,7 +93,6 @@ void prwDrawDownloadsView()
         i_initView();
     }
 
-    float hj = 0;
     float uiWidth = prwuiGetUIwidth();
     float uiHeight = prwuiGetUIheight();
     float scroll = prwaSmootherValue(&m_scroll);
