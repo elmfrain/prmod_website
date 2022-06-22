@@ -88,14 +88,18 @@ var package = new Promise(function(resolve, reject)
 var deliveredPackage = package.then(function(data)
 {
     Module['downloadedData'] = data;
-});
 
-Module.getPreloadedPackage = function(remotePackageName, remotePackageSize)
-{
-    return Module['downloadedData'];
-}
+    Module.getPreloadedPackage = function(remotePackageName, remotePackageSize)
+    {
+        return Module['downloadedData'];
+    }
+
+    let pr_webJS = document.createElement("script");
+    pr_webJS.setAttribute("src", "./pr_web.js");
+    document.body.appendChild(pr_webJS);
+});
         </script>
-        <script async type="text/javascript" src="./pr_web.js"></script>
+
         <script type="text/javascript">
 function onResize(e)
 {
@@ -118,7 +122,7 @@ if(!webGLContext)
 }
 
 window.addEventListener("resize", onResize);
-</script>
+        </script>
 
     </body>
 </html>
