@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
+#include <stdbool.h>
 
 #ifndef EMSCRIPTEN
 #include <openssl/ssl.h>
@@ -13,7 +14,9 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#ifndef EMSCRIPTEN
 #include <pthread.h>
+#endif
 #elif defined(_WIN32)
 #include <windows.h>
 #endif
@@ -42,7 +45,9 @@ static struct Fetcher
     SSL* sslConn;
 #endif
 
-#ifdef __unix__
+#ifdef EMSCRIPTEN
+    emscripten_fetch_t* fetcher;
+#elif __unix__
     pthread_t threadID;
 #elif defined(_WIN32)
     HANDLE threadID;
@@ -61,12 +66,31 @@ static void* i_fetcherWorker(void* fetcher);
 static DWORD WINAPI i_fetcherWorker(void* fetcher);
 #endif
 
+// Emscripten Fetching API
+#ifdef EMSCRIPTEN
+typedef struct FetcherPair
+{
+    emscripten_fetch_t* em_fetcher;
+    struct Fetcher* fetcher;
+} FetcherPair;
+
+static bool m_hasInit = false;
+static int m_pairIndex = 0;
+static FetcherPair m_pairList[256];
+
+static void i_fetcherOnRecieve(emscripten_fetch_t* fetch);
+#endif
+
 PRWfetcher* prwfFetch(const char* host, const char* dir)
 {
     struct Fetcher* newFetcher = malloc(sizeof(struct Fetcher));
+
 #ifndef EMSCRIPTEN
     if(!m_sslContext) i_init();
+#else
+    if(!m_hasInit) i_init();
 #endif
+
     if(newFetcher)
     {
         newFetcher->complete = 0;
@@ -83,7 +107,9 @@ PRWfetcher* prwfFetch(const char* host, const char* dir)
         strncpy(newFetcher->hostname, host, sizeof(newFetcher->hostname) - 1);
         strncpy(newFetcher->dir, dir, sizeof(newFetcher->dir) - 1);
 
-#ifdef __unix__
+#ifdef EMSCRIPTEN
+        i_fetcherWorker(newFetcher);
+#elif __unix__
         pthread_create(&newFetcher->threadID, NULL, i_fetcherWorker, newFetcher);
 #elif defined(_WIN32)
         newFetcher->threadID =  CreateThread(NULL, 0, i_fetcherWorker, newFetcher, 0, NULL);
@@ -155,7 +181,10 @@ const char* prwfFetchString(PRWfetcher* fetcher, int* length)
 void prwfFetchWait(PRWfetcher* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
-#ifdef __unix__
+
+#ifdef EMSCRIPTEN
+    while(f->data == NULL);
+#elif __unix__
     pthread_join(f->threadID, NULL);
 #elif defined(_WIN32)
     WaitForSingleObject(f->threadID, INFINITE);
@@ -166,7 +195,9 @@ void prwfFreeFetcher(PRWfetcher* fetcher)
 {
     struct Fetcher* f = (struct Fetcher*) fetcher;
 
-#ifdef __unix__
+#ifdef EMSCRIPTEN
+    while(f->data == NULL);
+#elif __unix__
     pthread_join(f->threadID, NULL);
 #elif defined(_WIN32)
     WaitForSingleObject(f->threadID, INFINITE);
@@ -312,7 +343,9 @@ DWORD WINAPI i_fetcherWorker(void* fetcher)
     emscripten_fetch_attr_t attr;
     emscripten_fetch_attr_init(&attr);
     strcpy(attr.requestMethod, "GET");
-    attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
+    attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
+    attr.onsuccess = i_fetcherOnRecieve;
+    attr.onerror = i_fetcherOnRecieve;
 
     char url[4098] = {0};
     strcat(url, "https://");
@@ -320,14 +353,42 @@ DWORD WINAPI i_fetcherWorker(void* fetcher)
     strcat(url, f->dir);
 
     strcpy(f->statusStr, "Sent Request");
-    emscripten_fetch_t *fetch = emscripten_fetch(&attr, url);
+    f->fetcher = emscripten_fetch(&attr, url);
+
+    m_pairList[m_pairIndex].em_fetcher = f->fetcher;
+    m_pairList[m_pairIndex].fetcher = f;
+    m_pairIndex++;
+    m_pairIndex = m_pairIndex % 256;
+#endif  
+    return 0;
+}
+
+#ifdef EMSCRIPTEN
+static void i_fetcherOnRecieve(emscripten_fetch_t* fetch)
+{
+    struct Fetcher* f = NULL;
+    for(int i = 0; i < 256; i++)
+    {
+        if(m_pairList[i].em_fetcher == fetch)
+        {
+            f = m_pairList[i].fetcher;
+            m_pairList[i].em_fetcher = NULL;
+            break;
+        }
+    }
+
+    if(!f)
+    {
+        return;
+    }
+
     f->statusCode = fetch->status;
     sprintf(f->statusStr, "Recived Data. Status: %d", f->statusCode);
 
     switch(f->statusCode)
     {
     case 0:
-        printf("[Fetcher][Error]: Unable to fetch %s. Ensure that \'Access-Control-Allow-Origin\' is enabled for that resource.\n", url);
+        printf("[Fetcher][Error]: Unable to fetch %s. Ensure that \'Access-Control-Allow-Origin\' is enabled for that resource.\n", fetch->url);
         break;
     case 200:
         f->datalen = fetch->numBytes + 1;
@@ -340,9 +401,8 @@ DWORD WINAPI i_fetcherWorker(void* fetcher)
     }
 
     emscripten_fetch_close(fetch);
-#endif  
-    return 0;
 }
+#endif
 
 #ifndef EMSCRIPTEN
 static void i_init()
@@ -358,6 +418,12 @@ static void i_init()
 	if(res != 0)
 		printf("[Fetcher][Error]: WSAStartup failed with code %d\n", res);
 #endif
+}
+#else
+static void i_init()
+{
+    memset(m_pairList, 0, sizeof(m_pairList));
+    m_hasInit = true;
 }
 #endif
 
