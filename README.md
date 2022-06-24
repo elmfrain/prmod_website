@@ -1,7 +1,7 @@
 # Parkour Recorder Website
 An interactive website that is home to my Minecraft mod, Parkour Recorder.
 
-Website: [https://elmfer.xyz](https://elmfer.xyz)
+Website: [https://prmod.elmfer.com](https://prmod.elmfer.com)
 
 ![Main Screenshot](https://raw.githubusercontent.com/wiki/elmfrain/prmod_website/main_screenshot.png)
 
