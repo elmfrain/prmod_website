@@ -284,8 +284,12 @@ DWORD WINAPI i_fetcherWorker(void* fetcher)
 
     if((res = strstr(f->rawData, "HTTP/1.1")))
         f->statusCode = atoi(res + 8);
-    if((res = strstr(f->rawData, "Content-Length:")))
+    if((res = strstr(f->rawData, "Content-Length:"))
+    || (res = strstr(f->rawData, "Content-length:"))
+    || (res = strstr(f->rawData, "content-length:")))
+    {
         contentLength = atoi(res + 15);
+    }
 
     if(headerLength + contentLength + 1 > capacity)
     {
