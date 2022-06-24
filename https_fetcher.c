@@ -379,6 +379,7 @@ static void i_fetcherOnRecieve(emscripten_fetch_t* fetch)
 
     if(!f)
     {
+        emscripten_fetch_close(fetch);
         return;
     }
 
