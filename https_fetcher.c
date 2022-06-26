@@ -160,7 +160,11 @@ const char* prwfFetchString(PRWfetcher* fetcher, int* length)
     struct Fetcher* f = (struct Fetcher*) fetcher;
     if(!f->complete)
     {
-        *length = strlen(f->statusStr) + 1;
+        if(length != NULL)
+        {
+            *length = strlen(f->statusStr) + 1;
+        }
+
         return f->statusStr;
     }
     #ifndef RAW_DATA
