@@ -7,6 +7,7 @@
 #include "shaders.h"
 #include "animation.h"
 #include "input.h"
+#include "https_fetcher.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -16,6 +17,10 @@
 #include <json_tokener.h>
 #include <time.h>
 #include <locale.h>
+
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif
 
 #define NAV_BAR_HEIGHT 15
 #define FILE_QUERY_LIST_MAX_SIZE 256
@@ -29,10 +34,10 @@ typedef struct FileQuery
     PRWwidget* m_linkButton;
     PRWwidget* m_directButton;
 
-    bool m_isLoading;
+    PRWfetcher* m_linkFetcher;
 
     // Metadata
-    uint64_t m_fileID;
+    uint32_t m_fileID;
     char m_downloads[128];
     char m_fileSize[128];
     char m_dateReleased[128];
@@ -51,8 +56,10 @@ static int m_arrowTicks;
 static PRWmarkdownViewer* m_titleMD;
 static PRWmarkdownViewer* m_noteMD;
 
-static size_t fileQueryListSize = 0;
-static FileQuery* fileQueryList[FILE_QUERY_LIST_MAX_SIZE];
+static size_t m_fileQueryListSize = 0;
+static FileQuery* m_fileQueryList[FILE_QUERY_LIST_MAX_SIZE];
+static PRWfetcher* m_fileListFetcher = NULL;
+static bool m_listLoaded = false;
 
 static void i_initView();
 static void i_drawArrow(float left, float top, float right, float bottom);
@@ -70,7 +77,7 @@ void prwTickDownloadsView()
 {
     if(prwScreenPage() == 2)
     {
-        if(!fileQueryListSize)
+        if(!m_listLoaded)
         {
             i_getFileQueries();
         }
@@ -78,8 +85,9 @@ void prwTickDownloadsView()
     }
     else
     {
-        if(fileQueryListSize)
+        if(m_fileQueryListSize)
         {
+            m_listLoaded = false;
             i_clearFileQueries();
         }
         m_arrowTicks = 0;
@@ -117,7 +125,7 @@ void prwDrawDownloadsView()
 
     m_body->x += NAV_BAR_HEIGHT * 2;
     m_body->width -= NAV_BAR_HEIGHT * 4;
-    float tableHeight = glm_max(12 + FILE_QUERY_HEIGHT, 12 + fileQueryListSize * FILE_QUERY_HEIGHT);
+    float tableHeight = glm_max(12 + FILE_QUERY_HEIGHT, 12 + m_fileQueryListSize * FILE_QUERY_HEIGHT);
 
     prwwViewportStart(m_body, 0);
     {
@@ -140,7 +148,7 @@ void prwDrawDownloadsView()
     }
     prwwViewportEnd(m_body);
 
-    float MAX_SCROLL = m_body->height - 80;
+    float MAX_SCROLL = (155 + tableHeight) - (155 + tableHeight) * 0.66f;
     if(MAX_SCROLL < 0) MAX_SCROLL = 0;
     if(scroll < 0) prwaSmootherGrabTo(&m_scroll, 0.5);
     else if(scroll > MAX_SCROLL) prwaSmootherGrabTo(&m_scroll, MAX_SCROLL - 0.5);
@@ -280,14 +288,14 @@ static void i_drawTable(float left, float top, float right, float bottom)
     prwuiTranslate(0, top + 12);
     prwuiRenderBatch();
 
-    if(fileQueryListSize == 0)
+    if(m_fileQueryListSize == 0)
     {
         i_drawLoadBar(left + width / 2, (height - 12) / 2);
     }
 
-    for(int i = 0; i < fileQueryListSize; i++)
+    for(int i = 0; i < m_fileQueryListSize; i++)
     {
-        i_drawFileQuery(fileQueryList[i], m_body->width, columnWidths, i % 2 == 0);
+        i_drawFileQuery(m_fileQueryList[i], m_body->width, columnWidths, i % 2 == 0);
         prwuiTranslate(0, FILE_QUERY_HEIGHT);
     }
 
@@ -333,37 +341,40 @@ static void i_drawText(const char* str, float x, float y, float lineMargin, uint
 
 static void i_getFileQueries()
 {
-    FILE* file = fopen("res/test.json", "r");
-    fseek(file, 0, SEEK_END);
-    size_t fileS = ftell(file);
-    rewind(file);
-    char* jsonData = malloc(fileS);
-    fread(jsonData, 1, fileS, file);
-    fclose(file);
-
-    json_object* jsonObj = json_tokener_parse(jsonData);
-    int listSize = json_object_array_length(jsonObj);
-    listSize = listSize < FILE_QUERY_LIST_MAX_SIZE ? listSize : FILE_QUERY_LIST_MAX_SIZE;
-
-    for(int i = 0; i < listSize; i++)
+    if(!m_fileListFetcher)
     {
-        json_object* fileQuery = json_object_array_get_idx(jsonObj, i);
-        fileQueryList[i] = i_genFileQuery(fileQuery, i);
+        m_fileListFetcher = prwfFetch("elmfer.xyz", "/api/mod_file_list");
     }
-    fileQueryListSize = listSize;
 
-    json_object_put(jsonObj);
-    free(jsonData);
+    if(m_fileQueryListSize == 0 && prwfFetchComplete(m_fileListFetcher))
+    {
+        json_object* jsonObj = json_tokener_parse(prwfFetchString(m_fileListFetcher, NULL));
+        int listSize = json_object_array_length(jsonObj);
+        listSize = listSize < FILE_QUERY_LIST_MAX_SIZE ? listSize : FILE_QUERY_LIST_MAX_SIZE;
+
+        for(int i = 0; i < listSize; i++)
+        {
+            json_object* fileQuery = json_object_array_get_idx(jsonObj, i);
+            m_fileQueryList[i] = i_genFileQuery(fileQuery, i);
+        }
+        m_fileQueryListSize = listSize;
+
+        json_object_put(jsonObj);
+
+        prwfFreeFetcher(m_fileListFetcher);
+        m_fileListFetcher = NULL;
+        m_listLoaded = true;
+    }
 }
 
 static void i_clearFileQueries()
 {
-    for(int i = 0; i < fileQueryListSize; i++)
+    for(int i = 0; i < m_fileQueryListSize; i++)
     {
-        i_deleteFileQuery(fileQueryList[i]);
+        i_deleteFileQuery(m_fileQueryList[i]);
     }
 
-    fileQueryListSize = 0;
+    m_fileQueryListSize = 0;
 }
 
 static FileQuery* i_genFileQuery(json_object* jsonQuery, float transitionDelay)
@@ -387,7 +398,7 @@ static FileQuery* i_genFileQuery(json_object* jsonQuery, float transitionDelay)
     prwaSmootherGrabTo(&newQuery->m_transition, 1);
     newQuery->m_transition.speed = 5;
 
-    newQuery->m_isLoading = false;
+    newQuery->m_linkFetcher = NULL;
 
     // Get file metadata from json
     json_object* fileID = json_object_object_get(jsonQuery, "fileID");
@@ -398,7 +409,7 @@ static FileQuery* i_genFileQuery(json_object* jsonQuery, float transitionDelay)
     json_object* mcVersion = json_object_object_get(jsonQuery, "mcVersion");
 
     // Set file metadata
-    newQuery->m_fileID = json_object_get_uint64(fileID);
+    newQuery->m_fileID = json_object_get_int(fileID);
 
     setlocale(LC_NUMERIC, "");
     sprintf(newQuery->m_downloads, "%'lu", json_object_get_uint64(downloads));
@@ -477,9 +488,14 @@ static void i_drawFileQuery(FileQuery* fileQuery, float width, float* columnWidt
 
         prwuiPopStack();
 
-        if(fileQuery->m_isLoading)
+        if(fileQuery->m_linkFetcher && !prwfFetchComplete(fileQuery->m_linkFetcher))
         {
             i_drawLoadBar(width / 2, FILE_QUERY_HEIGHT / 2);
+            prwaSmootherGrabTo(&fileQuery->m_transition, 0.5);
+        }
+        else
+        {
+            prwaSmootherGrabTo(&fileQuery->m_transition, 1.0);
         }
 
         prwsSetColor(1.0f, 1.0f, 1.0f, transiton);
@@ -488,15 +504,42 @@ static void i_drawFileQuery(FileQuery* fileQuery, float width, float* columnWidt
     }
     prwwViewportEnd(fileQuery->m_viewport);
 
-    if(prwwWidgetJustPressed(fileQuery->m_directButton))
+    if(!fileQuery->m_linkFetcher)
     {
-        prwaSmootherGrabTo(&fileQuery->m_transition, 1.0);
-        fileQuery->m_isLoading = false;
+        if(prwwWidgetJustPressed(fileQuery->m_directButton))
+        {
+            char url[1024];
+            sprintf(url, "https://elmfer.xyz/api/get_mod_download?fileID=%d&direct=true", fileQuery->m_fileID);
+            fileQuery->m_linkFetcher = prwfFetchURL(url);
+        }
+        else if(prwwWidgetJustPressed(fileQuery->m_viewport))
+        {
+            char url[1024];
+            sprintf(url, "https://elmfer.xyz/api/get_mod_download?fileID=%d&direct=false", fileQuery->m_fileID);
+            fileQuery->m_linkFetcher = prwfFetchURL(url);
+        }
     }
-    else if(prwwWidgetJustPressed(fileQuery->m_viewport))
+
+    if(fileQuery->m_linkFetcher && prwfFetchComplete(fileQuery->m_linkFetcher))
     {
-        prwaSmootherGrabTo(&fileQuery->m_transition, 0.5);
-        fileQuery->m_isLoading = true;
+        char command[3000];
+        const char* modUrl = prwfFetchString(fileQuery->m_linkFetcher, NULL);
+#ifdef EMSCRIPTEN
+        sprintf(command, "window.open(\"%s\");", modUrl);
+        emscripten_run_script(command);
+#elif defined(__unix__)
+        sprintf(command, "xdg-open %s", modUrl);
+        system(command);
+#elif defined(_WIN32)
+        sprintf(command, "start %s", modUrl);
+        system(command);
+#elif defined(__APPLE__)
+        sprintf(command, "open %s", modUrl);
+        system(command);
+#endif
+
+        prwfFreeFetcher(fileQuery->m_linkFetcher);
+        fileQuery->m_linkFetcher = NULL;
     }
 }
 
@@ -505,6 +548,11 @@ static void i_deleteFileQuery(FileQuery* fileQuery)
     prwwDeleteWidget(fileQuery->m_viewport);
     prwwDeleteWidget(fileQuery->m_linkButton);
     prwwDeleteWidget(fileQuery->m_directButton);
+
+    if(fileQuery->m_linkFetcher)
+    {
+        prwfFreeFetcher(fileQuery->m_linkFetcher);
+    }
 
     free(fileQuery);
 }
