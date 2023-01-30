@@ -1,0 +1,1 @@
+ dep/cglm/libcglm.a -lglfw dep/assimp/lib/libassimp.a -lm dep/assimp/contrib/zlib/libzlibstatic.a 
