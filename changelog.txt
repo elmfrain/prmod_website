@@ -4,6 +4,7 @@
     §7§l-Playback Right-Clicks:§r Record yourself placing blocks or using blocks and items.
 
     §7§l-Toggle Left/Right Clicks in Options Menu:§r Option to disable playback of clicks.
+    §lNote:§b Playback of clicks are disabled by default!
 
   §c§lBug Fixes
     -Fix player positioning during playback.
