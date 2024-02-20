@@ -1,15 +1,12 @@
-§a§l§nMinor Update v1.1.2.0 - Loop Mode
+§a§l§nMinor Update v1.1.3.0 - Record Clicks
   §e§lAdded Features
-    §7§l-Loop Mode Feature:§r Be able to record looped recordings and play them back on repeat.
-    §7§l-Hide server IP in Save Screen.
-    §bCredits to §lKamesuta§b from GitHub for those features!
+    §7§l-Playback Left-Clicks:§r Record yourself breaking blocks or attacking entites.
+    §7§l-Playback Right-Clicks:§r Record yourself placing blocks or using blocks and items.
 
-    §7§l-Key Input HUD:§r Shows key presses during playback or in the Timeline Screen.
-    §7§l-The Changelog Viewer from the Title Screen fetches the changelog online, and it is now more readable.
+    §7§l-Toggle Left/Right Clicks in Options Menu:§r Option to disable playback of clicks.
 
   §c§lBug Fixes
-    -Moving the cursor in Timeline Screen was not intuitive.
-    -The player's rotation may jerk while starting playback; improper rotation interpolation.
+    -Fix player positioning during playback.
 
 §2§l§nMajor Update v1.1.0.0 - Tabular Menu GUI
   §e§lAdded Features
